@@ -1,0 +1,29 @@
+# Multiple inclusion guard
+if(NOT C2PY_FOUND)
+
+MESSAGE(STATUS "Found c2py-config.cmake with version ${C2PY_VERSION}, hash = ${C2PY_GIT_HASH}, root = ${c2py_ROOT}")
+set(C2PY_FOUND True)
+set_property(GLOBAL PROPERTY C2PY_FOUND TRUE)
+
+# Version
+set(C2PY_VERSION @C2PY_VERSION@ CACHE STRING "c2py Version")
+set(C2PY_GIT_HASH @C2PY_GIT_HASH@ CACHE STRING "c2py Git Hash")
+
+# Root of the installation
+set(c2py_ROOT @CMAKE_INSTALL_PREFIX@ CACHE PATH "Root of c2py")
+
+# Mac specific
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+ set(CMAKE_INSTALL_NAME_DIR "@CMAKE_INSTALL_PREFIX@/lib")
+ set(CMAKE_MACOSX_RPATH 1) # new for cmake 3.x
+endif()
+
+# include the exported targets of this project
+include(@CMAKE_INSTALL_PREFIX@/lib/cmake/c2py/c2py-targets.cmake)
+
+#SET(C2PY_C2PY_MODULE_EXTENSION "wrap.cxx")
+
+# FIXME : already exists ..
+#add_library(c2py::c2py ALIAS c2py)
+
+endif()

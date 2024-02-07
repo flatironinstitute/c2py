@@ -1,0 +1,8 @@
+#!@Python_EXECUTABLE@
+
+cxxflags = "-I@CMAKE_INSTALL_PREFIX@/include " 
+ldflags = " -L@CMAKE_INSTALL_PREFIX@/lib -lc2py "
+
+if __name__ == "__main__" : 
+  print("%s %s %s "%(cxxflags, ldflags, "@c2py_all_python_flags@"))
+  
