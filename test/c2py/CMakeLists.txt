@@ -1,8 +1,10 @@
 #FILE(COPY ${CMAKE_SOURCE_DIR}/.clang-format DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # I have no clue why it is needed, but it is for the test to PRELOAD properly ?
-find_package(sanitizer REQUIRED "asan")
-MESSAGE("SANITIZER_RT_PRELOAD = ${SANITIZER_RT_PRELOAD}")
+if (ASAN)
+ find_package(sanitizer REQUIRED "asan")
+ MESSAGE("SANITIZER_RT_PRELOAD = ${SANITIZER_RT_PRELOAD}")
+endif()
 
 macro(c2py_add_test_1 modulename module_extension) 
 
