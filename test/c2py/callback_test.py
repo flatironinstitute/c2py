@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-import embed as M
+import callback as M
 
 class TestCallback(unittest.TestCase):
 
