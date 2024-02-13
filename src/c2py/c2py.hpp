@@ -41,7 +41,6 @@
 #include "py_range.hpp"
 #include "pydict.hpp"
 #include "pyfunction.hpp"
-#include "pyinterpreter.hpp"
 
 #include "serialization/as_tuple.hpp"
 #include "serialization/repr.hpp"

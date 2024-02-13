@@ -5,6 +5,7 @@
 #include "./py_converter.hpp"
 #include "./util/nv_pair.hpp"
 #include "./util/macros.hpp"
+#include <stdexcept>
 
 namespace c2py {
 
@@ -54,7 +55,7 @@ namespace c2py {
     pyfunction &operator=(pyfunction &&)      = default;
 
     template <typename... T> R operator()(T const &...x) const {
-
+      if (this->is_null()) throw std::runtime_error{"Empty function"};
       // x -> python mais si x nv_pair -> add in dict.
       // if one T is a nv_pair -> separate args, pydict into a tuple and a dict
       // 2 overload -> T and nv_pair<T> , pass and fold.

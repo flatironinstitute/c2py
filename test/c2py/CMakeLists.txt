@@ -42,7 +42,7 @@ add_custom_command(
 # ----------------------------
 set(c2py_all_low_level_tests cls CACHE INTERNAL "")
 set(c2py_all_full_tests  annote basicfun cls_basic cls_der comparison issue9 callables itertool generator
-    enumcxx synth_init tpl_cls tpl_derived two_module_1 two_module_2 CACHE INTERNAL "")
+    enumcxx synth_init tpl_cls tpl_derived callback two_module_1 two_module_2 CACHE INTERNAL "")
 
 foreach(t ${c2py_all_low_level_tests} )
   c2py_add_test_1(${t} "cxx")  
@@ -53,13 +53,4 @@ foreach(t ${c2py_all_full_tests} )
 endforeach()
 
 # must compile 1 first to have the hxx of the wrapped objects
-#add_dependencies(two_module_2 two_module_1)
-
-# ---------------------------
-# A special test for the embedding of the interpreter
-# -------------------------------
-
-add_executable(pyembed embed.cxx)
-target_link_libraries(pyembed PRIVATE c2py ${PROJECT_NAME}_warnings Python::NumPy)
-target_compile_options(pyembed PRIVATE -std=c++20 )
-add_test(NAME pyembed COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pyembed)
+add_dependencies(two_module_2 two_module_1)
