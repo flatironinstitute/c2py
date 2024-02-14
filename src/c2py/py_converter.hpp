@@ -26,6 +26,7 @@
 #include <typeindex>
 #include <iostream>
 
+#include "./cpp_name.hpp"
 #include "./pyref.hpp"
 
 // for backward compatibility layer below
@@ -122,4 +123,17 @@ namespace c2py {
     requires(concepts::IsConvertibleCPP2Py_backwd<std::decay_t<T>>)
   struct py_converter<T> : ::cpp2py::py_converter<std::decay_t<T>> {};
 
+  // ---------------------  Implementation of as method of pyref
+  // now that we have the converters ...
+
+  template <typename T> T pyref::as() const {
+    if (this->is_null()) throw std::runtime_error{"as<...> method: trying to convert a null reference."};
+    if (not py_converter<T>::is_convertible(*this, true)) {
+      auto err = c2py::get_python_error(); // clean error
+      throw std::runtime_error{" Error in converting in as<..> method.\n The Python object of type " + to_string(this->type())
+                               + " can not be converted to C++ type " + cpp_name<T>
+                               + "\n NB: the result was \n \n " + to_string(*this) + "   The converter error was : \n\n" + err + "\n"};
+    }
+    return py_converter<T>::py2c(*this);
+  }
 } // namespace c2py

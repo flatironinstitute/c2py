@@ -89,13 +89,8 @@ namespace c2py {
       return (ob ? PyObject_GetAttrString(ob, attr_name) : nullptr);
     } // NULL : pass the error in chain call x.attr().attr()....
 
-    // implement later in code ...
-    //    template<typename T>
-    //    T as() const {
-    //if (not py_converter<R>::is_convertible(r, true)) {
-    //       auto err = get_python_error(); // clean error
-    //       throw std::runtime_error{detail::format_error(r, fname, cpp_name<R>, err)};
-    //     }
+    template <typename T> T as() const;
+    // implemented in py_converters.hpp
 
     /// Call. Returns null if the object is null.
     pyref operator()(PyObject *a1) {

@@ -11,6 +11,15 @@ namespace c2py {
 
   namespace detail {
 
+    // Convert x to python. If x is not convertible and is a lambda or alike
+    // we make an attempt a std::function out of it.
+    template <typename T> static PyObject *cxx2py_or_fun(T &&x) {
+      if constexpr (concepts::IsConvertibleC2Py<std::decay_t<T>>)
+        return py_converter<std::decay_t<T>>::c2py(std::forward<T>(x));
+      else
+        return c2py::cxx2py(std::function{std::forward<T>(x)}); // FIXME : a better error message with static_assert(false)
+    }
+
     template <typename A> static constexpr int is_nv_pair             = 0;
     template <typename A> static constexpr int is_nv_pair<nv_pair<A>> = 1;
 
@@ -25,12 +34,12 @@ namespace c2py {
       }
 
       void operator()(auto const &x) {
-        [[maybe_unused]] int status = PyTuple_SetItem(args, args_current_pos++, cxx2py(x));
+        [[maybe_unused]] int status = PyTuple_SetItem(args, args_current_pos++, detail::cxx2py_or_fun(x));
         assert(status == 0);
       }
 
       template <typename A> void operator()(nv_pair<A> const &x) {
-        [[maybe_unused]] int status = PyDict_SetItemString(kwargs, x.name.c_str(), cxx2py(x.value));
+        [[maybe_unused]] int status = PyDict_SetItemString(kwargs, x.name.c_str(), detail::cxx2py_or_fun(x.value));
         assert(status == 0);
       }
     };
@@ -41,7 +50,27 @@ namespace c2py {
 
   template <typename R = pyref> struct pyfunction : pyref {
     std::string fname;
-    pyfunction(const char *module_name, const char *fname) : pyref{pyref::get_class(module_name, fname, true)}, fname{fname} {
+
+    private:
+    // split the function name A.B.f into A.B , f
+    // if no ., then __main__, f
+    std::pair<std::string, std::string> split_fname(std::string const &s) {
+      if (auto pos = s.find_last_of('.'); pos == std::string::npos)
+        return {"__main__", s};
+      else
+        return {s.substr(0, pos), s.substr(pos + 1, std::string::npos)};
+    }
+
+    public:
+    pyfunction(std::string const &module_name, std::string const &fname)
+       : pyref{pyref::get_class(module_name.c_str(), fname.c_str(), true)}, fname{fname} {
+      if (PyErr_Occurred()) { throw std::runtime_error{get_python_error()}; }
+    }
+
+    pyfunction(std::string const &qualifiedname) {
+      auto [module_name, fnt_name] = split_fname(qualifiedname);
+      static_cast<pyref &>(*this)  = pyref::get_class(module_name.data(), fnt_name.data(), true);
+      this->fname                  = fnt_name;
       if (PyErr_Occurred()) { throw std::runtime_error{get_python_error()}; }
     }
 
@@ -69,7 +98,7 @@ namespace c2py {
         (erased_args(x), ...);
         r = PyObject_Call(this->ob, erased_args.args, erased_args.kwargs);
       } else
-        r = PyObject_CallFunctionObjArgs(this->ob, cxx2py(x)..., NULL);
+        r = PyObject_CallFunctionObjArgs(this->ob, detail::cxx2py_or_fun(x)..., NULL);
       if (r.is_null()) {
         PyErr_Print();
         throw std::runtime_error{"Error calling the function " + fname}; //+ get_python_error()};

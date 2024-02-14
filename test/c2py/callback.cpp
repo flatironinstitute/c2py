@@ -33,7 +33,8 @@ def callback(f, arg):
 
 )RAW");
 
-  auto callback = c2py::pyfunction<long>("__main__", "callback");
+  //auto callback = c2py::pyfunction<long>("__main__", "callback");
+  auto callback = c2py::pyfunction<long>{"callback"};
 
   auto fun = std::function{[](long x) { return x * x - 2; }};
   long r   = callback(fun, 4);
@@ -47,27 +48,19 @@ def callback(f, arg):
 void callback3() {
 
   // Test 3 : A scipy example for the demo
-  auto fun = std::function<double(double)>{[](double x) {
+  auto fun = [](double x) {
     std::cerr << "callback fun: x= " << x << "  " << x * x - 2 << std::endl;
     return x * x - 2;
-  }};
+  };
 
   if (PyRun_SimpleString("import scipy")) {
     std::cerr << "== No scipy on this machine  =====\n";
-    return; 
+    return;
   }
   try {
-
-    auto root_scalar = c2py::pyfunction<>("scipy.optimize", "root_scalar");
-
-    //auto root_scalar = c2py::pyfunction<>("scipy.optimize.root_scalar"); // ,;
-    auto res = root_scalar(fun, "x0"_a = 0, "x1"_a = 2); //
-
-    double root = c2py::py2cxx<double>(res.attr("root"));
-
-    // FIXME
-    // double root = res.attr<double>("root");
-    // double root = res.attr("root").as<double>();
+    auto root_scalar = c2py::pyfunction{"scipy.optimize.root_scalar"};
+    auto res         = root_scalar(fun, "x0"_a = 0, "x1"_a = 2); //
+    double root      = res.attr("root").as<double>();
     if (std::abs(root - std::sqrt(2)) > precision) throw std::runtime_error{"Test scipy failed "};
   } catch (std::exception const &e) {
     std::cerr << "\n== Ended with C++ exception: =====\n" << e.what() << "\n";
