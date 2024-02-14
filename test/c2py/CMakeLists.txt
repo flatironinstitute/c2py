@@ -3,7 +3,14 @@
 # I have no clue why it is needed, but it is for the test to PRELOAD properly ?
 if (ASAN)
  find_package(sanitizer REQUIRED "asan")
- MESSAGE("SANITIZER_RT_PRELOAD = ${SANITIZER_RT_PRELOAD}")
+ MESSAGE(STATUS "SANITIZER_RT_PRELOAD = ${SANITIZER_RT_PRELOAD}")
+ 
+ # We need to add the LD_PRELOAD for the compilation ITSELF
+ # When we are testing the clair plugin
+ if (IS_CLAIR_BUILD)
+   set(CMAKE_CXX_COMPILER_LAUNCHER env ${SANITIZER_RT_PRELOAD})
+   MESSAGE(STATUS "Adding LD_PRELOAD to the compilation to check clair plugin") 
+ endif()
 endif()
 
 macro(c2py_add_test_1 modulename module_extension) 
