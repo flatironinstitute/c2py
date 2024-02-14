@@ -9,7 +9,7 @@ if(NOT CMAKE_INSTALL_PREFIX STREQUAL TRIQS_ROOT AND NOT IS_SUBPROJECT)
     FILES
       ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.modulefile
       ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}vars.sh
-    DESTINATION share
+    DESTINATION share/c2py
   )
  
   message(STATUS "***************************************************************")
