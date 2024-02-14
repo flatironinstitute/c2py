@@ -26,10 +26,12 @@ option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
 add_compile_options($<$<CONFIG:Debug>:-ggdb3>)
 
 # Check CMAKE_INSTALL_PREFIX : must be provided and absolute
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT OR (NOT IS_ABSOLUTE ${CMAKE_INSTALL_PREFIX}))
- message(FATAL_ERROR "CMAKE_INSTALL_PREFIX must be specified and must be an absolute path.\n There is no default.\n Current value : ${CMAKE_INSTALL_PREFIX}\n.  e.g. ... -DCMAKE_INSTALL_PREFIX=$HOME/c2py_install")
+if(NOT IS_SUBPROJECT)
+  if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT OR (NOT IS_ABSOLUTE ${CMAKE_INSTALL_PREFIX}))
+    message(FATAL_ERROR "CMAKE_INSTALL_PREFIX must be specified and must be an absolute path.\n There is no default.\n Current value : ${CMAKE_INSTALL_PREFIX}\n.  e.g. ... -DCMAKE_INSTALL_PREFIX=$HOME/c2py_install")
+  endif()
+  message(STATUS "Installation directory will be ${CMAKE_INSTALL_PREFIX}")
 endif()
-message(STATUS "Installation directory will be ${CMAKE_INSTALL_PREFIX}")
 set(C2PY_BINARY_DIR ${PROJECT_BINARY_DIR} CACHE STRING "Binary directory of the Clair Project")
 
 # add ./cmake to the path for module

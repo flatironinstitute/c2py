@@ -11,13 +11,5 @@ if(NOT CMAKE_INSTALL_PREFIX STREQUAL TRIQS_ROOT AND NOT IS_SUBPROJECT)
       ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}vars.sh
     DESTINATION share/c2py
   )
- 
-  message(STATUS "***************************************************************")
-  message(STATUS "* Custom install Location. Use:                                ")
-  message(STATUS "*                                                              ")
-  message(STATUS "*   source ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}vars.sh      ")
-  message(STATUS "*                                                              ")
-  message(STATUS "* to set up the environment variables                          ")
-  message(STATUS "***************************************************************")
 
 endif()
