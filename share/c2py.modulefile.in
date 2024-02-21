@@ -7,8 +7,8 @@ set     version     @C2PY_VERSION@
 set     root        @CMAKE_INSTALL_PREFIX@
 set     git_hash    @C2PY_GIT_HASH@
 
-set     url         "https://github.com/TRIQS/c2py"
-set     description "Cpp2Py is the Python/C++ interfacing tool of the TRIQS project"
+set     url         "https://github.com/flatironinstitute/c2py"
+set     description "Cpp2Py is a Python/C++ interfacing library"
 
 module-whatis   "$description"
 

@@ -1,10 +1,10 @@
-configure_file(${PROJECT_NAME}-config.cmake.in ${PROJECT_NAME}-config.cmake @ONLY)
-configure_file(${PROJECT_NAME}-config-version.cmake.in ${PROJECT_NAME}-config-version.cmake @ONLY)
+configure_file(c2py-config.cmake.in c2py-config.cmake @ONLY)
+configure_file(c2py-config-version.cmake.in c2py-config-version.cmake @ONLY)
 install(
   FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
-  DESTINATION lib/cmake/${PROJECT_NAME}
+    ${CMAKE_CURRENT_BINARY_DIR}/c2py-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/c2py-config-version.cmake
+  DESTINATION lib/cmake/c2py
 )
 
-#install(EXPORT ${PROJECT_NAME}-targets NAMESPACE ${PROJECT_NAME}:: DESTINATION lib/cmake/${PROJECT_NAME})
+install(EXPORT c2py-targets NAMESPACE c2py:: DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/c2py)
