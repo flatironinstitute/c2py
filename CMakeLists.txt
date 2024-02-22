@@ -118,7 +118,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/c2py_flags DESTINATION ${CMAKE_INSTALL
 add_subdirectory(src/c2py)
 
 # Tests
-if(Build_Tests AND NOT IS_SUBPROJECT)
+if(Build_Tests AND (NOT IS_SUBPROJECT OR IS_CLAIR_BUILD))
   set(H5_INCLUDE_DIR ${PROJECT_BINARY_DIR}/deps/h5_src/c++/)
   enable_testing()
   add_subdirectory(test)

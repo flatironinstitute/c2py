@@ -31,7 +31,7 @@ add_custom_command(
 )
 
 # ----------------------------
-set(c2py_all_low_level_tests cls)
+set(c2py_all_low_level_tests cls CACHE INTERNAL "")
 set(c2py_all_full_tests 
   annote basicfun
   cls_basic
@@ -47,7 +47,8 @@ set(c2py_all_full_tests
   tpl_derived
   callback
   two_module_1
-  two_module_2)
+  two_module_2
+  CACHE INTERNAL "")
 
 foreach(t ${c2py_all_low_level_tests})
   c2py_add_test_1(${t} "cxx")  
