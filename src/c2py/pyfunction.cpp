@@ -7,6 +7,7 @@ namespace c2py::detail {
     // FIXME : when std::format will be present in all compilers
     // Libc ++ > = 17
     // gcc  >= 13
+    // We don't want to depend on fmt for c2py.
 
 #if 0
     return std::format(R"RAW(

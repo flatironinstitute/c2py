@@ -21,6 +21,12 @@
 #define C2PY_RENAME(X)
 #endif
 
+#define C2PY_AS_STRING(...) C2PY_AS_STRING2(__VA_ARGS__)
+#define C2PY_AS_STRING2(...) #__VA_ARGS__
+
+#define C2PY_ANNOTATE(X) __attribute__((annotate(X)))
+#define C2PY_GUARD(X) C2PY_ANNOTATE(AS_STRING2(c2py_guard_##X))
+
 //#define C2PY_METHODS_AS_PROPERTY __attribute__((annotate("c2py_methods_as_property")))
 
 // ---------   Traits to be specialized in c2py_module ----------

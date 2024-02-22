@@ -1,5 +1,6 @@
 #pragma once
 #include <sstream>
+#include <type_traits>
 
 #include "../util/str.hpp"
 #include "../py_converter.hpp"
@@ -12,9 +13,12 @@
 namespace c2py {
 
   // ---------------  The generic wrapped type --------------------
-  template <typename T> struct wrap {
+  template <typename T> struct wrap { //NOLINT
+    static_assert(!std::is_reference_v<T>);
     PyObject_HEAD //;
        T *_c;
+    PyObject *parent = nullptr; // if not null, it owns a reference to possibly a parent wrapped object
+    bool is_const    = false;   // if T is U const &
   };
 
   // ============ Prepare all the slots for wrap_pytype below ====================
@@ -27,8 +31,13 @@ namespace c2py {
 
   // tp_dealloc
   template <typename T> static void tp_dealloc(PyObject *self) {
-    auto *c_ptr = ((wrap<T> *)self)->_c;
-    if (c_ptr != NULL) delete c_ptr; // NOLINT should never be null, but I protect it anyway
+    auto *self_c = ((wrap<T> *)self);
+    auto *c_ptr  = self_c->_c;
+    if (self_c->parent == nullptr) {
+      if (c_ptr != NULL) delete c_ptr; // NOLINT should never be null, but I protect it anyway
+    } else {
+      Py_DECREF(self_c->parent); // we release the parent
+    }
     Py_TYPE(self)->tp_free((PyObject *)self);
   }
 
