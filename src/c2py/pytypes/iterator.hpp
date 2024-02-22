@@ -122,10 +122,10 @@ namespace c2py {
     // We keep an owned reference to the container object (e.g. [x for x in g.mesh],
     // if the container is a temporary and the iterator lives longer than its python reference).
     Py_XINCREF(parent);
-    auto *_1 = new ((void *)(&p->iter)) decltype(p->iter); // NOLINT discard the result
-    auto *_2 = new ((void *)(&p->end)) decltype(p->end);   // NOLINT discard the result
-    p->iter  = std::move(b);
-    p->end   = std::move(e);
+    std::ignore = new ((void *)(&p->iter)) decltype(p->iter); // NOLINT
+    std::ignore = new ((void *)(&p->end)) decltype(p->end);   // NOLINT
+    p->iter     = std::move(b);
+    p->end      = std::move(e);
     return (PyObject *)p;
   }
 
