@@ -8,17 +8,15 @@
 
 // Test the C2PY_WRAP annotation
 
-int f(int i) { return 1;}
+int f(int i) { return 1; }
 
-C2PY_WRAP int g(int i) { return 2;}
+C2PY_WRAP int g(int i) { return 2; }
 
-struct C2PY_WRAP  A {
-  int k                 = 12;
+struct C2PY_WRAP A {
+  int k = 12;
 };
 
 namespace c2py_module {
   // Filter all by default.
   constexpr auto reject_names = ".*";
-}
-
-
+} // namespace c2py_module

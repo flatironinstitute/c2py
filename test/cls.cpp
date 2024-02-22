@@ -5,7 +5,7 @@ struct A {
   int k              = 12;
   std::vector<int> v = {1, 2, 3, 5};
 
-  //A() = default; 
+  //A() = default;
 
   auto f(int x) { return x * 2; }
   int f(int x) const { return x * 2; }
@@ -13,15 +13,14 @@ struct A {
   int size() const { return v.size(); }
   friend int a_friend(A const &a) { return -a.k; }
 
-  double tpl(auto x) { return 256 + x;}
-  
-  int& operator[](int i) { return v[i]; }
+  double tpl(auto x) { return 256 + x; }
+
+  int &operator[](int i) { return v[i]; }
   int operator[](int i) const { return v[i]; }
 
+  int operator()(int i) { return k + i; }
+  int operator()(int i, int j) const { return k + i + 10 * j; }
 
-  int operator()(int i) { return k + i;}
-  int operator()(int i, int j) const { return k + i + 10*j;}
-  
   bool operator==(A const &) const = default;
 
   int get_prop() const { return k; }
@@ -31,8 +30,8 @@ struct A {
   auto end() const { return std::end(v); }
 
   template <typename Ar> void serialize(Ar &ar, int) {
-    ar &k;
-    ar &v;
+    ar & k;
+    ar & v;
   }
 };
 
@@ -50,12 +49,7 @@ A maker_A(int i) {
   return A{i};
 }
 
-
-//void describe_operations(A a, A b, int s) { 
- //A{a + b};
- //A{a - b};
+//void describe_operations(A a, A b, int s) {
+//A{a + b};
+//A{a - b};
 //};
-
-  
-
-

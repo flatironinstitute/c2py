@@ -37,7 +37,7 @@ struct A {
 
   void no_prop() { k *= 10; }
 
-  static int static_method(int i) { return -i;}
+  static int static_method(int i) { return -i; }
 
   //C2PY_PROPERTY("p")
   //int get_prop() const { return k; }

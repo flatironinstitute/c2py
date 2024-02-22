@@ -10,8 +10,8 @@
 
 namespace c2py {
 
-//  template <> constexpr bool is_wrapped<h5::group> = true;
-//  template <> constexpr bool is_wrapped<h5::file>  = true;
+  //  template <> constexpr bool is_wrapped<h5::group> = true;
+  //  template <> constexpr bool is_wrapped<h5::file>  = true;
 
   /// hdf5 is not defined for this object, we still but a function + exception for a clear and early error message.
   template <typename Cls> static PyObject *tpxx_write_h5(PyObject *self, PyObject *args) {

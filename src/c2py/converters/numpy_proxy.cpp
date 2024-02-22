@@ -36,7 +36,7 @@ namespace c2py {
        PyArray_NewFromDescr(&PyArray_Type, PyArray_DescrFromType(element_type), rank, extents.data(), strides.data(), data, flags, nullptr); //NOLINT
     if (not result) return nullptr; // the Python error is set
 
-    if (!PyArray_Check(result)) {   //NOLINT
+    if (!PyArray_Check(result)) { //NOLINT
       PyErr_SetString(PyExc_RuntimeError, "The python object is not a numpy array");
       return nullptr;
     }
@@ -46,10 +46,7 @@ namespace c2py {
     arr->base = base;
     assert(arr->flags == (arr->flags & ~NPY_OWNDATA));
 #else
-    //int r     =
     PyArray_SetBaseObject(arr, base); //NOLINT
-    //EXPECTS(r == 0);
-    //EXPECTS(PyArray_FLAGS(arr) == (PyArray_FLAGS(arr) & ~NPY_ARRAY_OWNDATA));
 #endif
     base = nullptr; // ref is stolen by the new object
 

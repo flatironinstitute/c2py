@@ -32,7 +32,7 @@ static_assert(c2py::concepts::IsConvertibleC2Py<std::pair<return_t, double>>);
 // attribute declaration must precede definition ! Cf clang message if reverse order.
 C2PY_IGNORE int ignored(int x);
 int ignored(int x) { return x * 3; }
-  
+
 using dcomplex = std::complex<double>;
 
 namespace N {
