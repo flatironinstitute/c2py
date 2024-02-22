@@ -15,8 +15,13 @@ macro(c2py_add_test_1 modulename module_extension)
 endmacro()
 
 macro(c2py_add_test modulename)
-  c2py_add_test_1(${modulename} $<IF:$<TARGET_EXISTS:clair::c2py_plugin>,cpp,wrap.cxx>) 
-  target_link_libraries(${modulename} PRIVATE $<TARGET_NAME_IF_EXISTS:clair::c2py_plugin>)
+  if(IS_CLAIR_BUILD)
+    c2py_add_test_1(${modulename} cpp)
+    target_link_libraries(${modulename} PRIVATE clair::c2py_plugin)
+    target_compile_options(${modulename} PRIVATE -Wno-unused-const-variable -Wno-unused-variable)
+  else()
+    c2py_add_test_1(${modulename} wrap.cxx)
+  endif()
 endmacro()
 
 #--------------------------------------------------------
