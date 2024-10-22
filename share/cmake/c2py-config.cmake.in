@@ -14,12 +14,12 @@ set(c2py_ROOT @CMAKE_INSTALL_PREFIX@ CACHE PATH "Root of c2py")
 
 # Mac specific
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
- set(CMAKE_INSTALL_NAME_DIR "@CMAKE_INSTALL_PREFIX@/lib")
+ set(CMAKE_INSTALL_NAME_DIR "@CMAKE_INSTALL_FULL_LIBDIR@")
  set(CMAKE_MACOSX_RPATH 1) # new for cmake 3.x
 endif()
 
 # include the exported targets of this project
-include(@CMAKE_INSTALL_PREFIX@/lib/cmake/c2py/c2py-targets.cmake)
+include(@CMAKE_INSTALL_FULL_LIBDIR@/cmake/c2py/c2py-targets.cmake)
 
 #SET(C2PY_C2PY_MODULE_EXTENSION "wrap.cxx")
 
