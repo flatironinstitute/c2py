@@ -44,7 +44,7 @@ namespace c2py {
 
     static bool is_convertible(PyObject *ob, bool raise_exception) {
       if (!base_t::is_convertible(ob, raise_exception)) return false;
-      return base_t::py2c(ob).type() == std::type_index(typeid(T));
+      return base_t::py2c(ob).type() == typeid(T);
     }
 
     static T &py2c(PyObject *ob) { return std::any_cast<T &>(base_t::py2c(ob)); }
