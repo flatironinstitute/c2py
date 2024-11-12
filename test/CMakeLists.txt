@@ -38,13 +38,15 @@ add_custom_command(
 # ----------------------------
 set(c2py_all_low_level_tests cls CACHE INTERNAL "")
 set(c2py_all_full_tests 
-  annote basicfun
+  any
+  basicfun
   cls_basic
   cls_der
   comparison
   issue9
   callables
   itertool
+  ignore
   generator
   enumcxx
   synth_init

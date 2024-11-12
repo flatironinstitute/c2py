@@ -7,7 +7,7 @@
 // -------------  Annotations for function ---------------
 
 #define C2PY_IGNORE __attribute__((annotate("c2py_ignore")))
-#define C2PY_WRAP __attribute__((annotate("c2py_wrap")))
+#define C2PY_OPAQUE __attribute__((annotate("c2py_wrap_as_opaque")))
 #define C2PY_NOGIL __attribute__((annotate("c2py_nogil")))
 
 //#define C2PY_METHODS_AS_PROPERTY __attribute__((annotate("c2py_methods_as_property")))
