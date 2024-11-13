@@ -23,6 +23,8 @@ using c2py::operator"" _a;
 #ifndef C2PY_HXX_DECLARATION_ignore_GUARDS
 #define C2PY_HXX_DECLARATION_ignore_GUARDS
 template <> constexpr bool c2py::is_wrapped<a_struct> = true;
+template <> constexpr bool c2py::is_wrapped<opaque>   = true;
+template <> constexpr bool c2py::is_wrapped<opaque2>  = true;
 #endif
 
 // ==================== enums =====================
@@ -63,9 +65,7 @@ constexpr auto doc_member_0 = R"DOC()DOC";
 static PyObject *prop_get_dict_0(PyObject *self, void *) {
   auto &self_c = *(((c2py::wrap<a_struct> *)self)->_c);
   c2py::pydict dic;
-  dic["a"]           = self_c.a;
-  dic["b"]           = self_c.b;
-  dic["x_ignore_me"] = self_c.x_ignore_me;
+  dic["a"] = self_c.a;
   return dic.new_ref();
 }
 
@@ -76,11 +76,80 @@ constinit PyGetSetDef c2py::tp_getset<a_struct>[] = {c2py::getsetdef_from_member
                                                      {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
                                                      {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
+template <> inline const std::string c2py::cpp_name<opaque>   = "opaque";
+template <> inline constexpr auto c2py::tp_name<opaque>       = "ignore.Opaque";
+template <> inline constexpr const char *c2py::tp_doc<opaque> = R"DOC(   )DOC";
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<opaque>[] = {
+
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+// ----- Method table ----
+
+template <>
+constinit PyGetSetDef c2py::tp_getset<opaque>[] = {
+
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
+template <> inline const std::string c2py::cpp_name<opaque2>   = "opaque2";
+template <> inline constexpr auto c2py::tp_name<opaque2>       = "ignore.Opaque2";
+template <> inline constexpr const char *c2py::tp_doc<opaque2> = R"DOC(   )DOC";
+
+static auto init_0                                    = c2py::dispatcher_c_kw_t{c2py::c_constructor<opaque2>()};
+template <> constexpr initproc c2py::tp_init<opaque2> = c2py::pyfkw_constructor<init_0>;
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<opaque2>[] = {
+
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+// ----- Method table ----
+
+template <>
+constinit PyGetSetDef c2py::tp_getset<opaque2>[] = {
+
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
 // ==================== module functions ====================
 
+// inc_opaque
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<opaque &>(&inc_opaque), "w")};
+
+// inc_opaque2
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<opaque2 &>(&inc_opaque2), "w")};
+
+// make_opaque
+static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&make_opaque))};
+
+// make_opaque2
+static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&make_opaque2))};
+
+// take_opaque
+static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const opaque &>(&take_opaque), "w")};
+
+// take_opaque2
+static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const opaque2 &>(&take_opaque2), "w")};
+
+static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
+static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
+static const auto doc_d_2 = fun_2.doc({R"DOC(   )DOC"});
+static const auto doc_d_3 = fun_3.doc({R"DOC(   )DOC"});
+static const auto doc_d_4 = fun_4.doc({R"DOC(   )DOC"});
+static const auto doc_d_5 = fun_5.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
+   {"inc_opaque", (PyCFunction)c2py::pyfkw<fun_0>, METH_VARARGS | METH_KEYWORDS, doc_d_0.c_str()},
+   {"inc_opaque2", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
+   {"make_opaque", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
+   {"make_opaque2", (PyCFunction)c2py::pyfkw<fun_3>, METH_VARARGS | METH_KEYWORDS, doc_d_3.c_str()},
+   {"take_opaque", (PyCFunction)c2py::pyfkw<fun_4>, METH_VARARGS | METH_KEYWORDS, doc_d_4.c_str()},
+   {"take_opaque2", (PyCFunction)c2py::pyfkw<fun_5>, METH_VARARGS | METH_KEYWORDS, doc_d_5.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -113,6 +182,8 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_ignore() {
 
   if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<a_struct>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<opaque>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<opaque2>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -121,6 +192,8 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_ignore() {
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
   CLAIR_C2PY_ADD_TYPE_OBJECT(a_struct, "AStruct");
+  CLAIR_C2PY_ADD_TYPE_OBJECT(opaque, "Opaque");
+  CLAIR_C2PY_ADD_TYPE_OBJECT(opaque2, "Opaque2");
 
   return m;
 }

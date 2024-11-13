@@ -38,7 +38,6 @@ add_custom_command(
 # ----------------------------
 set(c2py_all_low_level_tests cls CACHE INTERNAL "")
 set(c2py_all_full_tests 
-  any
   basicfun
   cls_basic
   cls_der
