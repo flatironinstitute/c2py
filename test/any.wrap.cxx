@@ -29,44 +29,26 @@ using c2py::operator"" _a;
 
 // ==================== module classes =====================
 
-template <> struct c2py::py_converter<opaque> : c2py::py_converter_as_any<opaque> {};
-template <> struct c2py::py_converter<opaque2> : c2py::py_converter_as_any<opaque2> {};
-
 // ==================== module functions ====================
 
 // inc_opaque
 static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<opaque &>(&inc_opaque), "x")};
 
-// inc_opaque2
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<opaque2 &>(&NN::inc_opaque2), "x")};
-
 // make_opaque
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&make_opaque))};
-
-// make_opaque2
-static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&NN::make_opaque2))};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&make_opaque))};
 
 // take_opaque
-static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const opaque &>(&take_opaque), "x")};
-
-// take_opaque2
-static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const opaque2 &>(&NN::take_opaque2), "x")};
+static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const opaque &>(&take_opaque), "x")};
 
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
 static const auto doc_d_2 = fun_2.doc({R"DOC(   )DOC"});
-static const auto doc_d_3 = fun_3.doc({R"DOC(   )DOC"});
-static const auto doc_d_4 = fun_4.doc({R"DOC(   )DOC"});
-static const auto doc_d_5 = fun_5.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
    {"inc_opaque", (PyCFunction)c2py::pyfkw<fun_0>, METH_VARARGS | METH_KEYWORDS, doc_d_0.c_str()},
-   {"inc_opaque2", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
-   {"make_opaque", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
-   {"make_opaque2", (PyCFunction)c2py::pyfkw<fun_3>, METH_VARARGS | METH_KEYWORDS, doc_d_3.c_str()},
-   {"take_opaque", (PyCFunction)c2py::pyfkw<fun_4>, METH_VARARGS | METH_KEYWORDS, doc_d_4.c_str()},
-   {"take_opaque2", (PyCFunction)c2py::pyfkw<fun_5>, METH_VARARGS | METH_KEYWORDS, doc_d_5.c_str()},
+   {"make_opaque", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
+   {"take_opaque", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
