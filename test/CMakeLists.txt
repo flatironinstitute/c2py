@@ -41,6 +41,7 @@ set(c2py_all_full_tests
   basicfun
   cls_basic
   cls_der
+  pointer
   comparison
   issue9
   callables

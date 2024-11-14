@@ -91,8 +91,22 @@ namespace c2py {
     // IsConvertible
     template <typename U>
     concept IsConvertible = IsConvertibleC2Py<U> and IsConvertiblePy2C<U>;
-
   } // namespace concepts
+
+  //--------------------- Pointers -----------------------------
+
+  // You can convert a PyObject to a T * IIF you can convert it to a T&
+  // Typically for wrapped classes
+  // In any case, you can NOT convert a raw C++ pointer to Python
+  template <typename T>
+    requires(std::is_reference_v<decltype(py_converter<std::remove_const_t<T>>::py2c((PyObject *)nullptr))>)
+  struct py_converter<T *> {
+    using conv_t = py_converter<std::remove_const_t<T>>;
+
+    static PyObject *c2py(auto &&x) = delete; // No way you can return a raw pointer to Python
+    static bool is_convertible(PyObject *ob, bool raise_exception) noexcept { return conv_t::is_convertible(ob, raise_exception); }
+    static T *py2c(PyObject *ob) { return &conv_t::py2c(ob); }
+  };
   //---------------------  Helper functions -----------------------------
 
   // Convert a PyObject to C++
