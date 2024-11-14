@@ -31,7 +31,7 @@ template <> constexpr bool c2py::is_wrapped<A> = true;
 
 template <> inline const std::string c2py::cpp_name<A>   = "A";
 template <> inline constexpr auto c2py::tp_name<A>       = "annote.A";
-template <> inline constexpr const char *c2py::tp_doc<A> = R"DOC(   * k: int = 12)DOC";
+template <> inline constexpr const char *c2py::tp_doc<A> = R"DOC(   )DOC";
 
 static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
@@ -46,7 +46,7 @@ static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs)
     return -1;
   }
   auto &self_c = *(((c2py::wrap<A> *)self)->_c);
-  de("k", self_c.k, true);
+
   return de.check();
 }
 
@@ -59,7 +59,6 @@ PyMethodDef c2py::tp_methods<A>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
-constexpr auto doc_member_0 = R"DOC()DOC";
 static PyObject *prop_get_dict_0(PyObject *self, void *) {
   auto &self_c = *(((c2py::wrap<A> *)self)->_c);
   c2py::pydict dic;
@@ -70,9 +69,10 @@ static PyObject *prop_get_dict_0(PyObject *self, void *) {
 // ----- Method table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<A>[] = {c2py::getsetdef_from_member<&A::k, A>("k", doc_member_0),
-                                              {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
-                                              {nullptr, nullptr, nullptr, nullptr, nullptr}};
+constinit PyGetSetDef c2py::tp_getset<A>[] = {
+
+   {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
 // ==================== module functions ====================
 
@@ -105,7 +105,7 @@ static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
 
 extern "C" __attribute__((visibility("default"))) PyObject *PyInit_annote() {
 
-  if (not c2py::check_python_version()) return NULL;
+  if (not c2py::check_python_version("annote")) return NULL;
 
     // import numpy iff 'numpy/arrayobject.h' included
 #ifdef Py_ARRAYOBJECT_H
