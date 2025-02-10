@@ -292,6 +292,9 @@ namespace c2py {
     return cfun(+l, std::forward<A>(a)...); // + operator decays the lambda to a function pointer
   }
 
+  template <typename Lambda, typename... A> auto cmethod(Lambda l, A &&...a) {
+    return cmethod(+l, std::forward<A>(a)...); // + operator decays the lambda to a function pointer
+  }
   template <typename Cls, typename... T, typename... A> std::unique_ptr<pycfun_kw> c_constructor(A &&...a) {
     static_assert(sizeof...(T) == sizeof...(A));
     return std::make_unique<c_constructor_impl_t<Cls, T...>>(std::forward<A>(a)...);

@@ -45,12 +45,45 @@ namespace N1 {
     std::vector<int> v;
 
     std::vector<int> w = {1, 2, 3};
+    
+    private:
+     
   };
+
+   // Templated class
+  template<typename T>
+  struct tpl_params_ndc {
+
+    /// An int
+    T i;
+
+    /// A double
+    /// with a long doc
+    double x = 10;
+
+    /// A non default constructible object
+    A_ndc ndc1;
+
+    /// A non default constructible object with a default init
+    A_ndc ndc2 = A_ndc{9};
+
+    /// A vector of int
+    std::vector<T> v;
+
+    std::vector<T> w = {1, 2, 3};
+  };
+
 
   // double pr(params const &p) { return p.x; }
 
 } // namespace N1
 
+template struct N1::tpl_params_ndc<int>;
+
 // =============== Declare module ===========================
 
-namespace c2py_module {} // namespace c2py_module
+namespace c2py_module {
+
+using TplParamNdcInt = N1::tpl_params_ndc<int>;
+
+} // namespace c2py_module

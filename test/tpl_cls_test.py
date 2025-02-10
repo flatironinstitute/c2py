@@ -28,6 +28,10 @@ class TestIterable(unittest.TestCase):
         self.assertEqual(a.f(2),  4)
         self.assertEqual(a.h(2),  258)
         #self.assertEqual(M.a_friend(a),  -3)
+
+   def test_call(self):
+        a = AA(3)
+        self.assertEqual(a(2),  5)
   
 #    def test_compare(self):
         # a = AA(3)

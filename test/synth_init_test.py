@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from synth_init import Params, ParamsNdc, ANdc
+from synth_init import Params, ParamsNdc, ANdc,TplParamNdcInt
 
 class TestIterable(unittest.TestCase):
 
@@ -12,6 +12,15 @@ class TestIterable(unittest.TestCase):
         d['v'] = list(d['v'])
         d['w'] = list(d['w'])
         self.assertEqual(d,  {'i': 10, 'x': 10.0, 'v': [1, 2, 3], 'w': [1, 2, 3], 'ndc1': ANdc(12), 'ndc2': ANdc(9)})
+
+   def test_call_tpl(self):
+        p = TplParamNdcInt(i=10, v= [1,2,3], ndc1 = ANdc(12))
+        d = vars(p)
+        self.assertTrue(isinstance(d, dict))
+        d['v'] = list(d['v'])
+        d['w'] = list(d['w'])
+        self.assertEqual(d,  {'i': 10, 'x': 10.0, 'v': [1, 2, 3], 'w': [1, 2, 3], 'ndc1': ANdc(12), 'ndc2': ANdc(9)})
+
 
    def test_error(self):
         self.assertRaises(RuntimeError,  lambda : Params() )                           # mandatory param missing

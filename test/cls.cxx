@@ -60,7 +60,9 @@ template <> constexpr initproc c2py::tp_init<A> = &init_1;
 //   return ovs(self, args, kwargs);
 // };
 
-static const auto fun_B1 = dispatcher_f_kw_t{cfun(c2py::castm<int>(&A::f), "x")};
+static const auto fun_B1 = dispatcher_f_kw_t{cmethod([](A &self, int x) { return self.f(x); }, "self", "x")};
+
+//static const auto fun_B1 = dispatcher_f_kw_t{cfun(c2py::castm<int>(&A::f), "x")};
 static const auto fun_B2 = dispatcher_f_kw_t{cfun(&A::tpl<int>, "i"), cfun(&A::tpl<double>, "i")};
 static const auto fun_B4 = dispatcher_f_kw_t{cfun([](A const &a) -> int { return a_friend(a); }, "a")};
 

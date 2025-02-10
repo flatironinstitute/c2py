@@ -32,6 +32,10 @@ struct A {
 
   double tpl(auto x) { return 256 + x; }
 
+  // test having a method and a template method with same name. Was not working in v0.1
+  double m1(double x) { return 19 + x;}
+  template<typename T> requires(std::is_same_v<T, int>) auto m1(T x) { return -(19 + x);} 
+
   int prop1() const { return k; }
   int prop1() { return k; }
 

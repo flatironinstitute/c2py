@@ -43,7 +43,7 @@ namespace N {
 
   // the using will make a bug. The function would need to be rewritten...
   // FIXME : add a flag ? hard to detect ...
-  //using std::isfinite;
+  using std::isfinite;
   bool isfinite(dcomplex const &x) { return std::isfinite(real(x)) && std::isfinite(imag(x)); }
 
 } // namespace N

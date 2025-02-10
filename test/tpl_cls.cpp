@@ -18,6 +18,8 @@ template <typename T> struct A {
   double tpl(auto x) { return 256 + x; }
 
   bool operator==(A const &) const = default;
+
+  int operator()(int i) const { return i + k;}
 };
 
 template <typename T> std::ostream &operator<<(std::ostream &out, A<T> const &a) { return out << "A : k = " << a.k << "\n"; }
