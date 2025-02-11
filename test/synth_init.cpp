@@ -46,8 +46,9 @@ namespace N1 {
 
     std::vector<int> w = {1, 2, 3};
     
-    private:
-     
+    // will trigger compilation error: it deletes the default constructor and it is not an aggregate any more
+    //private:
+    //int zz = 0; 
   };
 
    // Templated class

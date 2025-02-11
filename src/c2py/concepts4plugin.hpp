@@ -25,4 +25,9 @@ namespace c2py::concepts {
     { x.serialize(ar, 0) };
   };
 
+  //---------------- HasNonDeletedDefaultConstructor-------------------
+
+  template <typename T>
+  concept HasNonDeletedDefaultConstructor = std::is_default_constructible_v<T> && std::is_constructible_v<T>;
+
 } // namespace c2py::concepts
