@@ -22,9 +22,10 @@ using c2py::operator"" _a;
 
 #ifndef C2PY_HXX_DECLARATION_synth_init_GUARDS
 #define C2PY_HXX_DECLARATION_synth_init_GUARDS
-template <> constexpr bool c2py::is_wrapped<N1::A_ndc>      = true;
-template <> constexpr bool c2py::is_wrapped<N1::params>     = true;
-template <> constexpr bool c2py::is_wrapped<N1::params_ndc> = true;
+template <> constexpr bool c2py::is_wrapped<N1::A_ndc>               = true;
+template <> constexpr bool c2py::is_wrapped<N1::params>              = true;
+template <> constexpr bool c2py::is_wrapped<N1::params_ndc>          = true;
+template <> constexpr bool c2py::is_wrapped<N1::tpl_params_ndc<int>> = true;
 #endif
 
 // ==================== enums =====================
@@ -203,6 +204,88 @@ constinit PyGetSetDef c2py::tp_getset<N1::params_ndc>[] = {c2py::getsetdef_from_
                                                            {"__dict__", (getter)prop_get_dict_1, nullptr, "", nullptr},
                                                            {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
+template <> inline const std::string c2py::cpp_name<N1::tpl_params_ndc<int>> = "N1::tpl_params_ndc<int>";
+template <> inline constexpr auto c2py::tp_name<N1::tpl_params_ndc<int>>     = "synth_init.TplParamNdcInt";
+template <>
+inline constexpr const char *c2py::tp_doc<N1::tpl_params_ndc<int>> = R"DOC(   * i: int
+      An int
+   
+   * x: double
+      A double
+      with a long doc
+   
+   * ndc1: N1::A_ndc
+      A non default constructible object
+   
+   * ndc2: N1::A_ndc
+      A non default constructible object with a default init
+   
+   * v: std::vector<int>
+      A vector of int
+   
+   * w: std::vector<int>)DOC";
+
+static int synth_constructor_2(PyObject *self, PyObject *args, PyObject *kwargs) {
+  if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
+    PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::tpl_params_ndc<int>.\nNo positional arguments allowed. Use keywords arguments"));
+    return -1;
+  }
+  c2py::pydict_extractor de{kwargs};
+  try {
+    ((c2py::wrap<N1::tpl_params_ndc<int>> *)self)->_c = new N1::tpl_params_ndc<int>{.ndc1 = de.get<N1::A_ndc>("ndc1")};
+  } catch (std::exception const &e) {
+    PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::tpl_params_ndc<int> from a Python dict.\n   "s + e.what()).c_str());
+    return -1;
+  }
+  auto &self_c = *(((c2py::wrap<N1::tpl_params_ndc<int>> *)self)->_c);
+  de("i", self_c.i, false);
+  de("x", self_c.x, true);
+  de("ndc2", self_c.ndc2, true);
+  de("v", self_c.v, false);
+  de("w", self_c.w, true);
+  return de.check();
+}
+
+template <> constexpr initproc c2py::tp_init<N1::tpl_params_ndc<int>> = synth_constructor_2;
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<N1::tpl_params_ndc<int>>[] = {
+
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+constexpr auto doc_member_11 = R"DOC(/// An int)DOC";
+constexpr auto doc_member_12 = R"DOC(/// A double
+    /// with a long doc)DOC";
+constexpr auto doc_member_13 = R"DOC(/// A non default constructible object)DOC";
+constexpr auto doc_member_14 = R"DOC(/// A non default constructible object with a default init)DOC";
+constexpr auto doc_member_15 = R"DOC(/// A vector of int)DOC";
+constexpr auto doc_member_16 = R"DOC()DOC";
+static PyObject *prop_get_dict_2(PyObject *self, void *) {
+  auto &self_c = *(((c2py::wrap<N1::tpl_params_ndc<int>> *)self)->_c);
+  c2py::pydict dic;
+  dic["i"]    = self_c.i;
+  dic["x"]    = self_c.x;
+  dic["ndc1"] = self_c.ndc1;
+  dic["ndc2"] = self_c.ndc2;
+  dic["v"]    = self_c.v;
+  dic["w"]    = self_c.w;
+  return dic.new_ref();
+}
+
+// ----- Method table ----
+
+template <>
+constinit PyGetSetDef c2py::tp_getset<N1::tpl_params_ndc<int>>[] = {c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::i, N1::tpl_params_ndc<int>>("i", doc_member_11),
+                                                                    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::x, N1::tpl_params_ndc<int>>("x", doc_member_12),
+                                                                    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::ndc1, N1::tpl_params_ndc<int>>("ndc1", doc_member_13),
+                                                                    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::ndc2, N1::tpl_params_ndc<int>>("ndc2", doc_member_14),
+                                                                    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::v, N1::tpl_params_ndc<int>>("v", doc_member_15),
+                                                                    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::w, N1::tpl_params_ndc<int>>("w", doc_member_16),
+                                                                    {"__dict__", (getter)prop_get_dict_2, nullptr, "", nullptr},
+                                                                    {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
 // ==================== module functions ====================
 
 //--------------------- module function table  -----------------------------
@@ -218,7 +301,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "synth_init",      /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,
@@ -242,6 +325,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_synth_init() 
   if (PyType_Ready(&c2py::wrap_pytype<N1::A_ndc>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<N1::params>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<N1::params_ndc>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<N1::tpl_params_ndc<int>>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -252,6 +336,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_synth_init() 
   CLAIR_C2PY_ADD_TYPE_OBJECT(N1::A_ndc, "ANdc");
   CLAIR_C2PY_ADD_TYPE_OBJECT(N1::params, "Params");
   CLAIR_C2PY_ADD_TYPE_OBJECT(N1::params_ndc, "ParamsNdc");
+  CLAIR_C2PY_ADD_TYPE_OBJECT(N1::tpl_params_ndc<int>, "TplParamNdcInt");
 
   return m;
 }

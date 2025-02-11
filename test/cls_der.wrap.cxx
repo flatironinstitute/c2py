@@ -37,7 +37,7 @@ template <> inline constexpr const char *c2py::tp_doc<B> = R"DOC(   )DOC";
 static auto init_0                              = c2py::dispatcher_c_kw_t{c2py::c_constructor<B, int>("i")};
 template <> constexpr initproc c2py::tp_init<B> = c2py::pyfkw_constructor<init_0>;
 // b
-static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castm<int>(&B::b), "u")};
+static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self, int u) { return self.b(u); }, "self", "u")};
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
@@ -63,7 +63,7 @@ template <> inline constexpr const char *c2py::tp_doc<A> = R"DOC(   )DOC";
 static auto init_1                              = c2py::dispatcher_c_kw_t{c2py::c_constructor<A, int>("i")};
 template <> constexpr initproc c2py::tp_init<A> = c2py::pyfkw_constructor<init_1>;
 // a
-static auto const fun_1   = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castm<int, int>(&A::a), "i", "j")};
+static auto const fun_1   = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self, int i, int j) { return self.a(i, j); }, "self", "i", "j")};
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
@@ -95,7 +95,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "cls_der",         /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

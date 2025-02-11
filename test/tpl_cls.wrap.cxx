@@ -35,24 +35,30 @@ template <> inline constexpr const char *c2py::tp_doc<A<int>> = R"DOC(   )DOC";
 
 static auto init_0                                   = c2py::dispatcher_c_kw_t{c2py::c_constructor<A<int>>(), c2py::c_constructor<A<int>, int>("i")};
 template <> constexpr initproc c2py::tp_init<A<int>> = c2py::pyfkw_constructor<init_0>;
+// __call__
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> const &self, int i) { return self.operator()(i); }, "self", "i")};
+
+template <> inline constexpr ternaryfunc c2py::tp_call<A<int>> = c2py::pyfkw<fun_0>;
+
 // f
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castmc<int>(&A<int>::f), "x")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> const &self, int x) { return self.f(x); }, "self", "x")};
 
 // g
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castm<int>(&A<int>::g), "x")};
+static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) { return self.g(x); }, "self", "x")};
 
 // h
-static auto const fun_2   = c2py::dispatcher_f_kw_t{c2py::cfun(&A<int>::tpl<int>, "x")};
+static auto const fun_3   = c2py::dispatcher_f_kw_t{c2py::cfun(&A<int>::tpl<int>, "x")};
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
 static const auto doc_d_2 = fun_2.doc({R"DOC(   )DOC"});
+static const auto doc_d_3 = fun_3.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<A<int>>[] = {
-   {"f", (PyCFunction)c2py::pyfkw<fun_0>, METH_VARARGS | METH_KEYWORDS, doc_d_0.c_str()},
-   {"g", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
-   {"h", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
+   {"f", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
+   {"g", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
+   {"h", (PyCFunction)c2py::pyfkw<fun_3>, METH_VARARGS | METH_KEYWORDS, doc_d_3.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -84,7 +90,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "tpl_cls",         /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

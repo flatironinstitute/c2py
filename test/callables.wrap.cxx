@@ -32,28 +32,28 @@ using c2py::operator"" _a;
 // ==================== module functions ====================
 
 // call1
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const std::function<int(int, int)> &>(&call1), "f")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](const std::function<int(int, int)> &f) { return call1(f); }, "f")};
 
 // call2
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<std::function<int(int, int)>>(&call2), "f")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::function<int(int, int)> f) { return call2(f); }, "f")};
 
 // call3
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const std::function<int(std::pair<int, int>)> &>(&call3), "f")};
+static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](const std::function<int(std::pair<int, int>)> &f) { return call3(f); }, "f")};
 
 // call4
-static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<std::function<int(std::pair<int, int>)>>(&call4), "f")};
+static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::function<int(std::pair<int, int>)> f) { return call4(f); }, "f")};
 
 // call5
-static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<std::function<int(const std::pair<int, int> &)>>(&call5), "f")};
+static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::function<int(const std::pair<int, int> &)> f) { return call5(f); }, "f")};
 
 // callback
-static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&callback))};
+static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return callback(); })};
 
 // make_f
-static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&make_f))};
+static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_f(); })};
 
 // make_f2
-static auto const fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&make_f2))};
+static auto const fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_f2(); })};
 
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
@@ -84,7 +84,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "callables",       /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

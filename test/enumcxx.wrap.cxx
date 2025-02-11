@@ -35,10 +35,10 @@ template <> std::map<E2, str_t> c2py::enum_to_string<E2> = {{E2::A, "A"}, {E2::B
 // ==================== module functions ====================
 
 // f1
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<E1>(&f1), "x")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](E1 x) { return f1(x); }, "x")};
 
 // f2
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<E2>(&f2), "x")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](E2 x) { return f2(x); }, "x")};
 
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
@@ -57,7 +57,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "enumcxx",         /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

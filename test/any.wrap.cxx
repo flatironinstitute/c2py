@@ -32,13 +32,13 @@ using c2py::operator"" _a;
 // ==================== module functions ====================
 
 // inc_opaque
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<opaque &>(&inc_opaque), "x")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](opaque &x) { return inc_opaque(x); }, "x")};
 
 // make_opaque
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&make_opaque))};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_opaque(); })};
 
 // take_opaque
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const opaque &>(&take_opaque), "x")};
+static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](const opaque &x) { return take_opaque(x); }, "x")};
 
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
@@ -59,7 +59,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "any",             /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

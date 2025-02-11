@@ -36,7 +36,7 @@ template <> inline constexpr const char *c2py::tp_doc<a_class> = R"DOC(   )DOC";
 static auto init_0                                    = c2py::dispatcher_c_kw_t{c2py::c_constructor<a_class>()};
 template <> constexpr initproc c2py::tp_init<a_class> = c2py::pyfkw_constructor<init_0>;
 // values
-static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castmc<>(&a_class::values))};
+static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cmethod([](a_class const &self) { return self.values(); }, "self")};
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
@@ -58,7 +58,7 @@ constinit PyGetSetDef c2py::tp_getset<a_class>[] = {c2py::getsetdef_from_member<
 // ==================== module functions ====================
 
 // trf
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<int>(&trf), "n")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int n) { return trf(n); }, "n")};
 
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------
@@ -75,7 +75,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "itertool",        /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

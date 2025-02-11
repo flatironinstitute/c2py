@@ -53,7 +53,7 @@ static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs)
 template <> constexpr initproc c2py::tp_init<N::A> = synth_constructor_0;
 
 // f
-static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castm<int>(&N::A::f), "i")};
+static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cmethod([](N::A &self, int i) { return self.f(i); }, "self", "i")};
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
@@ -81,7 +81,7 @@ constinit PyGetSetDef c2py::tp_getset<N::A>[] = {c2py::getsetdef_from_member<&N:
 // ==================== module functions ====================
 
 // f
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&N::f))};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return N::f(); })};
 
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------
@@ -98,7 +98,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "two_module_1",    /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

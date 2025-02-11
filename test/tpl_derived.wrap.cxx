@@ -37,7 +37,7 @@ template <> inline constexpr const char *c2py::tp_doc<N::my_base> = R"DOC(   )DO
 static auto init_0                                       = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::my_base>()};
 template <> constexpr initproc c2py::tp_init<N::my_base> = c2py::pyfkw_constructor<init_0>;
 // f_base
-static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castm<int>(&N::my_base::f_base), "u")};
+static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cmethod([](N::my_base &self, int u) { return self.f_base(u); }, "self", "u")};
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
@@ -58,10 +58,10 @@ template <> inline const std::string c2py::cpp_name<N::my_class>   = "N::my_clas
 template <> inline constexpr auto c2py::tp_name<N::my_class>       = "tpl_derived.MyClass";
 template <> inline constexpr const char *c2py::tp_doc<N::my_class> = R"DOC(   )DOC";
 
-static auto init_1 = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::my_class>(), c2py::c_constructor<N::my_class, int>("u")};
+static auto init_1                                        = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::my_class>(), c2py::c_constructor<N::my_class, int>("u")};
 template <> constexpr initproc c2py::tp_init<N::my_class> = c2py::pyfkw_constructor<init_1>;
 // get
-static auto const fun_1   = c2py::dispatcher_f_kw_t{c2py::cfun_B<N::my_class>(c2py::castmc<long>(&N::my_class::get), "i")};
+static auto const fun_1   = c2py::dispatcher_f_kw_t{c2py::cmethod([](N::my_class const &self, long i) { return self.get(i); }, "self", "i")};
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
@@ -95,7 +95,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "tpl_derived",     /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

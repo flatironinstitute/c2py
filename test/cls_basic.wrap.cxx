@@ -40,8 +40,8 @@ inline constexpr const char *c2py::tp_doc<A> = R"DOC(   Brief description of A
 static auto init_0                              = c2py::dispatcher_c_kw_t{c2py::c_constructor<A>(), c2py::c_constructor<A, int>("i")};
 template <> constexpr initproc c2py::tp_init<A> = c2py::pyfkw_constructor<init_0>;
 // __call__
-static auto const fun_0 =
-   c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castm<int>(&A::operator()), "i"), c2py::cfun(c2py::castmc<int, int>(&A::operator()), "i", "j")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self, int i) { return self.operator()(i); }, "self", "i"),
+                                                  c2py::cmethod([](A const &self, int i, int j) { return self.operator()(i, j); }, "self", "i", "j")};
 
 template <> inline constexpr ternaryfunc c2py::tp_call<A> = c2py::pyfkw<fun_0>;
 
@@ -49,19 +49,22 @@ template <> inline constexpr ternaryfunc c2py::tp_call<A> = c2py::pyfkw<fun_0>;
 static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod(&c2py::clone<A>, "x")};
 
 // f
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castmc<int>(&A::f), "x")};
+static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A const &self, int x) { return self.f(x); }, "self", "x")};
 
 // f_w_alias
-static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castmc<long>(&A::f_w_alias), "i")};
+static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A const &self, long i) { return self.f_w_alias(i); }, "self", "i")};
 
 // h
 static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cmethod(c2py::cast<const A &, int>(&hhh), "a", "j")};
 
+// m1
+static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self, double x) { return self.m1(x); }, "self", "x")};
+
 // no_prop
-static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castm<>(&A::no_prop))};
+static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self) { return self.no_prop(); }, "self")};
 
 // static_method
-static auto const fun_6         = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<int>(&A::static_method), "i")};
+static auto const fun_7         = c2py::dispatcher_f_kw_t{c2py::cfun([](int i) { return A::static_method(i); }, "i")};
 static constexpr auto doc_f_0_0 = R"DOC(   )DOC";
 static constexpr auto doc_f_0_1 = R"DOC(   )DOC";
 static const auto doc_d_0       = fun_0.doc({doc_f_0_0, doc_f_0_1});
@@ -74,6 +77,7 @@ static const auto doc_d_3       = fun_3.doc({R"DOC(   )DOC"});
 static const auto doc_d_4       = fun_4.doc({R"DOC(   )DOC"});
 static const auto doc_d_5       = fun_5.doc({R"DOC(   )DOC"});
 static const auto doc_d_6       = fun_6.doc({R"DOC(   )DOC"});
+static const auto doc_d_7       = fun_7.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
 template <>
@@ -82,8 +86,9 @@ PyMethodDef c2py::tp_methods<A>[] = {
    {"f", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
    {"f_w_alias", (PyCFunction)c2py::pyfkw<fun_3>, METH_VARARGS | METH_KEYWORDS, doc_d_3.c_str()},
    {"h", (PyCFunction)c2py::pyfkw<fun_4>, METH_VARARGS | METH_KEYWORDS, doc_d_4.c_str()},
-   {"no_prop", (PyCFunction)c2py::pyfkw<fun_5>, METH_VARARGS | METH_KEYWORDS, doc_d_5.c_str()},
-   {"static_method", (PyCFunction)c2py::pyfkw<fun_6>, METH_VARARGS | METH_KEYWORDS | METH_STATIC, doc_d_6.c_str()},
+   {"m1", (PyCFunction)c2py::pyfkw<fun_5>, METH_VARARGS | METH_KEYWORDS, doc_d_5.c_str()},
+   {"no_prop", (PyCFunction)c2py::pyfkw<fun_6>, METH_VARARGS | METH_KEYWORDS, doc_d_6.c_str()},
+   {"static_method", (PyCFunction)c2py::pyfkw<fun_7>, METH_VARARGS | METH_KEYWORDS | METH_STATIC, doc_d_7.c_str()},
    {"__getstate__", c2py::getstate_tuple<A>, METH_NOARGS, ""},
    {"__setstate__", c2py::setstate_tuple<A>, METH_O, ""},
    {nullptr, nullptr, 0, nullptr} // Sentinel
@@ -123,13 +128,13 @@ template <> inline constexpr const char *c2py::tp_doc<dummy_class> = R"DOC(   te
 static auto init_1                                        = c2py::dispatcher_c_kw_t{c2py::c_constructor<dummy_class>()};
 template <> constexpr initproc c2py::tp_init<dummy_class> = c2py::pyfkw_constructor<init_1>;
 // do_thing
-static auto const fun_7   = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::castm<double>(&dummy_class::do_thing), "x")};
-static const auto doc_d_7 = fun_7.doc({R"DOC(   )DOC"});
+static auto const fun_8   = c2py::dispatcher_f_kw_t{c2py::cmethod([](dummy_class &self, double x) { return self.do_thing(x); }, "self", "x")};
+static const auto doc_d_8 = fun_8.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<dummy_class>[] = {
-   {"do_thing", (PyCFunction)c2py::pyfkw<fun_7>, METH_VARARGS | METH_KEYWORDS, doc_d_7.c_str()},
+   {"do_thing", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -143,18 +148,18 @@ constinit PyGetSetDef c2py::tp_getset<dummy_class>[] = {
 // ==================== module functions ====================
 
 // hhh
-static auto const fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const A &, int>(&hhh), "a", "j")};
+static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a, int j) { return hhh(a, j); }, "a", "j")};
 
 // maker_A
-static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<int>(&maker_A), "i")};
+static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([](int i) { return maker_A(i); }, "i")};
 
-static const auto doc_d_8 = fun_8.doc({R"DOC(   )DOC"});
-static const auto doc_d_9 = fun_9.doc({R"DOC(   )DOC"});
+static const auto doc_d_9  = fun_9.doc({R"DOC(   )DOC"});
+static const auto doc_d_10 = fun_10.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"hhh", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
-   {"maker_A", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
+   {"hhh", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
+   {"maker_A", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -169,7 +174,7 @@ static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
   with multiple lines
   etc...
   )RAWDOC",                                          /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,          /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

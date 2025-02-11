@@ -77,10 +77,10 @@ constinit PyGetSetDef c2py::tp_getset<a_struct>[] = {c2py::getsetdef_from_member
 // ==================== module functions ====================
 
 // inc
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<a_struct *>(&inc), "a")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](a_struct *a) { return inc(a); }, "a")};
 
 // read
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const a_struct *>(&read), "a")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](const a_struct *a) { return read(a); }, "a")};
 
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
@@ -99,7 +99,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "pointer",         /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

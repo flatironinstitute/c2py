@@ -32,13 +32,13 @@ using c2py::operator"" _a;
 // ==================== module functions ====================
 
 // f
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<int>(&f), "x"), c2py::cfun(c2py::cast<int, int>(&f), "x", "y")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f(x); }, "x"), c2py::cfun([](int x, int y) { return f(x, y); }, "x", "y")};
 
 // f1
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<int>(&f1), "x"), c2py::cfun(c2py::cast<double>(&f1), "x")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f1(x); }, "x"), c2py::cfun([](double x) { return f1(x); }, "x")};
 
 // g
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<int, int>(&g), "x", "y"_a = 8)};
+static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x, int y) { return g(x, y); }, "x", "y"_a = 8)};
 
 // h
 static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun(&N::h<int>, "x"), c2py::cfun(&N::h<double>, "x")};
@@ -47,10 +47,10 @@ static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun(&N::h<int>, "x"), c
 static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<int>(&f1), "x"), c2py::cfun(&N::h<double>, "x")};
 
 // isfinite
-static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const dcomplex &>(&N::isfinite), "x")};
+static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](const dcomplex &x) { return N::isfinite(x); }, "x")};
 
 // ret_with_alias
-static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&ret_with_alias))};
+static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return ret_with_alias(); })};
 
 static constexpr auto doc_f_0_0 = R"DOC(   A doc for f(x)
    
@@ -101,7 +101,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "basicfun",                            /* name of module */
                                         R"RAWDOC(Module documentation)RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                                    /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

@@ -32,7 +32,7 @@ using c2py::operator"" _a;
 // ==================== module functions ====================
 
 // enumerate_vec
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<std::vector<int>>(&enumerate_vec), "v")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::vector<int> v) { return enumerate_vec(v); }, "v")};
 
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------
@@ -49,7 +49,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "generator",       /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

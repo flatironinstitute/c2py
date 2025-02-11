@@ -118,22 +118,22 @@ constinit PyGetSetDef c2py::tp_getset<opaque2>[] = {
 // ==================== module functions ====================
 
 // inc_opaque
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<opaque &>(&inc_opaque), "w")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](opaque &w) { return inc_opaque(w); }, "w")};
 
 // inc_opaque2
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<opaque2 &>(&inc_opaque2), "w")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](opaque2 &w) { return inc_opaque2(w); }, "w")};
 
 // make_opaque
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&make_opaque))};
+static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_opaque(); })};
 
 // make_opaque2
-static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<>(&make_opaque2))};
+static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_opaque2(); })};
 
 // take_opaque
-static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const opaque &>(&take_opaque), "w")};
+static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](const opaque &w) { return take_opaque(w); }, "w")};
 
 // take_opaque2
-static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<const opaque2 &>(&take_opaque2), "w")};
+static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](const opaque2 &w) { return take_opaque2(w); }, "w")};
 
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
@@ -160,7 +160,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "ignore",          /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,
