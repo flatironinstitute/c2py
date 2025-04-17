@@ -18,5 +18,5 @@ namespace c2py {
     template <typename T> auto operator=(T &&x) const { return nv_pair<T>{name, std::forward<T>(x)}; } //NOLINT
   };
 
-  inline nv_pair_builder operator"" _a(const char *s, size_t) { return {s}; }
+  inline nv_pair_builder operator""_a(const char *s, size_t) { return {s}; }
 } // namespace c2py
