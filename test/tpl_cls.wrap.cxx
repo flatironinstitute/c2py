@@ -16,7 +16,7 @@
 #include "c2py/c2py.hpp"
 #include "tpl_cls.cpp"
 
-using c2py::operator"" _a;
+using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
@@ -46,8 +46,8 @@ static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> const 
 // g
 static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) { return self.g(x); }, "self", "x")};
 
-// h
-static auto const fun_3   = c2py::dispatcher_f_kw_t{c2py::cfun(&A<int>::tpl<int>, "x")};
+// tpl
+static auto const fun_3   = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) { return self.tpl(x); }, "self", "x")};
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
 static const auto doc_d_2 = fun_2.doc({R"DOC(   )DOC"});
@@ -58,7 +58,7 @@ template <>
 PyMethodDef c2py::tp_methods<A<int>>[] = {
    {"f", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
    {"g", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
-   {"h", (PyCFunction)c2py::pyfkw<fun_3>, METH_VARARGS | METH_KEYWORDS, doc_d_3.c_str()},
+   {"tpl", (PyCFunction)c2py::pyfkw<fun_3>, METH_VARARGS | METH_KEYWORDS, doc_d_3.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
