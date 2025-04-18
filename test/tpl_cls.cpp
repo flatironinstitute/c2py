@@ -26,6 +26,9 @@ template <typename T> std::ostream &operator<<(std::ostream &out, A<T> const &a)
 
 template <typename T> bool operator<(A<T> const &x, A<T> const &y) { return x.k < y.k; }
 
+template double A<int>::tpl(int);
+
+
 // FIXME https://godbolt.org/z/bK8rTo9Ez
 
 // =============== Declare module ===========================
@@ -39,9 +42,9 @@ namespace c2py_module {
 
   using AA = A<int>;
 
-  template <> struct add_methods_to<A<int>> {
+  //template <> struct add_methods_to<A<int>> {
 
-    static constexpr auto h = c2py::dispatch<&A<int>::tpl<int>>;
-  };
+  //  static constexpr auto h = c2py::dispatch<&A<int>::tpl<int>>;
+  //}; 
 
 } // namespace c2py_module

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <c2py/c2py.hpp>
 
-using c2py::operator"" _a;
+using c2py::operator""_a;
 
 const double precision = 1.e-9;
 

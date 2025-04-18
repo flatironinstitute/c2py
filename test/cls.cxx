@@ -21,7 +21,7 @@
 #include "cls.cpp"
 
 using namespace c2py;
-using c2py::operator"" _a;
+using c2py::operator""_a;
 
 template <> constexpr bool c2py::is_wrapped<A> = true;
 

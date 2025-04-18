@@ -101,6 +101,9 @@ namespace c2py {
 #if (PY_MINOR_VERSION >= 12)
         0, // tp_watched
 #endif
+#if (PY_MINOR_VERSION >= 13)
+        0, // tp_versions_used
+#endif
   };
 
   // --------------------- implementations ----------------------

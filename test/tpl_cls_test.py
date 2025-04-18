@@ -26,7 +26,7 @@ class TestIterable(unittest.TestCase):
    def test_meth(self):
         a = AA(3)
         self.assertEqual(a.f(2),  4)
-        self.assertEqual(a.h(2),  258)
+        self.assertEqual(a.tpl(2),  258)
         #self.assertEqual(M.a_friend(a),  -3)
 
    def test_call(self):
