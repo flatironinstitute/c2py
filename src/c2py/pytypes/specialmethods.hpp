@@ -61,9 +61,15 @@ namespace c2py {
 
   // -------------------- [] ----------------------------
 
+// Not implemented in clang 20
+// #ifdef __cpp_multidimensional_subscript
+#if __cplusplus >= 202302L
+  template <typename T, typename... A> static decltype(auto) getitem(T const &a, A... i) { return a[i...]; }
+  template <typename T, typename... A> static void setitem(T &a, A... i, std::decay_t<decltype(a[i...])> const &val) { a[i...] = val; }
+#else
   template <typename T, typename A> static decltype(auto) getitem(T const &a, A i) { return a[i]; }
-
   template <typename T, typename A1> static void setitem(T &a, A1 i, std::decay_t<decltype(a[i])> const &val) { a[i] = val; }
+#endif
 
   template <typename T> static Py_ssize_t tpxx_size(PyObject *self) { return py2cxx<T>(self).size(); }
 

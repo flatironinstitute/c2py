@@ -18,7 +18,7 @@ macro(c2py_add_test modulename)
   if(IS_CLAIR_BUILD)
     c2py_add_test_1(${modulename} cpp)
     target_link_libraries(${modulename} PRIVATE clair::c2py_plugin)
-    target_compile_options(${modulename} PRIVATE -Wno-unused-const-variable -Wno-unused-variable)
+    target_compile_options(${modulename} PRIVATE -I./ -Wno-unused-const-variable -Wno-unused-variable)
   else()
     c2py_add_test_1(${modulename} wrap.cxx)
   endif()
@@ -30,6 +30,7 @@ endmacro()
 
 add_custom_target(c2py_copy_wrap_cxx_to_src)
 add_custom_command(
+  POST_BUILD
   TARGET c2py_copy_wrap_cxx_to_src
   COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/*.wrap.?xx ${CMAKE_CURRENT_SOURCE_DIR}
   COMMAND echo "** Copying all wrap.cxx to c2py test"
