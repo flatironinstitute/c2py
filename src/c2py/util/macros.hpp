@@ -85,9 +85,4 @@
 
 #define CLAIR_PRINT(X) std::cerr << AS_STRING(X) << " = " << X << "      at " << __FILE__ << ":" << __LINE__ << '\n'
 
-#define CLAIR_C2PY_ADD_TYPE_OBJECT(CLS, PYNAME)                                                                                                      \
-  Py_INCREF(&c2py::wrap_pytype<CLS>);                                                                                                                \
-  PyModule_AddObject(m, PYNAME, (PyObject *)&c2py::wrap_pytype<CLS>);                                                                                \
-  conv_table[std::type_index(typeid(CLS)).name()] = &c2py::wrap_pytype<CLS>;
-
 #endif

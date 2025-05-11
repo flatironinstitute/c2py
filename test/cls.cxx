@@ -188,7 +188,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls() {
 
   auto &conv_table = *c2py::conv_table_sptr.get();
 
-  CLAIR_C2PY_ADD_TYPE_OBJECT(A, "A");
+  add_type_object_to_main<A>("A", m, conv_table);
 
   return m;
 }

@@ -19,6 +19,13 @@ namespace c2py {
   // if the type was not wrapped, return nullptr and set up a Python exception
   PyTypeObject *get_type_ptr(std::type_index const &ind);
 
+  // get the PyTypeObject from the table in __main__.
+  template <typename T> void add_type_object_to_main(const char *pyname, PyObject *_main_, pto_table_t &conv_table) {
+    Py_INCREF(&c2py::wrap_pytype<T>);
+    PyModule_AddObject(_main_, pyname, (PyObject *)&c2py::wrap_pytype<T>);
+    conv_table[std::type_index(typeid(T)).name()] = &c2py::wrap_pytype<T>;
+  }
+
   //---------------------  wrapped type -----------------------------
 
   template <typename T>
