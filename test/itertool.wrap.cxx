@@ -16,7 +16,7 @@
 #include "c2py/c2py.hpp"
 #include "itertool.cpp"
 
-using c2py::operator"" _a;
+using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
@@ -88,7 +88,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_itertool() {
 
   if (not c2py::check_python_version("itertool")) return NULL;
 
-    // import numpy iff 'numpy/arrayobject.h' included
+  // import numpy iff 'numpy/arrayobject.h' included
 #ifdef Py_ARRAYOBJECT_H
   import_array();
 #endif
@@ -104,7 +104,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_itertool() {
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
-  CLAIR_C2PY_ADD_TYPE_OBJECT(a_class, "AClass");
+  c2py::add_type_object_to_main<a_class>("AClass", m, conv_table);
 
   return m;
 }

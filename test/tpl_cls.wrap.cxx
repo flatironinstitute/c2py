@@ -75,6 +75,13 @@ constinit PyGetSetDef c2py::tp_getset<A<int>>[] = {c2py::getsetdef_from_member<&
 
                                                    {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
+static PyObject *getitem_0(PyObject *self, PyObject *key) {
+  static c2py::dispatcher_t<c2py::pycfun23> disp = {c2py::cfun2(c2py::getitem<A<int>, int>)};
+  return disp(self, key);
+}
+
+template <> PyMappingMethods c2py::tp_as_mapping<A<int>> = {nullptr, getitem_0, nullptr};
+
 // ==================== module functions ====================
 
 //--------------------- module function table  -----------------------------
@@ -103,7 +110,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_tpl_cls() {
 
   if (not c2py::check_python_version("tpl_cls")) return NULL;
 
-    // import numpy iff 'numpy/arrayobject.h' included
+  // import numpy iff 'numpy/arrayobject.h' included
 #ifdef Py_ARRAYOBJECT_H
   import_array();
 #endif
@@ -119,7 +126,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_tpl_cls() {
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
-  CLAIR_C2PY_ADD_TYPE_OBJECT(A<int>, "AA");
+  c2py::add_type_object_to_main<A<int>>("AA", m, conv_table);
 
   return m;
 }

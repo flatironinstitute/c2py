@@ -16,7 +16,7 @@
 #include "c2py/c2py.hpp"
 #include "issue9.cpp"
 
-using c2py::operator"" _a;
+using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
@@ -96,7 +96,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_issue9() {
 
   if (not c2py::check_python_version("issue9")) return NULL;
 
-    // import numpy iff 'numpy/arrayobject.h' included
+  // import numpy iff 'numpy/arrayobject.h' included
 #ifdef Py_ARRAYOBJECT_H
   import_array();
 #endif
@@ -112,7 +112,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_issue9() {
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
-  CLAIR_C2PY_ADD_TYPE_OBJECT(dummy_class, "DummyClass");
+  c2py::add_type_object_to_main<dummy_class>("DummyClass", m, conv_table);
 
   return m;
 }

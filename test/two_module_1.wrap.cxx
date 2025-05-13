@@ -16,7 +16,7 @@
 #include "c2py/c2py.hpp"
 #include "two_module_1.cpp"
 
-using c2py::operator"" _a;
+using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
@@ -111,7 +111,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_two_module_1(
 
   if (not c2py::check_python_version("two_module_1")) return NULL;
 
-    // import numpy iff 'numpy/arrayobject.h' included
+  // import numpy iff 'numpy/arrayobject.h' included
 #ifdef Py_ARRAYOBJECT_H
   import_array();
 #endif
@@ -127,7 +127,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_two_module_1(
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
-  CLAIR_C2PY_ADD_TYPE_OBJECT(N::A, "A");
+  c2py::add_type_object_to_main<N::A>("A", m, conv_table);
 
   return m;
 }

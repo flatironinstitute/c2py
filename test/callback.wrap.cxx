@@ -16,7 +16,7 @@
 #include "c2py/c2py.hpp"
 #include "callback.cpp"
 
-using c2py::operator"" _a;
+using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
@@ -72,7 +72,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_callback() {
 
   if (not c2py::check_python_version("callback")) return NULL;
 
-    // import numpy iff 'numpy/arrayobject.h' included
+  // import numpy iff 'numpy/arrayobject.h' included
 #ifdef Py_ARRAYOBJECT_H
   import_array();
 #endif
