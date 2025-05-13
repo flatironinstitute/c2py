@@ -20,6 +20,8 @@ template <typename T> struct A {
   bool operator==(A const &) const = default;
 
   int operator()(int i) const { return i + k;}
+
+  int operator[](int i) const { return i + k;}
 };
 
 template <typename T> std::ostream &operator<<(std::ostream &out, A<T> const &a) { return out << "A : k = " << a.k << "\n"; }

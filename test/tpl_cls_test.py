@@ -32,6 +32,10 @@ class TestIterable(unittest.TestCase):
    def test_call(self):
         a = AA(3)
         self.assertEqual(a(2),  5)
+    
+   def test_call_bracket(self):
+        a = AA(3)
+        self.assertEqual(a[2],  5)
   
 #    def test_compare(self):
         # a = AA(3)
