@@ -29,10 +29,8 @@ struct A {
   auto begin() const { return std::begin(v); }
   auto end() const { return std::end(v); }
 
-  template <typename Ar> void serialize(Ar &ar, int) {
-    ar & k;
-    ar & v;
-  }
+  void serialize(auto &ar) const { ar & k & v; }
+  void deserialize(auto &ar) { ar & k & v; }
 };
 
 std::ostream &operator<<(std::ostream &out, A const &a) { return out << "A : k = " << a.k << "\n"; }

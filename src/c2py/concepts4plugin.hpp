@@ -22,7 +22,7 @@ namespace c2py::concepts {
 
   template <typename T>
   concept HasSerializeLikeBoost = requires(T x, fake_archive ar) {
-    { x.serialize(ar, 0) };
+    { x.serialize(ar) };
   };
 
   //---------------- HasNonDeletedDefaultConstructor-------------------

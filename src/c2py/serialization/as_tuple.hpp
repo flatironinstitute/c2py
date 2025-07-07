@@ -28,7 +28,7 @@ namespace c2py {
 
   template <typename T> PyObject *serialize_tuple(T &x) noexcept {
     serialize_tuple_worker w;
-    x.serialize(w, 0);
+    x.serialize(w);
     long l        = long(w.elem.size());
     PyObject *tup = PyTuple_New(l);
     for (int pos = 0; pos < l; ++pos) PyTuple_SetItem(tup, pos, w.elem[pos]);
@@ -52,7 +52,7 @@ namespace c2py {
   template <typename T> T deserialize_tuple(PyObject *ob) {
     T res;
     auto r = deserializer_tuple_worker{ob};
-    res.serialize(r, 0);
+    res.deserialize(r);
     return std::move(res);
   }
 
