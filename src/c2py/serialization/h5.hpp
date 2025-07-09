@@ -1,6 +1,7 @@
 #pragma once
 #include <h5/serialization.hpp>
 #include <h5/format.hpp>
+#include <h5/_h5py.wrap.hxx>
 #include "../py_converter.hpp"
 #include "../pytypes/wrap.hpp"
 #include "../dyn_dispatch/dispatcher.hpp"
@@ -9,9 +10,6 @@
 #include "../converters/wrapped.hpp"
 
 namespace c2py {
-
-  //  template <> constexpr bool is_wrapped<h5::group> = true;
-  //  template <> constexpr bool is_wrapped<h5::file>  = true;
 
   /// hdf5 is not defined for this object, we still but a function + exception for a clear and early error message.
   template <typename Cls> static PyObject *tpxx_write_h5(PyObject *self, PyObject *args) {
