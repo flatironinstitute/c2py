@@ -13,18 +13,14 @@
 #define C2PY_VERSION_MAJOR 0
 #define C2PY_VERSION_MINOR 1
 
-#include "c2py/c2py.hpp"
-#include "cls_basic.cpp"
+#include <c2py/c2py.hpp>
 
 using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
-#ifndef C2PY_HXX_DECLARATION_cls_basic_GUARDS
-#define C2PY_HXX_DECLARATION_cls_basic_GUARDS
 template <> constexpr bool c2py::is_wrapped<A>           = true;
 template <> constexpr bool c2py::is_wrapped<dummy_class> = true;
-#endif
 
 // ==================== enums =====================
 
@@ -174,7 +170,7 @@ static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
   with multiple lines
   etc...
   )RAWDOC",                                          /* module documentation, may be NULL */
-                                        -1,          /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,

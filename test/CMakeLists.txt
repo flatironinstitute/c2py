@@ -12,10 +12,12 @@ macro(c2py_add_test modulename)
   target_link_libraries(${modulename} PRIVATE c2py c2py_warnings)
   add_test(NAME ${modulename}_py COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${test_dir}/${modulename}_test.py WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${test_dir})
   set_property(TEST ${modulename}_py APPEND PROPERTY ENVIRONMENT PYTHONPATH=${h5_BINARY_DIR}/python:${CMAKE_CURRENT_BINARY_DIR}:$ENV{PYTHONPATH} ${SANITIZER_RT_PRELOAD})
-  if(IS_CLAIR_BUILD)
+  if (IS_CLAIR_BUILD AND NOT "${ARGN}" STREQUAL "LOW_LEVEL")
     add_custom_command(
       OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.wrap.hxx
-      COMMAND clair-c2py ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.cpp
+      COMMAND clair-c2py -p ${PROJECT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.cpp
+      DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.cpp 
+      DEPENDS clair-c2py # If the tool ifself is recompiled, we need to regenerate the wrap.cxx
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
     add_custom_target(generate_${modulename} DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.wrap.hxx)
@@ -24,7 +26,7 @@ macro(c2py_add_test modulename)
 endmacro()
 
 # ----------------------------
-#c2py_add_test(cls LOW_LEVEL)
+c2py_add_test(cls LOW_LEVEL)
 
 set(c2py_all_full_tests 
   #any

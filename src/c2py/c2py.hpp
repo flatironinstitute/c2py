@@ -1,5 +1,7 @@
 #pragma once
 
+#define PY_ARRAY_UNIQUE_SYMBOL _cpp2py_ARRAY_API
+
 // The clang plugin will define C2PY_VERSION_MAJOR/MINOR in the generated wrapping code,
 // which includes c2py.
 // This checks that the versions are the same, i.e. that the generated code is indeed
