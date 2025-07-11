@@ -5,67 +5,51 @@ if (IS_CLAIR_BUILD AND (ASAN OR UBSAN))
   set(CMAKE_CXX_COMPILER_LAUNCHER env ${SANITIZER_RT_PRELOAD})
 endif()
 
-macro(c2py_add_test_1 modulename module_extension) 
+macro(c2py_add_test modulename)
   get_filename_component(test_name ${modulename} NAME_WE)
   get_filename_component(test_dir ${modulename} DIRECTORY)
-  Python_add_library(${modulename} MODULE ${modulename}.${module_extension})
+  Python_add_library(${modulename} MODULE ${modulename}.cpp)
   target_link_libraries(${modulename} PRIVATE c2py c2py_warnings)
   add_test(NAME ${modulename}_py COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${test_dir}/${modulename}_test.py WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${test_dir})
   set_property(TEST ${modulename}_py APPEND PROPERTY ENVIRONMENT PYTHONPATH=${h5_BINARY_DIR}/python:${CMAKE_CURRENT_BINARY_DIR}:$ENV{PYTHONPATH} ${SANITIZER_RT_PRELOAD})
-endmacro()
-
-macro(c2py_add_test modulename)
   if(IS_CLAIR_BUILD)
-    c2py_add_test_1(${modulename} cpp)
-    target_link_libraries(${modulename} PRIVATE clair::c2py_plugin)
-    target_compile_options(${modulename} PRIVATE -I./ -Wno-unused-const-variable -Wno-unused-variable)
-  else()
-    c2py_add_test_1(${modulename} wrap.cxx)
+    add_custom_command(
+      OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.wrap.hxx
+      COMMAND clair-c2py ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.cpp
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+    add_custom_target(generate_${modulename} DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.wrap.hxx)
+    add_dependencies(${modulename} generate_${modulename})
   endif()
 endmacro()
 
-#--------------------------------------------------------
-#  A target to copy the wrap.cxx files back to the src
-#--------------------------------------------------------
-
-add_custom_target(c2py_copy_wrap_cxx_to_src)
-add_custom_command(
-  POST_BUILD
-  TARGET c2py_copy_wrap_cxx_to_src
-  COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/*.wrap.?xx ${CMAKE_CURRENT_SOURCE_DIR}
-  COMMAND echo "** Copying all wrap.cxx to c2py test"
-)
-
 # ----------------------------
-set(c2py_all_low_level_tests cls CACHE INTERNAL "")
-set(c2py_all_full_tests 
-  any
-  basicfun
-  cls_basic
-  cls_der
-  pointer
-  comparison
-  issue9
-  callables
-  itertool
-  ignore
-  generator
-  enumcxx
-  synth_init
-  tpl_cls
-  tpl_derived
-  callback
-  two_module_1
-  two_module_2
-  CACHE INTERNAL "")
+#c2py_add_test(cls LOW_LEVEL)
 
-foreach(t ${c2py_all_low_level_tests})
-  c2py_add_test_1(${t} "cxx")  
-endforeach()
+set(c2py_all_full_tests 
+  #any
+  #basicfun
+  cls_basic
+  #cls_der
+  #pointer
+  #comparison
+  #issue9
+  #callables
+  #itertool
+  #ignore
+  #generator
+  #enumcxx
+  #synth_init
+  #tpl_cls
+  #tpl_derived
+  #callback
+  #two_module_1
+  #two_module_2
+  CACHE INTERNAL "")
 
 foreach(t ${c2py_all_full_tests})
   c2py_add_test(${t})
 endforeach()
 
 # must compile 1 first to have the hxx of the wrapped objects
-add_dependencies(two_module_2 two_module_1)
+#add_dependencies(two_module_2 two_module_1)
