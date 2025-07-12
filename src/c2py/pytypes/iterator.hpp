@@ -100,6 +100,12 @@ namespace c2py {
         0,                                                   // tp_version_tag
         0,                                                   // tp_finalize
         0,                                                   // tp_vectorcall
+#if (PY_MINOR_VERSION >= 12)
+        0, // tp_watched
+#endif
+#if (PY_MINOR_VERSION >= 13)
+        0, // tp_versions_used
+#endif
   };
 
   // ---------------------------------------
