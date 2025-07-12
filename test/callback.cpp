@@ -67,3 +67,5 @@ void callback3() {
     return;
   }
 }
+
+#include "callback.wrap.cxx"

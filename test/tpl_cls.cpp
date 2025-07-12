@@ -50,3 +50,5 @@ namespace c2py_module {
   //}; 
 
 } // namespace c2py_module
+
+#include "tpl_cls.wrap.cxx"

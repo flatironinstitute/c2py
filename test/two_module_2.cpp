@@ -5,3 +5,5 @@
 struct B {
   int g(int i, N::A const &a) { return i + a.k; }
 };
+
+#include "two_module_2.wrap.cxx"

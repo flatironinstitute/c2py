@@ -46,3 +46,5 @@ namespace c2py_module {
   //using C3 = N::my_base_templated<double>;
 
 } // namespace c2py_module
+
+#include "tpl_derived.wrap.cxx"

@@ -40,3 +40,5 @@ namespace N {
 // =============== Declare module ===========================
 
 namespace c2py_module {} // namespace c2py_module
+
+#include "comparison.wrap.cxx"

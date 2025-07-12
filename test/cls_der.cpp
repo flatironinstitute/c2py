@@ -12,3 +12,5 @@ struct A : B {
   A(int i) : B(i) {}
   int a(int i, int j) { return i + j; }
 };
+
+#include "cls_der.wrap.cxx"

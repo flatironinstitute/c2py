@@ -19,3 +19,5 @@ struct dummy_class {
   double do_thing(const std::function<double(const myarray<1> &)> & x) { return 9; }
   //double do_thing2(const std::function<double(myarray<1>&)> f) { return 10;}
 };
+
+#include "issue9.wrap.cxx"

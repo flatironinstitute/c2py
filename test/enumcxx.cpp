@@ -12,3 +12,5 @@ E2 f2(E2 x) { return x; }
 // =============== Declare module ===========================
 
 namespace c2py_module {} // namespace c2py_module
+
+#include "enumcxx.wrap.cxx"

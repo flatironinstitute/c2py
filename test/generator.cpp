@@ -28,3 +28,5 @@ auto enumerate_vec(std::vector<int> v) -> cppcoro::generator<std::pair<int, decl
     n += 1;
   }
 }
+
+#include "generator.wrap.cxx"

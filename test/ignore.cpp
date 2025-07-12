@@ -47,3 +47,5 @@ namespace c2py_module {
   constexpr auto reject_names = ".*ignore_me|opaque::.*|opaque2::.*";
 
 } // namespace c2py_module
+
+#include "ignore.wrap.cxx"

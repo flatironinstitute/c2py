@@ -88,3 +88,5 @@ namespace c2py_module {
 using TplParamNdcInt = N1::tpl_params_ndc<int>;
 
 } // namespace c2py_module
+
+#include "synth_init.wrap.cxx"

@@ -123,6 +123,4 @@ namespace c2py_module {
 
 } // namespace c2py_module
 
-#ifndef CLAIR_WRAP_GEN
 #include "cls_basic.wrap.cxx"
-#endif

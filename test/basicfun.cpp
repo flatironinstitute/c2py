@@ -62,3 +62,5 @@ namespace c2py_module {
   } // namespace add
 
 } // namespace c2py_module
+
+#include "basicfun.wrap.cxx"

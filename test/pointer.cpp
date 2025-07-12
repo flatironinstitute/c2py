@@ -15,3 +15,4 @@ int read(a_struct const *a) { return a->a; }
 
 // Should not compile
 // a_struct *make(a_struct *a) { return a; }
+#include "pointer.wrap.cxx"

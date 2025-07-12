@@ -42,3 +42,5 @@ int callback() {
 // ==========  Declare the module ==========
 
 namespace c2py_module {} // namespace c2py_module
+
+#include "callables.wrap.cxx"

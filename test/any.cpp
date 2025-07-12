@@ -26,3 +26,5 @@ int inc_opaque(opaque &x) { return ++(x.c); }
 //namespace c2py_module {
 //  constexpr auto reject_names = "opaque";
 //}
+
+#include "any.wrap.cxx"

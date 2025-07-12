@@ -23,3 +23,5 @@ auto trf(int n) {
   for (int i = 0; i < n; ++i) v[i] = i + 1;
   return itertools::transform(std::move(v), [](auto &&x) { return x * x; });
 }
+
+#include "itertool.wrap.cxx"
