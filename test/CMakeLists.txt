@@ -14,19 +14,20 @@ macro(c2py_add_test modulename)
   set_property(TEST ${modulename}_py APPEND PROPERTY ENVIRONMENT PYTHONPATH=${h5_BINARY_DIR}/python:${CMAKE_CURRENT_BINARY_DIR}:$ENV{PYTHONPATH} ${SANITIZER_RT_PRELOAD})
   if (IS_CLAIR_BUILD AND NOT "${ARGN}" STREQUAL "LOW_LEVEL")
     add_custom_command(
-      OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.wrap.hxx
+      OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.wrap.cxx
       COMMAND clair-c2py -p ${PROJECT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.cpp
       DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.cpp 
       DEPENDS clair-c2py # If the tool ifself is recompiled, we need to regenerate the wrap.cxx
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
-    add_custom_target(generate_${modulename} DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.wrap.hxx)
+    add_custom_target(generate_${modulename} DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.wrap.cxx)
     add_dependencies(${modulename} generate_${modulename})
   endif()
 endmacro()
 
 # ----------------------------
 c2py_add_test(cls LOW_LEVEL)
+set (c2py_all_low_level_tests cls CACHE INTERNAL "") # Keep this, used in clair 
 
 set(c2py_all_full_tests 
   any
@@ -54,4 +55,4 @@ foreach(t ${c2py_all_full_tests})
 endforeach()
 
 # must compile 1 first to have the hxx of the wrapped objects
-#add_dependencies(two_module_2 two_module_1)
+add_dependencies(two_module_2 two_module_1)
