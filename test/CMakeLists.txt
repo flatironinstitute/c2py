@@ -29,24 +29,24 @@ endmacro()
 c2py_add_test(cls LOW_LEVEL)
 
 set(c2py_all_full_tests 
-  #any
-  #basicfun
+  any
+  basicfun
   cls_basic
-  #cls_der
-  #pointer
-  #comparison
-  #issue9
-  #callables
-  #itertool
-  #ignore
-  #generator
-  #enumcxx
-  #synth_init
-  #tpl_cls
-  #tpl_derived
-  #callback
-  #two_module_1
-  #two_module_2
+  cls_der
+  pointer
+  comparison
+  issue9
+  callables
+  itertool
+  ignore
+  generator
+  enumcxx
+  synth_init
+  tpl_cls
+  tpl_derived
+  callback
+  two_module_1
+  two_module_2
   CACHE INTERNAL "")
 
 foreach(t ${c2py_all_full_tests})
