@@ -107,7 +107,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_annote() {
 
   if (not c2py::check_python_version("annote")) return NULL;
 
-    // import numpy iff 'numpy/arrayobject.h' included
+  // import numpy iff 'numpy/arrayobject.h' included
 #ifdef Py_ARRAYOBJECT_H
   import_array();
 #endif

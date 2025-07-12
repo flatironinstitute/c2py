@@ -1,6 +1,7 @@
 
 // C.f. https://numpy.org/doc/1.21/reference/c-api/array.html#importing-the-api
 #define PY_ARRAY_UNIQUE_SYMBOL _cpp2py_ARRAY_API
+#ifndef CLAIR_WRAP_GEN
 #ifdef __clang__
 // #pragma clang diagnostic ignored "-W#warnings"
 #endif
@@ -208,3 +209,5 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls_basic() {
 
   return m;
 }
+#endif
+// CLAIR_WRAP_GEN

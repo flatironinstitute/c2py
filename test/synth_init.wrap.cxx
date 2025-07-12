@@ -1,6 +1,7 @@
 
 // C.f. https://numpy.org/doc/1.21/reference/c-api/array.html#importing-the-api
 #define PY_ARRAY_UNIQUE_SYMBOL _cpp2py_ARRAY_API
+#ifndef CLAIR_WRAP_GEN
 #ifdef __clang__
 // #pragma clang diagnostic ignored "-W#warnings"
 #endif
@@ -13,20 +14,16 @@
 #define C2PY_VERSION_MAJOR 0
 #define C2PY_VERSION_MINOR 1
 
-#include "c2py/c2py.hpp"
-#include "synth_init.cpp"
+#include <c2py/c2py.hpp>
 
 using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
-#ifndef C2PY_HXX_DECLARATION_synth_init_GUARDS
-#define C2PY_HXX_DECLARATION_synth_init_GUARDS
 template <> constexpr bool c2py::is_wrapped<N1::A_ndc>               = true;
 template <> constexpr bool c2py::is_wrapped<N1::params>              = true;
 template <> constexpr bool c2py::is_wrapped<N1::params_ndc>          = true;
 template <> constexpr bool c2py::is_wrapped<N1::tpl_params_ndc<int>> = true;
-#endif
 
 // ==================== enums =====================
 
@@ -277,14 +274,15 @@ static PyObject *prop_get_dict_2(PyObject *self, void *) {
 // ----- Method table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<N1::tpl_params_ndc<int>>[] = {c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::i, N1::tpl_params_ndc<int>>("i", doc_member_11),
-                                                                    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::x, N1::tpl_params_ndc<int>>("x", doc_member_12),
-                                                                    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::ndc1, N1::tpl_params_ndc<int>>("ndc1", doc_member_13),
-                                                                    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::ndc2, N1::tpl_params_ndc<int>>("ndc2", doc_member_14),
-                                                                    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::v, N1::tpl_params_ndc<int>>("v", doc_member_15),
-                                                                    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::w, N1::tpl_params_ndc<int>>("w", doc_member_16),
-                                                                    {"__dict__", (getter)prop_get_dict_2, nullptr, "", nullptr},
-                                                                    {nullptr, nullptr, nullptr, nullptr, nullptr}};
+constinit PyGetSetDef c2py::tp_getset<N1::tpl_params_ndc<int>>[] = {
+   c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::i, N1::tpl_params_ndc<int>>("i", doc_member_11),
+   c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::x, N1::tpl_params_ndc<int>>("x", doc_member_12),
+   c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::ndc1, N1::tpl_params_ndc<int>>("ndc1", doc_member_13),
+   c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::ndc2, N1::tpl_params_ndc<int>>("ndc2", doc_member_14),
+   c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::v, N1::tpl_params_ndc<int>>("v", doc_member_15),
+   c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::w, N1::tpl_params_ndc<int>>("w", doc_member_16),
+   {"__dict__", (getter)prop_get_dict_2, nullptr, "", nullptr},
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
 // ==================== module functions ====================
 
@@ -301,7 +299,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "synth_init",      /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,
@@ -340,3 +338,5 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_synth_init() 
 
   return m;
 }
+#endif
+// CLAIR_WRAP_GEN

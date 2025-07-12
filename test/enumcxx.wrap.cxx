@@ -1,6 +1,7 @@
 
 // C.f. https://numpy.org/doc/1.21/reference/c-api/array.html#importing-the-api
 #define PY_ARRAY_UNIQUE_SYMBOL _cpp2py_ARRAY_API
+#ifndef CLAIR_WRAP_GEN
 #ifdef __clang__
 // #pragma clang diagnostic ignored "-W#warnings"
 #endif
@@ -13,17 +14,11 @@
 #define C2PY_VERSION_MAJOR 0
 #define C2PY_VERSION_MINOR 1
 
-#include "c2py/c2py.hpp"
-#include "enumcxx.cpp"
+#include <c2py/c2py.hpp>
 
 using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
-
-#ifndef C2PY_HXX_DECLARATION_enumcxx_GUARDS
-#define C2PY_HXX_DECLARATION_enumcxx_GUARDS
-
-#endif
 
 // ==================== enums =====================
 
@@ -57,7 +52,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "enumcxx",         /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,
@@ -88,3 +83,5 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_enumcxx() {
 
   return m;
 }
+#endif
+// CLAIR_WRAP_GEN

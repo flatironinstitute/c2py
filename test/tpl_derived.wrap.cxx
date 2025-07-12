@@ -1,6 +1,7 @@
 
 // C.f. https://numpy.org/doc/1.21/reference/c-api/array.html#importing-the-api
 #define PY_ARRAY_UNIQUE_SYMBOL _cpp2py_ARRAY_API
+#ifndef CLAIR_WRAP_GEN
 #ifdef __clang__
 // #pragma clang diagnostic ignored "-W#warnings"
 #endif
@@ -13,18 +14,14 @@
 #define C2PY_VERSION_MAJOR 0
 #define C2PY_VERSION_MINOR 1
 
-#include "c2py/c2py.hpp"
-#include "tpl_derived.cpp"
+#include <c2py/c2py.hpp>
 
 using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
-#ifndef C2PY_HXX_DECLARATION_tpl_derived_GUARDS
-#define C2PY_HXX_DECLARATION_tpl_derived_GUARDS
 template <> constexpr bool c2py::is_wrapped<N::my_base>  = true;
 template <> constexpr bool c2py::is_wrapped<N::my_class> = true;
-#endif
 
 // ==================== enums =====================
 
@@ -58,7 +55,7 @@ template <> inline const std::string c2py::cpp_name<N::my_class>   = "N::my_clas
 template <> inline constexpr auto c2py::tp_name<N::my_class>       = "tpl_derived.MyClass";
 template <> inline constexpr const char *c2py::tp_doc<N::my_class> = R"DOC(   )DOC";
 
-static auto init_1                                        = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::my_class>(), c2py::c_constructor<N::my_class, int>("u")};
+static auto init_1 = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::my_class>(), c2py::c_constructor<N::my_class, int>("u")};
 template <> constexpr initproc c2py::tp_init<N::my_class> = c2py::pyfkw_constructor<init_1>;
 // get
 static auto const fun_1   = c2py::dispatcher_f_kw_t{c2py::cmethod([](N::my_class const &self, long i) { return self.get(i); }, "self", "i")};
@@ -95,7 +92,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "tpl_derived",     /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,
@@ -131,3 +128,5 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_tpl_derived()
 
   return m;
 }
+#endif
+// CLAIR_WRAP_GEN

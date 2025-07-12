@@ -1,6 +1,7 @@
 
 // C.f. https://numpy.org/doc/1.21/reference/c-api/array.html#importing-the-api
 #define PY_ARRAY_UNIQUE_SYMBOL _cpp2py_ARRAY_API
+#ifndef CLAIR_WRAP_GEN
 #ifdef __clang__
 // #pragma clang diagnostic ignored "-W#warnings"
 #endif
@@ -13,17 +14,11 @@
 #define C2PY_VERSION_MAJOR 0
 #define C2PY_VERSION_MINOR 1
 
-#include "c2py/c2py.hpp"
-#include "basicfun.cpp"
+#include <c2py/c2py.hpp>
 
 using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
-
-#ifndef C2PY_HXX_DECLARATION_basicfun_GUARDS
-#define C2PY_HXX_DECLARATION_basicfun_GUARDS
-
-#endif
 
 // ==================== enums =====================
 
@@ -32,7 +27,8 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // f
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f(x); }, "x"), c2py::cfun([](int x, int y) { return f(x, y); }, "x", "y")};
+static auto const fun_0 =
+   c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f(x); }, "x"), c2py::cfun([](int x, int y) { return f(x, y); }, "x", "y")};
 
 // f1
 static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f1(x); }, "x"), c2py::cfun([](double x) { return f1(x); }, "x")};
@@ -101,7 +97,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "basicfun",                            /* name of module */
                                         R"RAWDOC(Module documentation)RAWDOC", /* module documentation, may be NULL */
-                                        -1,                                    /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,
@@ -132,3 +128,5 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_basicfun() {
 
   return m;
 }
+#endif
+// CLAIR_WRAP_GEN

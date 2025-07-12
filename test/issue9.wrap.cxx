@@ -1,6 +1,7 @@
 
 // C.f. https://numpy.org/doc/1.21/reference/c-api/array.html#importing-the-api
 #define PY_ARRAY_UNIQUE_SYMBOL _cpp2py_ARRAY_API
+#ifndef CLAIR_WRAP_GEN
 #ifdef __clang__
 // #pragma clang diagnostic ignored "-W#warnings"
 #endif
@@ -13,17 +14,13 @@
 #define C2PY_VERSION_MAJOR 0
 #define C2PY_VERSION_MINOR 1
 
-#include "c2py/c2py.hpp"
-#include "issue9.cpp"
+#include <c2py/c2py.hpp>
 
 using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
-#ifndef C2PY_HXX_DECLARATION_issue9_GUARDS
-#define C2PY_HXX_DECLARATION_issue9_GUARDS
 template <> constexpr bool c2py::is_wrapped<dummy_class> = true;
-#endif
 
 // ==================== enums =====================
 
@@ -36,7 +33,8 @@ template <> inline constexpr const char *c2py::tp_doc<dummy_class> = R"DOC(   )D
 static auto init_0                                        = c2py::dispatcher_c_kw_t{c2py::c_constructor<dummy_class>()};
 template <> constexpr initproc c2py::tp_init<dummy_class> = c2py::pyfkw_constructor<init_0>;
 // do_thing
-static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cmethod([](dummy_class &self, const std::function<double(const dummy_class::myarray<1> &)> &x) { return self.do_thing(x); }, "self", "x")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{
+   c2py::cmethod([](dummy_class &self, const std::function<double(const dummy_class::myarray<1> &)> &x) { return self.do_thing(x); }, "self", "x")};
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
@@ -83,7 +81,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "issue9",          /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,
@@ -116,3 +114,5 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_issue9() {
 
   return m;
 }
+#endif
+// CLAIR_WRAP_GEN

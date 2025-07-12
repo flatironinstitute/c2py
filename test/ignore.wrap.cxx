@@ -1,6 +1,7 @@
 
 // C.f. https://numpy.org/doc/1.21/reference/c-api/array.html#importing-the-api
 #define PY_ARRAY_UNIQUE_SYMBOL _cpp2py_ARRAY_API
+#ifndef CLAIR_WRAP_GEN
 #ifdef __clang__
 // #pragma clang diagnostic ignored "-W#warnings"
 #endif
@@ -13,19 +14,15 @@
 #define C2PY_VERSION_MAJOR 0
 #define C2PY_VERSION_MINOR 1
 
-#include "c2py/c2py.hpp"
-#include "ignore.cpp"
+#include <c2py/c2py.hpp>
 
 using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
-#ifndef C2PY_HXX_DECLARATION_ignore_GUARDS
-#define C2PY_HXX_DECLARATION_ignore_GUARDS
 template <> constexpr bool c2py::is_wrapped<a_struct> = true;
 template <> constexpr bool c2py::is_wrapped<opaque>   = true;
 template <> constexpr bool c2py::is_wrapped<opaque2>  = true;
-#endif
 
 // ==================== enums =====================
 
@@ -160,7 +157,7 @@ static PyMethodDef module_methods[] = {
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "ignore",          /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
-                                        -1,                /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+                                        -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
                                         NULL,
@@ -197,3 +194,5 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_ignore() {
 
   return m;
 }
+#endif
+// CLAIR_WRAP_GEN
