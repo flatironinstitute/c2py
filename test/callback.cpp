@@ -1,6 +1,6 @@
+#include <c2py/c2py.hpp>
 #include <vector>
 #include <iostream>
-#include <c2py/c2py.hpp>
 
 using c2py::operator""_a;
 

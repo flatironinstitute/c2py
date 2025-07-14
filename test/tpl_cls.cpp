@@ -1,6 +1,6 @@
+#include <c2py/c2py.hpp>
 #include <vector>
 #include <iostream>
-#include <c2py/c2py.hpp>
 
 template <typename T> struct A {
   int k                 = 12;
@@ -19,9 +19,9 @@ template <typename T> struct A {
 
   bool operator==(A const &) const = default;
 
-  int operator()(int i) const { return i + k;}
+  int operator()(int i) const { return i + k; }
 
-  int operator[](int i) const { return i + k;}
+  int operator[](int i) const { return i + k; }
 };
 
 template <typename T> std::ostream &operator<<(std::ostream &out, A<T> const &a) { return out << "A : k = " << a.k << "\n"; }
@@ -29,7 +29,6 @@ template <typename T> std::ostream &operator<<(std::ostream &out, A<T> const &a)
 template <typename T> bool operator<(A<T> const &x, A<T> const &y) { return x.k < y.k; }
 
 template double A<int>::tpl(int);
-
 
 // FIXME https://godbolt.org/z/bK8rTo9Ez
 
@@ -47,7 +46,7 @@ namespace c2py_module {
   //template <> struct add_methods_to<A<int>> {
 
   //  static constexpr auto h = c2py::dispatch<&A<int>::tpl<int>>;
-  //}; 
+  //};
 
 } // namespace c2py_module
 

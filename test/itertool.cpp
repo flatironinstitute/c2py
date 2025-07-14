@@ -1,11 +1,10 @@
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #endif
+#include <c2py/c2py.hpp>
 
 #include "./itertools/itertools.hpp"
 #include <functional> // FIXME This should be automatic in the CXX
-
-#include <c2py/c2py.hpp>
 
 static_assert(c2py::concepts::IsConvertibleC2Py<itertools::detail::transformed<std::vector<int>, decltype([](auto &&x) { return x * x; })>>);
 

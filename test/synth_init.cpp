@@ -1,6 +1,6 @@
+#include <c2py/c2py.hpp>
 #include <vector>
 #include <string>
-#include <c2py/c2py.hpp>
 namespace N1 {
 
   struct A_ndc {
@@ -45,15 +45,14 @@ namespace N1 {
     std::vector<int> v;
 
     std::vector<int> w = {1, 2, 3};
-    
+
     // will trigger compilation error: it deletes the default constructor and it is not an aggregate any more
     //private:
-    //int zz = 0; 
+    //int zz = 0;
   };
 
-   // Templated class
-  template<typename T>
-  struct tpl_params_ndc {
+  // Templated class
+  template <typename T> struct tpl_params_ndc {
 
     /// An int
     T i;
@@ -74,7 +73,6 @@ namespace N1 {
     std::vector<T> w = {1, 2, 3};
   };
 
-
   // double pr(params const &p) { return p.x; }
 
 } // namespace N1
@@ -85,7 +83,7 @@ template struct N1::tpl_params_ndc<int>;
 
 namespace c2py_module {
 
-using TplParamNdcInt = N1::tpl_params_ndc<int>;
+  using TplParamNdcInt = N1::tpl_params_ndc<int>;
 
 } // namespace c2py_module
 

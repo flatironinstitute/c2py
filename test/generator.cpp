@@ -2,8 +2,8 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #endif
 
-#include "./cppcoro/generator.hpp"
 #include <c2py/c2py.hpp>
+#include "./cppcoro/generator.hpp"
 
 static_assert(c2py::concepts::RangeOfConvertibles<cppcoro::generator<std::pair<int, int>>>);
 static_assert(c2py::concepts::IsConvertibleC2Py<cppcoro::generator<std::pair<int, int>>>);

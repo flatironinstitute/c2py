@@ -2,8 +2,8 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #endif
 
-#include <vector>
 #include <c2py/c2py.hpp>
+#include <vector>
 
 namespace N {
 

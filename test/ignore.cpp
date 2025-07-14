@@ -2,9 +2,9 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #endif
 
+#include <c2py/c2py.hpp>
 #include <vector>
 #include <iostream>
-#include <c2py/c2py.hpp>
 
 struct a_struct {
   int a;

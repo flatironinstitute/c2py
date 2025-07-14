@@ -1,6 +1,6 @@
+#include <c2py/c2py.hpp>
 #include <vector>
 #include <iostream>
-#include <c2py/c2py.hpp>
 
 enum class E1 { a, b, c };
 
