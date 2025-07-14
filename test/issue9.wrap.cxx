@@ -1,7 +1,7 @@
 
 // C.f. https://numpy.org/doc/1.21/reference/c-api/array.html#importing-the-api
 #define PY_ARRAY_UNIQUE_SYMBOL _cpp2py_ARRAY_API
-#ifndef CLAIR_WRAP_GEN
+#ifndef CLAIR_C2PY_WRAP_GEN
 #ifdef __clang__
 // #pragma clang diagnostic ignored "-W#warnings"
 #endif
@@ -34,7 +34,7 @@ static auto init_0                                        = c2py::dispatcher_c_k
 template <> constexpr initproc c2py::tp_init<dummy_class> = c2py::pyfkw_constructor<init_0>;
 // do_thing
 static auto const fun_0 = c2py::dispatcher_f_kw_t{
-   c2py::cmethod([](dummy_class &self, const std::function<double(const dummy_class::myarray<1> &)> &x) { return self.do_thing(x); }, "self", "x")};
+   c2py::cmethod([](dummy_class &self, const std::function<double(const std::array<double, 1> &)> &x) { return self.do_thing(x); }, "self", "x")};
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----

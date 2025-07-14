@@ -1,7 +1,7 @@
 
 // C.f. https://numpy.org/doc/1.21/reference/c-api/array.html#importing-the-api
 #define PY_ARRAY_UNIQUE_SYMBOL _cpp2py_ARRAY_API
-#ifndef CLAIR_WRAP_GEN
+#ifndef CLAIR_C2PY_WRAP_GEN
 #ifdef __clang__
 // #pragma clang diagnostic ignored "-W#warnings"
 #endif
@@ -27,7 +27,7 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // enumerate_vec
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::vector<int> v) { return enumerate_vec(v); }, "v")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::vector<int, std::allocator<int>> v) { return enumerate_vec(v); }, "v")};
 
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------
