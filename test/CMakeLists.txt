@@ -32,6 +32,7 @@ set (c2py_all_low_level_tests cls CACHE INTERNAL "") # Keep this, used in clair
 set(c2py_all_full_tests 
   any
   basicfun
+  bug_tpl_type
   cls_basic
   cls_der
   pointer
