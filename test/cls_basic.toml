@@ -1,0 +1,3 @@
+get_set_as_properties = true
+match_names = "nothing"
+reject_names = "hidden|fff"

@@ -77,8 +77,6 @@ namespace N1 {
 
 } // namespace N1
 
-template struct N1::tpl_params_ndc<int>;
-
 // =============== Declare module ===========================
 
 namespace c2py_module {
