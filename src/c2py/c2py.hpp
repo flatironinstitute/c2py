@@ -53,7 +53,6 @@
 #include "converters/stl/map.hpp"
 #include "converters/stl/optional.hpp"
 #include "converters/stl/pair.hpp"
-#include "converters/stl/tuple.hpp"
 #include "converters/stl/set.hpp"
 #include "converters/stl/array.hpp"
 #include "converters/stl/string.hpp"
