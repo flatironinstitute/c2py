@@ -54,6 +54,7 @@ set(c2py_all_full_tests
   tpl_cls
   tpl_derived
   callback
+  std_container
   two_module_1
   two_module_2
   CACHE INTERNAL "")
