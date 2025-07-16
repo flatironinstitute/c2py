@@ -1,3 +1,8 @@
 get_set_as_properties = true
-match_names = "nothing"
+#match_names = "nothing"
+documentation = """
+A long documentation of this nice module
+  with multiple lines
+and a lot of text
+"""
 reject_names = "hidden|fff"

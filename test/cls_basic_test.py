@@ -4,7 +4,7 @@ import pickle
 
 import cls_basic as M
 A = M.A
-
+print(M.__doc__)
 class TestIterable(unittest.TestCase):
 
    def test_construct(self):

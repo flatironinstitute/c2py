@@ -105,16 +105,7 @@ double dummy_class::do_thing(double x) { return 3 * x; }
 
 namespace c2py_module {
 
-  const auto documentation = R"RAW(
-  A long documentation of this nice module
-  with multiple lines
-  etc...
-  )RAW";
-
-  constexpr auto reject_names = "hidden|fff";
-
-  constexpr auto get_set_as_properties = true;
-  auto module_init                     = []() { std::cout << "Starting module" << std::endl; };
+  auto module_init = []() { std::cout << "Starting module" << std::endl; };
 
   template <> struct add_methods_to<A> {
     static constexpr auto h     = c2py::dispatch<hhh>;

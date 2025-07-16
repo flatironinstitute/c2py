@@ -34,19 +34,9 @@ template double A<int>::tpl(int);
 
 // =============== Declare module ===========================
 
-// In some cases, it is necessary to explicitly instantiate
-// template struct A<int>;
-
 namespace c2py_module {
 
-  auto get_set_as_properties = true;
-
   using AA = A<int>;
-
-  //template <> struct add_methods_to<A<int>> {
-
-  //  static constexpr auto h = c2py::dispatch<&A<int>::tpl<int>>;
-  //};
 
 } // namespace c2py_module
 

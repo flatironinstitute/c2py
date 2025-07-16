@@ -36,15 +36,7 @@ namespace N {
 
 } // namespace N
 
-// =============== Declare module ===========================
-
-namespace c2py_module {
-
-  auto reject_names = "N::my_private_base";
-
-  // fails with error if I attempt to wrap C3 as well
-  //using C3 = N::my_base_templated<double>;
-
-} // namespace c2py_module
+// SHOULD fails with error if I attempt to wrap C3 as well
+// using C3 = N::my_base_templated<double>;
 
 #include "tpl_derived.wrap.cxx"

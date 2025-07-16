@@ -13,10 +13,17 @@ macro(c2py_add_test modulename)
   add_test(NAME ${modulename}_py COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${test_dir}/${modulename}_test.py WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${test_dir})
   set_property(TEST ${modulename}_py APPEND PROPERTY ENVIRONMENT PYTHONPATH=${h5_BINARY_DIR}/python:${CMAKE_CURRENT_BINARY_DIR}:$ENV{PYTHONPATH} ${SANITIZER_RT_PRELOAD})
   if (IS_CLAIR_BUILD AND NOT "${ARGN}" STREQUAL "LOW_LEVEL")
+    # Verbose, but I don't know to make simpler: on 
+    if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.toml")
+       set(toml_file_ext "toml")
+    else() 
+       set(toml_file_ext "cpp") # duplicates the depends, but it does not matter
+    endif()
     add_custom_command(
       OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.wrap.cxx
       COMMAND clair-c2py -p ${PROJECT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.cpp
       DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.cpp 
+      DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${modulename}.${toml_file_ext} 
       DEPENDS clair-c2py # If the tool ifself is recompiled, we need to regenerate the wrap.cxx
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )

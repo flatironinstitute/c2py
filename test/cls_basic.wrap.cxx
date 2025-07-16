@@ -166,11 +166,10 @@ static PyMethodDef module_methods[] = {
 /// Or mandatory ?
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
                                         "cls_basic", /* name of module */
-                                        R"RAWDOC(
-  A long documentation of this nice module
+                                        R"RAWDOC(A long documentation of this nice module
   with multiple lines
-  etc...
-  )RAWDOC",                                          /* module documentation, may be NULL */
+and a lot of text
+)RAWDOC",                                            /* module documentation, may be NULL */
                                         -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
@@ -203,9 +202,6 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls_basic() {
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
   c2py::add_type_object_to_main<A>("A", m, conv_table);
   c2py::add_type_object_to_main<dummy_class>("DummyClass", m, conv_table);
-
-  // Initialization of the module
-  c2py_module::module_init();
 
   return m;
 }

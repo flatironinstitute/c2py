@@ -39,13 +39,5 @@ struct opaque2 {
 opaque2 make_opaque2() { return {}; }
 int inc_opaque2(opaque2 &w) { return ++w.a; }
 int take_opaque2(opaque2 const &w) { return w.a; }
-// =============== Declare module ===========================
-
-namespace c2py_module {
-#pragma clang diagnostic ignored "-Wunused-const-variable"
-
-  constexpr auto reject_names = ".*ignore_me|opaque::.*|opaque2::.*";
-
-} // namespace c2py_module
 
 #include "ignore.wrap.cxx"

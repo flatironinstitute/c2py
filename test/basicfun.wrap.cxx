@@ -95,8 +95,8 @@ static PyMethodDef module_methods[] = {
 //// module doc directly in the code or "" if not present...
 /// Or mandatory ?
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
-                                        "basicfun",                            /* name of module */
-                                        R"RAWDOC(Module documentation)RAWDOC", /* module documentation, may be NULL */
+                                        "basicfun",        /* name of module */
+                                        R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
                                         -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
                                         NULL,
