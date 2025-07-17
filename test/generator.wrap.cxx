@@ -27,7 +27,7 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // enumerate_vec
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::vector<int, std::allocator<int>> v) { return enumerate_vec(v); }, "v")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::vector<int> v) { return enumerate_vec(v); }, "v")};
 
 static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------

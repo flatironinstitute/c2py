@@ -8,6 +8,7 @@ template <int N> struct A {
   A() {}
   //static_assert(N != 3, "NO!!");
   void f(std::vector<std::array<int, N>> v) {}
+  //void g(std::array<int, N> v) {}
 };
 
 template <typename T> struct B {

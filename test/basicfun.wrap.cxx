@@ -43,7 +43,7 @@ static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun(&N::h<int>, "x"), c
 static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<int>(&f1), "x"), c2py::cfun(&N::h<double>, "x")};
 
 // isfinite
-static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](const std::complex<double> &x) { return N::isfinite(x); }, "x")};
+static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](const dcomplex &x) { return N::isfinite(x); }, "x")};
 
 // ret_with_alias
 static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return ret_with_alias(); })};
