@@ -31,16 +31,17 @@ static auto const fun_0 =
    c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f(x); }, "x"), c2py::cfun([](int x, int y) { return f(x, y); }, "x", "y")};
 
 // f1
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f1(x); }, "x"), c2py::cfun([](double x) { return f1(x); }, "x")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](double x) { return f1(x); }, "x")};
 
 // g
 static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x, int y) { return g(x, y); }, "x", "y"_a = 8)};
 
 // h
-static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun(&N::h<int>, "x"), c2py::cfun(&N::h<double>, "x")};
+static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return N::h(x); }, "x")};
 
 // hf
-static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun(c2py::cast<int>(&f1), "x"), c2py::cfun(&N::h<double>, "x")};
+static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f1(x); }, "x"), c2py::cfun([](long x) { return N::h(x); }, "x"),
+                                                  c2py::cfun([](double x) { return N::h(x); }, "x")};
 
 // isfinite
 static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](const dcomplex &x) { return N::isfinite(x); }, "x")};
@@ -65,16 +66,13 @@ static constexpr auto doc_f_0_1 = R"DOC(   A doc for f(x,y)
    y:
    The doc of y)DOC";
 static const auto doc_d_0       = fun_0.doc({doc_f_0_0, doc_f_0_1});
-static constexpr auto doc_f_1_0 = R"DOC(   )DOC";
-static constexpr auto doc_f_1_1 = R"DOC(   )DOC";
-static const auto doc_d_1       = fun_1.doc({doc_f_1_0, doc_f_1_1});
+static const auto doc_d_1       = fun_1.doc({R"DOC(   )DOC"});
 static const auto doc_d_2       = fun_2.doc({R"DOC(   )DOC"});
-static constexpr auto doc_f_3_0 = R"DOC(   )DOC";
-static constexpr auto doc_f_3_1 = R"DOC(   )DOC";
-static const auto doc_d_3       = fun_3.doc({doc_f_3_0, doc_f_3_1});
+static const auto doc_d_3       = fun_3.doc({R"DOC(   )DOC"});
 static constexpr auto doc_f_4_0 = R"DOC(   )DOC";
 static constexpr auto doc_f_4_1 = R"DOC(   )DOC";
-static const auto doc_d_4       = fun_4.doc({doc_f_4_0, doc_f_4_1});
+static constexpr auto doc_f_4_2 = R"DOC(   )DOC";
+static const auto doc_d_4       = fun_4.doc({doc_f_4_0, doc_f_4_1, doc_f_4_2});
 static const auto doc_d_5       = fun_5.doc({R"DOC(   )DOC"});
 static const auto doc_d_6       = fun_6.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------

@@ -7,7 +7,10 @@
 // -------------  Annotations for function ---------------
 
 #define C2PY_IGNORE __attribute__((annotate("c2py_ignore")))
+#define C2PY_WRAP_AS_METHOD __attribute__((annotate("c2py_wrap_as_method")))
+#define C2PY_MODULE_INIT __attribute__((annotate("c2py_module_init")))
 #define C2PY_NOGIL __attribute__((annotate("c2py_nogil")))
+#define C2PY_RENAME(X) __attribute__((annotate("c2py_rename:" #X)))
 
 //#define C2PY_METHODS_AS_PROPERTY __attribute__((annotate("c2py_methods_as_property")))
 
@@ -36,7 +39,7 @@ namespace c2py {
 
   /// A clone function. c2py::clone<T> is a clone function
   /// Cf example, it allows to add a clone function method to a class.
-  template <typename T> static T clone(T const &x) { return T{x}; };
+  //template <typename T> C2PY_WRAP_AS_METHOD static T clone(T const &x) { return T{x}; };
 
   // ----------- API for arithmetic operations ---------------------------
 

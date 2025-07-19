@@ -68,6 +68,7 @@ class TestIterable(unittest.TestCase):
         # Check friend declaration are not wrapped
         self.assertFalse(hasattr(M, "a_friend"))
         #self.assertEqual(M.a_friend(a),  -3)
+        self.assertEqual(a.tpl(10),  266)
   
    def test_meth_with_alias(self):
         a = M.A(3)

@@ -14,7 +14,7 @@
 */
 struct A {
   int k                 = 12;
-  const int k_immutable = 23;
+  const int k_immutable = 23; //NOLINT
   std::vector<int> v    = {1, 2, 3, 5};
 
   A() = default;
@@ -79,14 +79,25 @@ auto operator-(A const &x, A const &y) { return A{x.k - y.k}; }
 A operator+(A const &x, int y) { return A{x.k + y}; }
 
 // Additional method
-//C2PY_METHOD_OF(A)
+C2PY_WRAP_AS_METHOD
+C2PY_RENAME(h)
 int hhh(A const &a, int j) { return j + 20; }
 
+// Fails to compile with proper error
+//struct C2PY_IGNORE ignored {};
+//C2PY_WRAP_AS_METHOD int h_fail(ignored const &a, int j) { return j + 20; }
+//C2PY_WRAP_AS_METHOD int h_fail2() { return 20; }
+
+// instantiate template methods
+template double A::tpl(double);
+template auto A::m1(int);
+
 // maker into a constructor
-A maker_A(int i) {
-  std::cout << " I am the A maker" << std::endl;
-  return A{i};
-}
+// NOT IMPLEMENT
+// A maker_A(int i) {
+//   std::cout << " I am the A maker" << std::endl;
+//   return A{i};
+// }
 
 // To check the filter : it should not compile if hidden is filtered out
 struct hidden {};
@@ -101,17 +112,9 @@ struct dummy_class {
 };
 double dummy_class::do_thing(double x) { return 3 * x; }
 
-// =============== Declare module ===========================
+template <typename T> C2PY_WRAP_AS_METHOD static T clone(T const &x) { return T{x}; };
+template A clone(A const &x);
 
-namespace c2py_module {
-
-  auto module_init = []() { std::cout << "Starting module" << std::endl; };
-
-  template <> struct add_methods_to<A> {
-    static constexpr auto h     = c2py::dispatch<hhh>;
-    static constexpr auto clone = c2py::dispatch<c2py::clone<A>>;
-  };
-
-} // namespace c2py_module
+C2PY_MODULE_INIT void my_module_init() { std::cout << "===== Starting module !!=====" << std::endl; };
 
 #include "cls_basic.wrap.cxx"

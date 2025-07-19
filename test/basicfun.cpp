@@ -1,8 +1,7 @@
 #include <c2py/c2py.hpp>
-#include <c2py/converters/stl/pair.hpp>
 #include <complex>
 
-int f1(int x) { return x * 3; }
+C2PY_RENAME(hf) int f1(int x) { return x * 3; }
 double f1(double x) { return -x * 10; }
 
 /** 
@@ -41,26 +40,22 @@ namespace N {
 
   auto h(auto x) { return x + 4; }
 
-  // the using will make a bug. The function would need to be rewritten...
-  // FIXME : add a flag ? hard to detect ...
+  // Works only because we generate code with lambda rewriting. Taking addresses would not work (previous version)
+  // left to check against backward regression.
   using std::isfinite;
   bool isfinite(dcomplex const &x) { return std::isfinite(real(x)) && std::isfinite(imag(x)); }
 
 } // namespace N
 
-// ==========  Declare the module ==========
+// should fail to compile. No way to know auto ...
+// template <typename T> auto square(T x); // { return x * x; }
+// extern template auto square(int);
 
-namespace c2py_module {
+// instantiate
+//template C2PY_RENAME(h) auto N::h(float x);
+template C2PY_RENAME(h) auto N::h(int x);
 
-  auto documentation = "Module documentation";
-
-  namespace add {
-    //auto f  = c2py::dispatch<c2py::cast<int>(::f), c2py::cast<double>(::f)>;
-    auto h  = c2py::dispatch<N::h<int>, N::h<double>>;
-    auto hf = c2py::dispatch<c2py::cast<int>(::f1), N::h<double>>;
-
-  } // namespace add
-
-} // namespace c2py_module
+template C2PY_RENAME(hf) auto N::h(long x);
+template C2PY_RENAME(hf) auto N::h(double x);
 
 #include "basicfun.wrap.cxx"

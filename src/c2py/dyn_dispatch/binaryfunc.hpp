@@ -11,7 +11,7 @@ namespace c2py {
   // -------------------  pycfun23--------------------
 
   class pycfun23 {
-    std::string const *sig;
+    std::string const *sig [[maybe_unused]]; //NOLINT No clue why the unused warning
     using conv_f_t = bool (*)(PyObject *, bool);
     std::vector<conv_f_t> c_args;
     virtual PyObject *call(PyObject *x, PyObject *y, PyObject *z) const = 0;

@@ -43,7 +43,7 @@ static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self, int 
 template <> inline constexpr ternaryfunc c2py::tp_call<A> = c2py::pyfkw<fun_0>;
 
 // clone
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod(&c2py::clone<A>, "x")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod(&clone<A>, "x")};
 
 // f
 static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A const &self, int x) { return self.f(x); }, "self", "x")};
@@ -55,26 +55,30 @@ static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A const &self
 static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cmethod(c2py::cast<const A &, int>(&hhh), "a", "j")};
 
 // m1
-static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self, double x) { return self.m1(x); }, "self", "x")};
+static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self, double x) { return self.m1(x); }, "self", "x"),
+                                                  c2py::cmethod([](A &self, int x) { return self.m1(x); }, "self", "x")};
 
 // no_prop
 static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self) { return self.no_prop(); }, "self")};
 
 // static_method
-static auto const fun_7         = c2py::dispatcher_f_kw_t{c2py::cfun([](int i) { return A::static_method(i); }, "i")};
+static auto const fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](int i) { return A::static_method(i); }, "i")};
+
+// tpl
+static auto const fun_8         = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self, double x) { return self.tpl(x); }, "self", "x")};
 static constexpr auto doc_f_0_0 = R"DOC(   )DOC";
 static constexpr auto doc_f_0_1 = R"DOC(   )DOC";
 static const auto doc_d_0       = fun_0.doc({doc_f_0_0, doc_f_0_1});
-static const auto doc_d_1       = fun_1.doc({R"DOC(   A clone function. c2py::clone
-   
-   <T
-   > is a clone function Cf example, it allows to add a clone function method to a class.)DOC"});
+static const auto doc_d_1       = fun_1.doc({R"DOC(   )DOC"});
 static const auto doc_d_2       = fun_2.doc({R"DOC(   )DOC"});
 static const auto doc_d_3       = fun_3.doc({R"DOC(   )DOC"});
 static const auto doc_d_4       = fun_4.doc({R"DOC(   )DOC"});
-static const auto doc_d_5       = fun_5.doc({R"DOC(   )DOC"});
+static constexpr auto doc_f_5_0 = R"DOC(   )DOC";
+static constexpr auto doc_f_5_1 = R"DOC(   )DOC";
+static const auto doc_d_5       = fun_5.doc({doc_f_5_0, doc_f_5_1});
 static const auto doc_d_6       = fun_6.doc({R"DOC(   )DOC"});
 static const auto doc_d_7       = fun_7.doc({R"DOC(   )DOC"});
+static const auto doc_d_8       = fun_8.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
 template <>
@@ -86,6 +90,7 @@ PyMethodDef c2py::tp_methods<A>[] = {
    {"m1", (PyCFunction)c2py::pyfkw<fun_5>, METH_VARARGS | METH_KEYWORDS, doc_d_5.c_str()},
    {"no_prop", (PyCFunction)c2py::pyfkw<fun_6>, METH_VARARGS | METH_KEYWORDS, doc_d_6.c_str()},
    {"static_method", (PyCFunction)c2py::pyfkw<fun_7>, METH_VARARGS | METH_KEYWORDS | METH_STATIC, doc_d_7.c_str()},
+   {"tpl", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
    {"__getstate__", c2py::getstate_tuple<A>, METH_NOARGS, ""},
    {"__setstate__", c2py::setstate_tuple<A>, METH_O, ""},
    {nullptr, nullptr, 0, nullptr} // Sentinel
@@ -125,13 +130,13 @@ template <> inline constexpr const char *c2py::tp_doc<dummy_class> = R"DOC(   te
 static auto init_1                                        = c2py::dispatcher_c_kw_t{c2py::c_constructor<dummy_class>()};
 template <> constexpr initproc c2py::tp_init<dummy_class> = c2py::pyfkw_constructor<init_1>;
 // do_thing
-static auto const fun_8   = c2py::dispatcher_f_kw_t{c2py::cmethod([](dummy_class &self, double x) { return self.do_thing(x); }, "self", "x")};
-static const auto doc_d_8 = fun_8.doc({R"DOC(   )DOC"});
+static auto const fun_9   = c2py::dispatcher_f_kw_t{c2py::cmethod([](dummy_class &self, double x) { return self.do_thing(x); }, "self", "x")};
+static const auto doc_d_9 = fun_9.doc({R"DOC(   )DOC"});
 
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<dummy_class>[] = {
-   {"do_thing", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
+   {"do_thing", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -144,19 +149,14 @@ constinit PyGetSetDef c2py::tp_getset<dummy_class>[] = {
 
 // ==================== module functions ====================
 
-// hhh
-static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a, int j) { return hhh(a, j); }, "a", "j")};
+// my_module_init
+static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
 
-// maker_A
-static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([](int i) { return maker_A(i); }, "i")};
-
-static const auto doc_d_9  = fun_9.doc({R"DOC(   )DOC"});
 static const auto doc_d_10 = fun_10.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"hhh", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
-   {"maker_A", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
+   {"my_module_init", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -202,6 +202,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls_basic() {
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
   c2py::add_type_object_to_main<A>("A", m, conv_table);
   c2py::add_type_object_to_main<dummy_class>("DummyClass", m, conv_table);
+
+  // Initialization of the module
+  my_module_init();
 
   return m;
 }
