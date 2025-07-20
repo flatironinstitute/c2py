@@ -20,11 +20,4 @@ int take_opaque(opaque const &x) { return x.c; }
 // we can modify the object passed from Python
 int inc_opaque(opaque &x) { return ++(x.c); }
 
-// Should not be needed.
-// If a class alaready has a converter, it is automatically rejected
-// from the list of classes to wrap.
-//namespace c2py_module {
-//  constexpr auto reject_names = "opaque";
-//}
-
 #include "any.wrap.cxx"

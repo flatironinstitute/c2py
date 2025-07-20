@@ -1,1 +1,2 @@
+match_files = "ignore.cpp"
 reject_names = ".*ignore_me|opaque::.*|opaque2::.*"

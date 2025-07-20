@@ -55,7 +55,7 @@ static constexpr auto doc_f_0_0 = R"DOC(   A doc for f(x)
    ----------
    
    x:
-   The doc of x)DOC";
+      The doc of x)DOC";
 static constexpr auto doc_f_0_1 = R"DOC(   A doc for f(x,y)
    
    Parameters
@@ -64,7 +64,7 @@ static constexpr auto doc_f_0_1 = R"DOC(   A doc for f(x,y)
    x:
       The doc of x
    y:
-   The doc of y)DOC";
+      The doc of y)DOC";
 static const auto doc_d_0       = fun_0.doc({doc_f_0_0, doc_f_0_1});
 static const auto doc_d_1       = fun_1.doc({R"DOC(   )DOC"});
 static const auto doc_d_2       = fun_2.doc({R"DOC(   )DOC"});

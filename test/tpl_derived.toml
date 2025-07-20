@@ -1,1 +1,2 @@
+match_files = "tpl_derived.cpp"
 reject_names = "N::my_private_base"

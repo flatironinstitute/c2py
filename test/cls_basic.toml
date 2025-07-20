@@ -6,3 +6,6 @@ A long documentation of this nice module
 and a lot of text
 """
 reject_names = "hidden|fff"
+
+# necessary for this test !
+match_files = "cls_basic.cpp"
