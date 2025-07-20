@@ -1,0 +1,2 @@
+documentation = "Test for namespace filtering" 
+namespaces = "A A::B" # ignore A::detail

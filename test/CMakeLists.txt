@@ -41,6 +41,7 @@ set(c2py_all_full_tests
   basicfun
   bug_tpl_type
   cls_basic
+  namespace
   cls_der
   pointer
   comparison
