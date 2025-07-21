@@ -1,8 +1,12 @@
 #!@Python_EXECUTABLE@
+import sys
 
 cxxflags = "-I@CMAKE_INSTALL_FULL_INCLUDEDIR@ "
 ldflags = " -L@CMAKE_INSTALL_FULL_LIBDIR@ -lc2py "
 
 if __name__ == "__main__" :
-    print("%s %s -fPIC %s "%(cxxflags, ldflags, "@c2py_all_python_flags@"))
+   if "-i" in sys.argv:
+      print("%s  %s "%(cxxflags,  "@c2py_all_python_include_flags@"))
+   else:
+      print("%s %s -fPIC %s "%(cxxflags, ldflags, "@c2py_all_python_flags@"))
 
