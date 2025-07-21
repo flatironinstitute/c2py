@@ -1,1 +1,2 @@
 wrap_no_arg_methods_as_properties = true
+match_files="tpl_cls.cpp"
