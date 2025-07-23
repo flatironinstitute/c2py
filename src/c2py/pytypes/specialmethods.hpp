@@ -63,7 +63,7 @@ namespace c2py {
 
 // Not implemented in clang 20
 // #ifdef __cpp_multidimensional_subscript
-#if __cplusplus >= 202302L
+#if (defined(__GNUC__) and (__cpp_multidimensional_subscript >= 202110L)) or (__cplusplus >= 202302L)
   template <typename T, typename... A> static decltype(auto) getitem(T const &a, A... i) { return a[i...]; }
   template <typename T, typename... A> static void setitem(T &a, A... i, std::decay_t<decltype(a[i...])> const &val) { a[i...] = val; }
 #else
