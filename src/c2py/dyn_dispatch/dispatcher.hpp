@@ -62,7 +62,10 @@ namespace c2py {
       fs << "Dispatched C++ function\n";
       int i = 0;
       // FIXME : use format when in std
-      for (auto const &x : docs) fs << "[" << i + 1 << "]  " << ov_list[i++]->signature() << "\n\n" << x << "\n\n";
+      for (auto const &x : docs) {
+        fs << "[" << i + 1 << "]  " << ov_list[i]->signature() << "\n\n" << x << "\n\n";
+        ++i;
+      }
       return fs.str();
     }
   };
