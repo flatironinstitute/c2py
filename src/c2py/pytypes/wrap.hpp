@@ -34,7 +34,6 @@ namespace c2py {
   }
 
   template <typename T> static constexpr initproc tp_init   = nullptr;
-  template <typename T> static constexpr char *tp_name      = nullptr; //NOLINT
   template <typename T> static constexpr const char *tp_doc = nullptr;
   template <typename T> static PyObject *tp_repr(PyObject *self); // impl below
   template <typename T> static PyObject *tp_str(PyObject *self) { return tp_repr<T>(self); }

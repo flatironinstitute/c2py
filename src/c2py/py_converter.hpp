@@ -120,6 +120,26 @@ namespace c2py {
   // raise_exception. Cf py_converter::is_convertible
   template <typename T> static bool convertible(PyObject *ob, bool raise_exception) { return py_converter<T>::is_convertible(ob, raise_exception); }
 
+  // ------------------- Python type name --------------------
+  // For proper doc.
+  inline std::string remove_package_name(std::string const &name) {
+    auto pos = name.find_last_of('.');
+    if (pos != std::string::npos) return name.substr(pos + 1);
+    return name;
+  }
+
+  template <typename T> std::string python_typename() {
+    if constexpr (requires { py_converter<T>::tp_name(); })
+      return py_converter<T>::tp_name();
+    else if constexpr (requires { py_converter<T>::tp_name; }) // a simple string
+      return py_converter<T>::tp_name;
+    else {
+      if (tp_name<T>)
+        return remove_package_name(tp_name<T>);
+      else
+        return cpp_name<T>;
+    }
+  }
   // ---------------------  Backward compatibility layer with cpp2py ------------
   // If the converters already exists in cpp2py, use them
 

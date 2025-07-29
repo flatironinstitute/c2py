@@ -1,5 +1,14 @@
 #include <c2py/c2py.hpp>
 #include <complex>
+#include <iterator>
+#include <sstream>
+
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wunused-parameter"
+#endif
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif
 
 C2PY_RENAME(hf) int f1(int x) { return x * 3; }
 double f1(double x) { return -x * 10; }
@@ -22,6 +31,9 @@ int f(int x, int y) { return x + 10 * y; }
 int f(int x);
 
 int g(int x, int y = 8) { return x * 10 + y; }
+
+// BUG
+//int g2(int x, int y = {}) { return x;}
 
 using return_t = double;
 std::pair<return_t, double> ret_with_alias() { return std::make_pair(1.3, 2.0); }
@@ -55,7 +67,33 @@ namespace N {
 //template C2PY_RENAME(h) auto N::h(float x);
 template C2PY_RENAME(h) auto N::h(int x);
 
-template C2PY_RENAME(hf) auto N::h(long x);
+using mylong = long;
+
+template C2PY_RENAME(hf) auto N::h(mylong x);
 template C2PY_RENAME(hf) auto N::h(double x);
+
+// Playing with the doc generation
+/**
+ * @brief A silly function to play with a vector of integers
+ * 
+ * @param v A vector of integers
+ * @return Something new  
+ */
+std::vector<int> play_with_vector(std::vector<int> v) { return v; }
+
+/**
+ * @brief A nice function to play with a vector of vectors of integers 
+ * 
+ * @param v  A vector of vectors of integers 
+ * @return Something 
+ */
+std::vector<double> play_with_vector(std::vector<std::vector<int>> v) { return {2.0, 3.0, 4.0}; }
+
+int get_arg() { return 42; }
+int dd(int x, int y = 8) { return 1; }
+int dd(int x, long y = 8) { return 1; }
+int dd(int x, bool y = false) { return 1; }
+int dd(int x, double z, int y = get_arg()) { return 1; }
+int dd(int x, std::string y = "blabla") { return 1; }
 
 #include "basicfun.wrap.cxx"

@@ -23,6 +23,12 @@ namespace c2py {
 
   template <typename T1, typename T2> struct py_converter<std::pair<T1, T2>> {
 
+    static std::string tp_name() {
+      std::ostringstream out;
+      out << "tuple[" << python_typename<T1>() << ", " << python_typename<T2>() << "]";
+      return out.str();
+    }
+
     template <typename P> static PyObject *c2py(P &&p) {
       static_assert(is_instantiation_of_v<std::pair, std::decay_t<P>>, "Logic error");
       pyref x1 = cxx2py(std::get<0>(std::forward<P>(p)));

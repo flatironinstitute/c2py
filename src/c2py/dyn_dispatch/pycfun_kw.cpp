@@ -85,10 +85,23 @@ bool c2py::pycfun_kw::is_callable(PyObject *, PyObject *args, PyObject *kwargs, 
 // --------------------------------
 
 std::string c2py::pycfun_kw::signature() const {
-  auto res = "("
-     + join(
-                c_arguments, [](auto &&a) { return a.name + ": " + trim(*a.type_name); }, ", ");
-  return (this->rtype_name ? res + ") -> " + (*this->rtype_name) : res + ")");
+  // splitting strategy to be improved
+  auto sign = [&](bool split_lines) {
+    const char *sep = split_lines ? ",\n      " : ", ";
+    auto res        = join(
+       c_arguments,
+       [](argument_t const &a) {
+         return a.name + ": " + trim(a.python_typename()) + (a.default_value_printer ? " = " + a.default_value_printer(a.default_value) : "");
+       },
+       sep);
+    auto rtype_name = this->python_return_typename();
+    return "(" + (!rtype_name.empty() ? res + ")\n    -> " + rtype_name : res + ")");
+  };
+  auto res = sign(false);
+  if (res.size() > 100)
+    return sign(true);
+  else
+    return res;
 }
 
 // --------------------------------

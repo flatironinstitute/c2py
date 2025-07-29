@@ -14,6 +14,9 @@ namespace c2py {
   // FIXME : constexpr when implemented in clang 2b
   template <typename T> static inline const std::string cpp_name = trim(replacenl(std::string{util::type_name<T>()})); // typeid(T).name();
 
+  template <typename T> static constexpr char *tp_name = nullptr; //NOLINT
+
+  // cLEAN THIS
   // FIXME : if the first option is not ok, we have to enumerate all basic types , etc...
   // And specialize for all converters ?
   //template <> inline const std::string cpp_name<int>                      = "int";

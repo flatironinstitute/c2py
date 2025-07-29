@@ -22,6 +22,8 @@ namespace c2py {
 
   template <> struct py_converter<std::string> {
 
+    static constexpr const char *tp_name = "str";
+
     static PyObject *c2py(std::string const &x) { return PyUnicode_FromString(x.c_str()); }
 
     static std::string py2c(PyObject *ob) { return PyUnicode_AsUTF8(ob); }

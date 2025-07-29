@@ -25,6 +25,8 @@ namespace c2py {
   // --- complex
 
   template <> struct py_converter<std::complex<double>> {
+
+    static constexpr const char *tp_name = "complex";
     static PyObject *c2py(std::complex<double> x) { return PyComplex_FromDoubles(x.real(), x.imag()); }
     static std::complex<double> py2c(PyObject *ob) {
       if (PyArray_CheckScalar(ob)) {

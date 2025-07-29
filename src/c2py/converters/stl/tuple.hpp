@@ -26,6 +26,15 @@ namespace c2py {
 
   template <typename... Types> struct py_converter<std::tuple<Types...>> {
 
+    static std::string tp_name() {
+      std::ostringstream out;
+      std::string sep;
+      out << "tuple[";
+      ((out << sep << python_typename<Types>(), sep = ", "), ...);
+      out << "]";
+      return out.str();
+    }
+
     private:
     using tuple_t = std::tuple<Types...>;
 

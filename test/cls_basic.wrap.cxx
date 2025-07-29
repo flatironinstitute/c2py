@@ -152,11 +152,16 @@ constinit PyGetSetDef c2py::tp_getset<dummy_class>[] = {
 // my_module_init
 static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
 
+// nop
+static auto const fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
+
 static const auto doc_d_10 = fun_10.doc({R"DOC(   )DOC"});
+static const auto doc_d_11 = fun_11.doc({R"DOC(   )DOC"});
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
    {"my_module_init", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
+   {"nop", (PyCFunction)c2py::pyfkw<fun_11>, METH_VARARGS | METH_KEYWORDS, doc_d_11.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 

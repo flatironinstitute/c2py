@@ -13,28 +13,7 @@ namespace c2py {
     template <typename... U> dispatcher_t(U &&...u) { ((void)ov_list.push_back(std::forward<U>(u)), ...); }
 
     private:
-    // impl detail of ()
-    PyObject *call_impl(PyObject *self, PyObject *args, PyObject *kwargs) const {
-
-      for (auto const &ov : ov_list)
-        if (ov->is_callable(self, args, kwargs)) return ov->operator()(self, args, kwargs);
-
-      // The call has failed. We rerun, but raising the exception in each case, and report
-      std::stringstream err;
-      err << "[c2py] Can not call the function with the arguments\n";
-      //if (self) err << "  - " << PyUnicode_AsUTF8(pyref{PyObject_Str(self)}) << "\n";
-      if (args) err << "  - " << PyUnicode_AsUTF8(pyref{PyObject_Str(args)}) << "\n";
-      if (kwargs) err << "  - " << PyUnicode_AsUTF8(pyref{PyObject_Str(kwargs)}) << "\n";
-      err << "The dispatch to C++ failed with the following error(s):\n";
-      int c = 0;
-      for (auto const &ov : ov_list) {
-        ++c;
-        ov->is_callable(self, args, kwargs, true);
-        err << "[" << c << "] " << ov->signature() << "\n    " << c2py::get_python_error() << "\n";
-      }
-      PyErr_SetString(PyExc_TypeError, err.str().c_str());
-      return nullptr;
-    }
+    PyObject *call_impl(PyObject *self, PyObject *args, PyObject *kwargs) const;
 
     public:
     // Call each overload. The first available is used.
@@ -56,18 +35,7 @@ namespace c2py {
 
     // overload doc (string) in case only one overload ...
     // FIXME : to make generated code simpler in most cases.
-    [[nodiscard]] std::string doc(std::initializer_list<const char *> const &docs) const {
-      assert(docs.size() == ov_list.size()); // by construction for the automated tool
-      std::stringstream fs;
-      fs << "Dispatched C++ function\n";
-      int i = 0;
-      // FIXME : use format when in std
-      for (auto const &x : docs) {
-        fs << "[" << i + 1 << "]  " << ov_list[i]->signature() << "\n\n" << x << "\n\n";
-        ++i;
-      }
-      return fs.str();
-    }
+    [[nodiscard]] std::string doc(std::initializer_list<const char *> const &docs) const;
   };
 
   // ==============================

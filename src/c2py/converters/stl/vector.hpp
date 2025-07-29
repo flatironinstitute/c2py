@@ -17,6 +17,7 @@
 // Authors: Olivier Parcollet, Nils Wentzell
 
 #pragma once
+#include <sstream>
 #include <vector>
 #include <string>
 #include <cstddef>
@@ -24,7 +25,6 @@
 #include "./common.hpp"
 #include "../../py_converter.hpp"
 #include "../numpy_proxy.hpp"
-
 namespace c2py {
 
   // Convert vector to numpy_proxy, WARNING: Deep Copy
@@ -95,6 +95,12 @@ namespace c2py {
   // --------------------------------------
 
   template <typename T> struct py_converter<std::vector<T>> {
+
+    static std::string tp_name() {
+      std::ostringstream out;
+      out << "[" << python_typename<T>() << "]";
+      return out.str();
+    }
 
     template <typename V> static PyObject *c2py(V &&v) {
       static_assert(is_instantiation_of_v<std::vector, std::decay_t<V>>, "Logic error");

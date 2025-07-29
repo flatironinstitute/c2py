@@ -1,4 +1,7 @@
 #pragma once
+#include <optional>
+#include <ratio>
+#include <sstream>
 #include <type_traits>
 #include <vector>
 #include <any>
@@ -13,6 +16,21 @@ namespace c2py {
   // has raised an exception
   struct exception_raised_in_python {};
 
+  template <typename T> std::string default_value_repr(std::any const &v) {
+    std::ostringstream oss;
+    using U = std::decay_t<T>; // just in case
+    if constexpr (std::is_same_v<U, std::string>)
+      oss << '"' << std::any_cast<T>(v) << '"';
+    else if constexpr (std::is_same_v<U, bool>)
+      oss << (std::any_cast<T>(v) ? "True" : "False");
+    else if constexpr (std::is_same_v<U, std::nullopt_t> or std::is_same_v<U, std::nullptr_t>)
+      oss << "None";
+    else if constexpr (requires { oss << T{}; })
+      oss << std::any_cast<T>(v);
+    else
+      oss << "<unprintable>";
+    return oss.str();
+  }
   // =====================  argument_t ===========================
 
   // Handle one argument of a dynamically dispatched function pycfun_kw
@@ -20,9 +38,10 @@ namespace c2py {
   // We need a set of erased argument to determine which function to call
   struct argument_t {
     std::string name;                  // name of the argument. Can be empty
-    std::string const *type_name;      // Name of the C++ type for error. FIXME : Python AND C++ names?
+    std::string (*python_typename)();  // Name of the type in Python, for doc
     bool (*is_conv)(PyObject *, bool); // eraser of py_converter<T>::is_convertible
     std::any default_value;            // the value. Can be none.
+    std::string (*default_value_printer)(std::any const &) = nullptr;
 
     [[nodiscard]] bool has_default() const { return default_value.has_value(); }
 
@@ -36,26 +55,30 @@ namespace c2py {
   // First one for argument without a default value.
   template <typename A> auto make_argument(std::string const &name) {
     return argument_t{name,
-                      &cpp_name<A>,
+                      python_typename<std::decay_t<A>>,
                       [](PyObject *ob, bool re) -> bool { return py_converter<std::decay_t<A>>::is_convertible(ob, re); },
                       // &py_converter<std::decay_t<A>>::is_convertible, // I use a lambda as in some cases, is_convertible
                       // can have optional parameters (e.g. nda::array_view), so the cast of the pointer does not compile
+                      {},
                       {}};
   }
   // Second one with for an argument with a default value.
   template <typename A, typename T> auto make_argument(nv_pair<T> &&nvp) {
-    return argument_t{std::move(nvp).name, &cpp_name<A>,
-                      [](PyObject *ob, bool re) -> bool { return py_converter<std::decay_t<A>>::is_convertible(ob, re); },
-                      A{std::move(nvp).value}}; //ensure the default_value is an A, whatever T is.
+    return argument_t{std::move(nvp).name, //
+                      python_typename<std::decay_t<A>>,
+                      [](PyObject *ob, bool re) -> bool { return py_converter<std::decay_t<A>>::is_convertible(ob, re); }, //
+                      A{std::move(nvp).value}, //ensure the default_value is an A, whatever T is.
+                      default_value_repr<A>};
   }
 
   // =========================== pycfun_kw =====================
 
   // Abstract class for the eraser for a C++ function into a python function
   class pycfun_kw {
-    bool release_GIL = false;            // Not used
-    std::vector<argument_t> c_arguments; // arguments of the function, with erased type
-    std::string const *rtype_name;       // name of the return type for error messages
+    bool release_GIL = false;                // Not used
+    std::vector<argument_t> c_arguments;     // arguments of the function, with erased type
+                                             // std::string const *rtype_name;       // name of the return type for error messages
+    std::string (*python_return_typename)(); // Name of the return type in Python, for doc
 
     protected:
     // Call the function from args, kwargs
@@ -69,8 +92,8 @@ namespace c2py {
 
     protected:
     // Constructs by simply moving in the data
-    pycfun_kw(std::vector<argument_t> &&c_arguments, std::string const *rtype_name = {})
-       : c_arguments{std::move(c_arguments)}, rtype_name{rtype_name} {}
+    pycfun_kw(std::vector<argument_t> &&c_arguments, std::string (*python_return_typename)() = nullptr)
+       : c_arguments{std::move(c_arguments)}, python_return_typename{python_return_typename} {}
 
     pycfun_kw(pycfun_kw const &)            = default;
     pycfun_kw(pycfun_kw &&)                 = default;
@@ -143,7 +166,7 @@ namespace c2py {
     // Note that U can be some pair of a DIFFERENT type than A::type, e.g. double x = 0 ...
     // As long as we can construc the A, it is fine
     template <typename... U>
-    c_function_impl_t(fnt_ptr_t f, U &&...u) noexcept : pycfun_kw{{make_argument<T>(std::forward<U>(u))...}, &cpp_name<R>}, f{f} {}
+    c_function_impl_t(fnt_ptr_t f, U &&...u) noexcept : pycfun_kw{{make_argument<T>(std::forward<U>(u))...}, python_typename<R>}, f{f} {}
 
     // call it : simply convert all arguments and call f
     PyObject *call(PyObject * /*self*/, PyObject *args, PyObject *kwargs) const override {
@@ -166,7 +189,7 @@ namespace c2py {
     // Note that U can be some pair of a DIFFERENT type than A::type, e.g. double x = 0 ...
     // As long as we can construc the A, it is fine
     template <typename U0, typename... U>
-    c_methfun_impl_t(fnt_ptr_t f, U0, U &&...u) noexcept : pycfun_kw{{make_argument<T>(std::forward<U>(u))...}, &cpp_name<R>}, f{f} {}
+    c_methfun_impl_t(fnt_ptr_t f, U0, U &&...u) noexcept : pycfun_kw{{make_argument<T>(std::forward<U>(u))...}, python_typename<R>}, f{f} {}
 
     // call it : simply convert all arguments and call f
     PyObject *call(PyObject *self, PyObject *args, PyObject *kwargs) const override {
@@ -188,7 +211,7 @@ namespace c2py {
 
     public:
     template <typename... U>
-    c_method_impl_t(fnt_ptr_t f, U &&...u) noexcept : pycfun_kw{{make_argument<T>(std::forward<U>(u))...}, &cpp_name<R>}, f{f} {}
+    c_method_impl_t(fnt_ptr_t f, U &&...u) noexcept : pycfun_kw{{make_argument<T>(std::forward<U>(u))...}, python_typename<R>}, f{f} {}
 
     PyObject *call(PyObject *self, PyObject *args, PyObject *kwargs) const override {
       auto l = [&]<size_t... Is>(std::index_sequence<Is...>) {

@@ -115,6 +115,8 @@ double dummy_class::do_thing(double x) { return 3 * x; }
 template <typename T> C2PY_WRAP_AS_METHOD static T clone(T const &x) { return T{x}; };
 template A clone(A const &x);
 
+void nop(A const &a) {}
+
 C2PY_MODULE_INIT void my_module_init() { std::cout << "===== Starting module !!=====" << std::endl; };
 
 #include "cls_basic.wrap.cxx"

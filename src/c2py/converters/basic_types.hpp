@@ -40,6 +40,7 @@ namespace c2py {
 
   // --- bool
   template <> struct py_converter<bool> {
+    static constexpr const char *tp_name = "bool";
     static PyObject *c2py(bool b) {
       if (b)
         Py_RETURN_TRUE;
@@ -58,6 +59,9 @@ namespace c2py {
 
   namespace details {
     template <typename I> struct py_converter_impl {
+
+      static constexpr const char *tp_name = "int";
+
       static PyObject *c2py(I i) { return PyLong_FromLong(long(i)); }
       static I py2c(PyObject *ob) {
         if (PyLong_Check(ob)) { return I(PyLong_AsLong(ob)); }
@@ -97,6 +101,8 @@ namespace c2py {
   // --- byte
 
   template <> struct py_converter<std::byte> {
+    static constexpr const char *tp_name = "bytes";
+
     static PyObject *c2py(std::byte b) { return PyBytes_FromStringAndSize(reinterpret_cast<char *>(&b), 1); } //NOLINT
     static std::byte py2c(PyObject *ob) { return static_cast<std::byte>(PyBytes_AsString(ob)[0]); }           //NOLINT
     static bool is_convertible(PyObject *ob, bool raise_exception) {
@@ -109,6 +115,8 @@ namespace c2py {
   // --- double
 
   template <> struct py_converter<double> {
+    static constexpr const char *tp_name = "float";
+
     static PyObject *c2py(double x) { return PyFloat_FromDouble(x); }
     static double py2c(PyObject *ob) {
       if (PyFloat_Check(ob) || PyLong_Check(ob)) { return PyFloat_AsDouble(ob); }
