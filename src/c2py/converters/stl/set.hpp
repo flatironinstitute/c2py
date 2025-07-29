@@ -24,6 +24,13 @@ namespace c2py {
 
   template <typename K> struct py_converter<std::set<K>> {
 
+    static std::string tp_name() {
+      std::ostringstream out;
+      std::string sep;
+      out << "set[" << python_typename<K>() << "]";
+      return out.str();
+    }
+
     template <typename S> static PyObject *c2py(S &&s) {
       static_assert(is_instantiation_of_v<std::set, std::decay_t<S>>, "Logic error");
       PyObject *set = PySet_New(nullptr);

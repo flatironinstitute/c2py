@@ -27,6 +27,13 @@ namespace c2py {
   // converts in the first possible type
   template <typename... T> struct py_converter<std::variant<T...>> {
 
+    static std::string tp_name() {
+      std::ostringstream out;
+      std::string sep;
+      ((out << sep << python_typename<T>(), sep = " | "), ...);
+      return out.str();
+    }
+
     private:
     template <int N> using types_t = std::tuple_element_t<N, std::tuple<T...>>;
 

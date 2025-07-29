@@ -24,6 +24,12 @@ namespace c2py {
 
   template <typename T> struct py_converter<std::optional<T>> {
 
+    static std::string tp_name() {
+      std::ostringstream out;
+      out << python_typename<T>() << " | None";
+      return out.str();
+    }
+
     using conv = py_converter<std::decay_t<T>>;
 
     template <typename O> static PyObject *c2py(O &&op) {

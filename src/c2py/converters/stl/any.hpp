@@ -7,6 +7,8 @@ namespace c2py {
 
   template <> struct py_converter<std::any> {
 
+    static constexpr const char *tp_name = "capsule";
+
     static void capsule_destructor(PyObject *capsule) {
       void *p = PyCapsule_GetPointer(capsule, "std::any");
       assert(p);

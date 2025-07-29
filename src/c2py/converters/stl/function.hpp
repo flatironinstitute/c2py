@@ -17,7 +17,9 @@ namespace c2py {
 
     // a dispatcher for this std::function
     template <typename R, typename... T>
-    static const auto std_function_call = dispatcher_f_kw_t{cfun(&std::function<R(T...)>::operator(), empty_string<T>...)};
+    static const auto std_function_call = dispatcher_f_kw_t {
+      cfun(&std::function<R(T...)>::operator(), empty_string<T>...)
+    };
 
   } // namespace detail
 
@@ -34,6 +36,15 @@ namespace c2py {
   struct py_converter<std::function<R(T...)>> {
     static_assert(concepts::IsConvertibleC2Py<R>, "Return type not convertible");
     static_assert((concepts::IsConvertiblePy2C<T> and ... and true), "Parameter not convertible");
+
+    static std::string tp_name() {
+      std::ostringstream out;
+      std::string sep;
+      out << "(";
+      ((out << sep << python_typename<T>(), sep = ", "), ...);
+      out << ") -> " << python_typename<R>();
+      return out.str();
+    }
 
     using c_t  = std::function<R(T...)>;
     using py_t = wrap<c_t>;

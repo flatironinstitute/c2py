@@ -68,6 +68,8 @@ namespace c2py {
 
   template <> struct py_converter<std::vector<std::byte>> {
 
+    static constexpr const char *tp_name = "[bytes]";
+
     static PyObject *c2py(std::vector<std::byte> const &v) {
       auto *char_ptr = reinterpret_cast<const char *>(v.data()); // NOLINT
       return PyBytes_FromStringAndSize(char_ptr, Py_ssize_t(v.size()));

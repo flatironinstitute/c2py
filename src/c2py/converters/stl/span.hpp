@@ -23,6 +23,9 @@
 namespace c2py {
 
   template <> struct py_converter<std::span<std::byte>> {
+
+    static constexpr const char *tp_name = "[bytes]";
+
     // --------------------------------------
 
     static bool is_convertible(PyObject *ob, bool raise_exception) {

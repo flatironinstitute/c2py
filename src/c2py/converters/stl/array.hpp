@@ -24,6 +24,12 @@ namespace c2py {
 
   template <typename T, size_t R> struct py_converter<std::array<T, R>> {
 
+    static std::string tp_name() {
+      std::ostringstream out;
+      out << "[" << python_typename<T>() << ", len = " << R << "]";
+      return out.str();
+    }
+
     static PyObject *c2py(std::array<T, R> const &v) {
       PyObject *list = PyList_New(0);
       for (auto const &x : v) {

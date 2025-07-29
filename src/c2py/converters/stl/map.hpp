@@ -27,6 +27,13 @@ namespace c2py {
 
   template <typename K, typename V> struct py_converter<std::map<K, V>> {
 
+    static std::string tp_name() {
+      std::ostringstream out;
+      std::string sep;
+      out << "dict[" << python_typename<K>() << " -> " << python_typename<V>() << "]";
+      return out.str();
+    }
+
     template <typename M>
     static PyObject *c2py(M &&m)
       requires(concepts::IsConvertibleC2Py<V>)
