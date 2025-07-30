@@ -88,14 +88,17 @@ std::string c2py::pycfun_kw::signature() const {
   // splitting strategy to be improved
   auto sign = [&](bool split_lines) {
     const char *sep = split_lines ? ",\n      " : ", ";
-    auto res        = join(
+    auto all_args   = join(
        c_arguments,
        [](argument_t const &a) {
          return a.name + ": " + trim(a.python_typename()) + (a.default_value_printer ? " = " + a.default_value_printer(a.default_value) : "");
        },
        sep);
-    auto rtype_name = this->python_return_typename();
-    return "(" + (!rtype_name.empty() ? res + ")\n    -> " + rtype_name : res + ")");
+    if (this->python_return_typename) {
+      auto rtype_name = this->python_return_typename();
+      return "(" + all_args + ")\n    -> " + rtype_name;
+    } else
+      return "(" + all_args + ")";
   };
   auto res = sign(false);
   if (res.size() > 100)
