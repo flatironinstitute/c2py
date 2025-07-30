@@ -56,10 +56,10 @@ namespace c2py {
     long size = p.extents[0];
     long step = p.strides[0] / sizeof(T);
 
-    std::vector<T> v(size);
+    std::vector<T> v; //(size);
 
     T *data = static_cast<T *>(p.data);
-    for (long i = 0; i < size; ++i) v[i] = *(data + i * step);
+    for (long i = 0; i < size; ++i) v.push_back(*(data + i * step));
 
     return v;
   }
