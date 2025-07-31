@@ -28,7 +28,6 @@ template <> constexpr bool c2py::is_wrapped<N::cls_comp>   = true;
 
 // ==================== module classes =====================
 
-template <> inline const std::string c2py::cpp_name<N::cls_equal>   = "N::cls_equal";
 template <> inline constexpr auto c2py::tp_name<N::cls_equal>       = "comparison.ClsEqual";
 template <> inline constexpr const char *c2py::tp_doc<N::cls_equal> = R"DOC(   )DOC";
 
@@ -51,7 +50,6 @@ constinit PyGetSetDef c2py::tp_getset<N::cls_equal>[] = {c2py::getsetdef_from_me
 
                                                          {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline const std::string c2py::cpp_name<N::cls_equal2>   = "N::cls_equal2";
 template <> inline constexpr auto c2py::tp_name<N::cls_equal2>       = "comparison.ClsEqual2";
 template <> inline constexpr const char *c2py::tp_doc<N::cls_equal2> = R"DOC(   )DOC";
 
@@ -74,7 +72,6 @@ constinit PyGetSetDef c2py::tp_getset<N::cls_equal2>[] = {c2py::getsetdef_from_m
 
                                                           {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline const std::string c2py::cpp_name<N::cls_comp>   = "N::cls_comp";
 template <> inline constexpr auto c2py::tp_name<N::cls_comp>       = "comparison.ClsComp";
 template <> inline constexpr const char *c2py::tp_doc<N::cls_comp> = R"DOC(   )DOC";
 

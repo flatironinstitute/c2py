@@ -29,7 +29,6 @@ template <> constexpr bool c2py::is_wrapped<N1::tpl_params_ndc<int>> = true;
 
 // ==================== module classes =====================
 
-template <> inline const std::string c2py::cpp_name<N1::A_ndc>   = "N1::A_ndc";
 template <> inline constexpr auto c2py::tp_name<N1::A_ndc>       = "synth_init.ANdc";
 template <> inline constexpr const char *c2py::tp_doc<N1::A_ndc> = R"DOC(   )DOC";
 
@@ -52,8 +51,7 @@ constinit PyGetSetDef c2py::tp_getset<N1::A_ndc>[] = {c2py::getsetdef_from_membe
 
                                                       {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline const std::string c2py::cpp_name<N1::params> = "N1::params";
-template <> inline constexpr auto c2py::tp_name<N1::params>     = "synth_init.Params";
+template <> inline constexpr auto c2py::tp_name<N1::params> = "synth_init.Params";
 template <>
 inline constexpr const char *c2py::tp_doc<N1::params> = R"DOC(   * i: int
       An int
@@ -119,8 +117,7 @@ constinit PyGetSetDef c2py::tp_getset<N1::params>[] = {c2py::getsetdef_from_memb
                                                        {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline const std::string c2py::cpp_name<N1::params_ndc> = "N1::params_ndc";
-template <> inline constexpr auto c2py::tp_name<N1::params_ndc>     = "synth_init.ParamsNdc";
+template <> inline constexpr auto c2py::tp_name<N1::params_ndc> = "synth_init.ParamsNdc";
 template <>
 inline constexpr const char *c2py::tp_doc<N1::params_ndc> = R"DOC(   * i: int
       An int
@@ -201,8 +198,7 @@ constinit PyGetSetDef c2py::tp_getset<N1::params_ndc>[] = {c2py::getsetdef_from_
                                                            {"__dict__", (getter)prop_get_dict_1, nullptr, "", nullptr},
                                                            {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline const std::string c2py::cpp_name<N1::tpl_params_ndc<int>> = "N1::tpl_params_ndc<int>";
-template <> inline constexpr auto c2py::tp_name<N1::tpl_params_ndc<int>>     = "synth_init.TplParamNdcInt";
+template <> inline constexpr auto c2py::tp_name<N1::tpl_params_ndc<int>> = "synth_init.TplParamNdcInt";
 template <>
 inline constexpr const char *c2py::tp_doc<N1::tpl_params_ndc<int>> = R"DOC(   * i: int
       An int

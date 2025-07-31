@@ -30,7 +30,7 @@ namespace c2py {
         else
           return cxx2py(T{h5::h5_read<T>(gr, name)});
       } catch (std::exception const &e) {
-        auto err = std::string(".. In h5 reading of object of type ") + cpp_name<T> + "\n.... " + e.what() + "\n";
+        auto err = std::string(".. In h5 reading of object of type ") + python_typename<T> + "\n.... " + e.what() + "\n";
         throw std::runtime_error{err};
       }
     };

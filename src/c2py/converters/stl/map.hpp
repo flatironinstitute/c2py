@@ -19,11 +19,7 @@
 #pragma once
 #include <map>
 #include "./common.hpp"
-#include "../../cpp_name.hpp"
-
 namespace c2py {
-
-  template <typename K, typename V> inline const std::string cpp_name<std::map<K, V>> = "std::map";
 
   template <typename K, typename V> struct py_converter<std::map<K, V>> {
 

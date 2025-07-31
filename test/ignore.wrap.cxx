@@ -28,7 +28,6 @@ template <> constexpr bool c2py::is_wrapped<opaque2>  = true;
 
 // ==================== module classes =====================
 
-template <> inline const std::string c2py::cpp_name<a_struct>   = "a_struct";
 template <> inline constexpr auto c2py::tp_name<a_struct>       = "ignore.AStruct";
 template <> inline constexpr const char *c2py::tp_doc<a_struct> = R"DOC(   * a: int)DOC";
 
@@ -73,7 +72,6 @@ constinit PyGetSetDef c2py::tp_getset<a_struct>[] = {c2py::getsetdef_from_member
                                                      {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
                                                      {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline const std::string c2py::cpp_name<opaque>   = "opaque";
 template <> inline constexpr auto c2py::tp_name<opaque>       = "ignore.Opaque";
 template <> inline constexpr const char *c2py::tp_doc<opaque> = R"DOC(   )DOC";
 
@@ -91,7 +89,6 @@ constinit PyGetSetDef c2py::tp_getset<opaque>[] = {
 
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline const std::string c2py::cpp_name<opaque2>   = "opaque2";
 template <> inline constexpr auto c2py::tp_name<opaque2>       = "ignore.Opaque2";
 template <> inline constexpr const char *c2py::tp_doc<opaque2> = R"DOC(   )DOC";
 

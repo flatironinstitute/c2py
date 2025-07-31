@@ -26,8 +26,9 @@
 #include <typeindex>
 #include <iostream>
 
-#include "./cpp_name.hpp"
 #include "./pyref.hpp"
+#include "util/type_name.hpp"
+#include "util/str.hpp"
 
 // for backward compatibility layer below
 namespace cpp2py {
@@ -35,6 +36,9 @@ namespace cpp2py {
 }
 
 namespace c2py {
+
+  template <typename T> const std::string cpp_qname() { return trim(replacenl(std::string{util::type_name<T>()})); }
+  template <typename T> static constexpr char *tp_name = nullptr; //NOLINT
 
   //---------------------  py_converters -----------------------------
 
@@ -137,7 +141,7 @@ namespace c2py {
       if (tp_name<T>)
         return remove_package_name(tp_name<T>);
       else
-        return cpp_name<T>;
+        return cpp_qname<T>();
     }
   }
   // ---------------------  Backward compatibility layer with cpp2py ------------
@@ -165,8 +169,8 @@ namespace c2py {
     if (not py_converter<T>::is_convertible(*this, true)) {
       auto err = c2py::get_python_error(); // clean error
       throw std::runtime_error{" Error in converting in as<..> method.\n The Python object of type " + to_string(this->type())
-                               + " can not be converted to C++ type " + cpp_name<T>
-                               + "\n NB: the result was \n \n " + to_string(*this) + "   The converter error was : \n\n" + err + "\n"};
+                               + " can not be converted to C++ type " + cpp_qname<T>() + "\n NB: the result was \n \n " + to_string(*this)
+                               + "   The converter error was : \n\n" + err + "\n"};
     }
     return py_converter<T>::py2c(*this);
   }

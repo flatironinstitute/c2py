@@ -28,7 +28,6 @@ template <> constexpr bool c2py::is_wrapped<B<int>> = true;
 
 // ==================== module classes =====================
 
-template <> inline const std::string c2py::cpp_name<C>   = "C";
 template <> inline constexpr auto c2py::tp_name<C>       = "bug_tpl_type.C";
 template <> inline constexpr const char *c2py::tp_doc<C> = R"DOC(   )DOC";
 
@@ -49,7 +48,6 @@ constinit PyGetSetDef c2py::tp_getset<C>[] = {
 
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline const std::string c2py::cpp_name<A<3>>   = "A<3>";
 template <> inline constexpr auto c2py::tp_name<A<3>>       = "bug_tpl_type.A3";
 template <> inline constexpr const char *c2py::tp_doc<A<3>> = R"DOC(   )DOC";
 
@@ -74,7 +72,6 @@ constinit PyGetSetDef c2py::tp_getset<A<3>>[] = {
 
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline const std::string c2py::cpp_name<B<int>>   = "B<int>";
 template <> inline constexpr auto c2py::tp_name<B<int>>       = "bug_tpl_type.Bi";
 template <> inline constexpr const char *c2py::tp_doc<B<int>> = R"DOC(   )DOC";
 

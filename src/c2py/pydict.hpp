@@ -1,6 +1,5 @@
 #pragma once
 #include <fstream>
-#include "cpp_name.hpp"
 #include "py_converter.hpp"
 #include "converters/basic_types.hpp"
 namespace c2py {
@@ -87,7 +86,7 @@ namespace c2py {
       if (py_converter<T>::is_convertible(pyarg, false))
         x = py2cxx<T>(pyarg);
       else {
-        err << make_error_mandatory(pyarg, varname, cpp_name<T>);
+        err << make_error_mandatory(pyarg, varname, cpp_qname<T>());
         py_converter<T>::is_convertible(pyarg, true); // raise exception
         if (PyErr_Occurred()) { err << "   Explanation: " << get_python_error() << "\n"; }
       }
@@ -108,7 +107,7 @@ namespace c2py {
       PyObject *pyarg = dic[name];
       if (not pyarg) throw std::runtime_error("The mandatory parameter '"s + name + "' is missing");
       used_keys.emplace_back(name);
-      if (not py_converter<T>::is_convertible(pyarg, true)) throw std::runtime_error(make_error_mandatory(pyarg, name, cpp_name<T>));
+      if (not py_converter<T>::is_convertible(pyarg, true)) throw std::runtime_error(make_error_mandatory(pyarg, name, cpp_qname<T>()));
       return py2cxx<T>(pyarg);
     }
 

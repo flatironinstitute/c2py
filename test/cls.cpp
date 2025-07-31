@@ -29,7 +29,7 @@ static_assert(c2py::concepts::IsConvertible<int>);
 
 // =============== struct A =====================
 namespace c2py {
-  template <> inline const std::string cpp_name<A> = "[C++ A]";
+//  template <> inline const std::string cpp_name<A> = "[C++ A]";
 
   template <> constexpr auto tp_name<A>       = "cls.A";
   template <> constexpr const char *tp_doc<A> = "Doc A ";

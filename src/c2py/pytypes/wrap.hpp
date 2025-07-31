@@ -2,7 +2,6 @@
 #include <sstream>
 
 #include "../util/str.hpp"
-#include "../cpp_name.hpp"
 #include "../py_converter.hpp"
 
 // local pieces, separated for code readibility
@@ -117,7 +116,7 @@ namespace c2py {
       fs << self_c;
       return PyUnicode_FromString(fs.str().c_str());
     } else {
-      auto s = wrap_pytype<Cls>.tp_name + " [wrapped from C++ object "s + cpp_name<Cls> + "]";
+      auto s = wrap_pytype<Cls>.tp_name + " [wrapped from C++ object "s + cpp_qname<Cls>() + "]";
       return PyUnicode_FromString(s.c_str());
     }
   }

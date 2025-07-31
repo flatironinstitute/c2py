@@ -27,8 +27,7 @@ template <> constexpr bool c2py::is_wrapped<dummy_class> = true;
 
 // ==================== module classes =====================
 
-template <> inline const std::string c2py::cpp_name<A> = "A";
-template <> inline constexpr auto c2py::tp_name<A>     = "cls_basic.A";
+template <> inline constexpr auto c2py::tp_name<A> = "cls_basic.A";
 template <>
 inline constexpr const char *c2py::tp_doc<A> = R"DOC(   Brief description of A
    
@@ -123,7 +122,6 @@ static int setitem_0(PyObject *self, PyObject *key, PyObject *val) {
 
 template <> PyMappingMethods c2py::tp_as_mapping<A> = {c2py::tpxx_size<A>, getitem_0, setitem_0};
 
-template <> inline const std::string c2py::cpp_name<dummy_class>   = "dummy_class";
 template <> inline constexpr auto c2py::tp_name<dummy_class>       = "cls_basic.DummyClass";
 template <> inline constexpr const char *c2py::tp_doc<dummy_class> = R"DOC(   test implementation outside of class)DOC";
 

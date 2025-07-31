@@ -26,7 +26,6 @@ template <> constexpr bool c2py::is_wrapped<B> = true;
 
 // ==================== module classes =====================
 
-template <> inline const std::string c2py::cpp_name<B>   = "B";
 template <> inline constexpr auto c2py::tp_name<B>       = "two_module_2.B";
 template <> inline constexpr const char *c2py::tp_doc<B> = R"DOC(   )DOC";
 

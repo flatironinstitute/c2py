@@ -1,11 +1,8 @@
 #pragma once
-//#include <stdexcept>
-#include "./cpp_name.hpp"
 #include "./pyref.hpp"
 #include "./py_converter.hpp"
 #include "./util/nv_pair.hpp"
 #include "./util/macros.hpp"
-#include <stdexcept>
 
 namespace c2py {
 
@@ -105,7 +102,7 @@ namespace c2py {
       }
       if (not py_converter<R>::is_convertible(r, true)) {
         auto err = get_python_error(); // clean error
-        throw std::runtime_error{detail::format_error(r, fname, cpp_name<R>, err)};
+        throw std::runtime_error{detail::format_error(r, fname, cpp_qname<R>(), err)};
       }
       return py2cxx<R>(r);
     }

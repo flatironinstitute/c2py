@@ -6,18 +6,18 @@
 
 namespace c2py {
 
-  template <typename R, typename... T> static inline const std::string simple_signature = (cpp_name<T> + ... + "") + " -> " + cpp_name<R>;
+  template <typename R, typename... T> std::string simple_signature() { return (cpp_qname<T>() + ... + "") + " -> " + cpp_qname<R>(); }
 
   // -------------------  pycfun23--------------------
 
   class pycfun23 {
-    std::string const *sig [[maybe_unused]]; //NOLINT No clue why the unused warning
+    std::string (*sig)(); //NOLINT No clue why the unused warning
     using conv_f_t = bool (*)(PyObject *, bool);
     std::vector<conv_f_t> c_args;
     virtual PyObject *call(PyObject *x, PyObject *y, PyObject *z) const = 0;
 
     protected:
-    pycfun23(std::vector<conv_f_t> &&cargs, std::string const *sig) : sig{sig}, c_args(std::move(cargs)) {}
+    pycfun23(std::vector<conv_f_t> &&cargs, std::string (*sig)()) : sig{sig}, c_args(std::move(cargs)) {}
 
     public:
     virtual ~pycfun23() = default;
@@ -27,7 +27,7 @@ namespace c2py {
     pycfun23 &operator=(pycfun23 const &) = default;
     pycfun23 &operator=(pycfun23 &&)      = default;
 
-    [[nodiscard]] std::string const &signature() const { return *sig; }
+    [[nodiscard]] std::string signature() const { return (*sig)(); }
 
     bool is_callable(PyObject *x, PyObject *y, PyObject *z, bool raise_exception = false) const noexcept {
       bool b = (z == nullptr ? true : (*c_args[2])(y, raise_exception));
