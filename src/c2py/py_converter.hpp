@@ -132,7 +132,11 @@ namespace c2py {
     return name;
   }
 
-  template <typename T> std::string python_typename() {
+  //-------------------  python_typename --------------------
+
+  template <typename U> std::string python_typename() {
+    using T = std::decay_t<U>; // remove const, ref, etc.
+    // If the type is wrapped, we use the tp_name of the wrapped type.
     if constexpr (requires { py_converter<T>::tp_name(); })
       return py_converter<T>::tp_name();
     else if constexpr (requires { py_converter<T>::tp_name; }) // a simple string
