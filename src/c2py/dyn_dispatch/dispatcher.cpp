@@ -26,17 +26,12 @@ namespace c2py {
 
   // overload doc (string) in case only one overload ...
   // FIXME : to make generated code simpler in most cases.
-  template <typename Eraser, bool Constructors>
-  [[nodiscard]] std::string dispatcher_t<Eraser, Constructors>::doc(std::initializer_list<const char *> const &docs) const {
-    assert(docs.size() == ov_list.size()); // by construction for the automated tool
+  template <typename Eraser, bool Constructors> [[nodiscard]] std::string dispatcher_t<Eraser, Constructors>::doc(const char *doc_string) const {
     std::stringstream fs;
     fs << "Dispatched C++ function\n";
-    // should use itertools ?
-    //for (auto &&[n, ov] : itertools::enumerate(ov_list)) { fs << "[" << n + 1 << "]  " << ov->signature() << "\n"; }
     int n = 1;
     for (auto const &ov : ov_list) fs << "[" << n++ << "]  " << ov->signature() << "\n";
-    fs << "\n";
-    for (auto const &x : docs) { fs << x << "\n"; }
+    fs << "\n" << doc_string << "\n";
     return fs.str();
   }
 
