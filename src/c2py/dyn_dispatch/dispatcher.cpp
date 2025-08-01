@@ -1,4 +1,5 @@
 #include "dispatcher.hpp"
+#include <regex>
 
 namespace c2py {
   template <typename Eraser, bool Constructors>
@@ -27,11 +28,17 @@ namespace c2py {
   // overload doc (string) in case only one overload ...
   // FIXME : to make generated code simpler in most cases.
   template <typename Eraser, bool Constructors> [[nodiscard]] std::string dispatcher_t<Eraser, Constructors>::doc(const char *doc_string) const {
+    constexpr auto hline  = ".. raw:: html\n\n   <hr>\n";
+    auto on_one_line = [](std::string const &sig) { return std::regex_replace(sig, std::regex(R"(\n\s+)"), " "); };
     std::stringstream fs;
-    fs << "Dispatched C++ function\n";
-    int n = 1;
-    for (auto const &ov : ov_list) fs << "[" << n++ << "]  " << ov->signature() << "\n";
-    fs << "\n" << doc_string << "\n";
+    if (ov_list.size() == 1) {
+      fs << "Dispatched C++ function: ``" << on_one_line(ov_list[0]->signature()) << "``\n\n";
+    } else {
+      fs << "Dispatched C++ functions:\n\n";
+      int n = 1;
+      for (auto const &ov : ov_list) fs << "[" << n++ << "] ``" << on_one_line(ov->signature()) << "``\n\n";
+    }
+    fs << hline << "\n\n" << doc_string << "\n";
     return fs.str();
   }
 
