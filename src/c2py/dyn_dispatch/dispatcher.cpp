@@ -28,16 +28,15 @@ namespace c2py {
   // overload doc (string) in case only one overload ...
   // FIXME : to make generated code simpler in most cases.
   template <typename Eraser, bool Constructors> [[nodiscard]] std::string dispatcher_t<Eraser, Constructors>::doc(const char *doc_string) const {
-    constexpr auto hline  = ".. raw:: html\n\n   <hr>\n";
-    auto on_one_line = [](std::string const &sig) { return std::regex_replace(sig, std::regex(R"(\n\s+)"), " "); };
+    constexpr auto hline = ".. raw:: html\n\n   <hr>\n";
+    auto format_sig      = [](std::string const &sig) {
+      auto tmp_res = std::regex_replace(sig, std::regex(R"(\n\s+)"), "\n        ");
+      return std::regex_replace(tmp_res, std::regex(R"(\n\s+->)"), "\n     ->");
+    };
     std::stringstream fs;
-    if (ov_list.size() == 1) {
-      fs << "Dispatched C++ function:\n\n``" << on_one_line(ov_list[0]->signature()) << "``\n\n";
-    } else {
-      fs << "Dispatched C++ functions:\n\n";
-      int n = 1;
-      for (auto const &ov : ov_list) fs << "[" << n++ << "] ``" << on_one_line(ov->signature()) << "``\n\n";
-    }
+    fs << "Dispatched C++ functions::\n\n";
+    int n = 1;
+    for (auto const &ov : ov_list) fs << "   [" << n++ << "] " << format_sig(ov->signature()) << "\n\n";
     fs << hline << "\n\n" << doc_string << "\n";
     return fs.str();
   }
