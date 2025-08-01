@@ -32,7 +32,7 @@ namespace c2py {
     auto on_one_line = [](std::string const &sig) { return std::regex_replace(sig, std::regex(R"(\n\s+)"), " "); };
     std::stringstream fs;
     if (ov_list.size() == 1) {
-      fs << "Dispatched C++ function: ``" << on_one_line(ov_list[0]->signature()) << "``\n\n";
+      fs << "Dispatched C++ function:\n\n``" << on_one_line(ov_list[0]->signature()) << "``\n\n";
     } else {
       fs << "Dispatched C++ functions:\n\n";
       int n = 1;
