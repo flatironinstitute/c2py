@@ -28,19 +28,20 @@ namespace c2py {
   // overload doc (string) in case only one overload ...
   // FIXME : to make generated code simpler in most cases.
   template <typename Eraser, bool Constructors> [[nodiscard]] std::string dispatcher_t<Eraser, Constructors>::doc(const char *doc_string) const {
-    constexpr auto hline = ".. raw:: html\n\n   <hr>\n";
-    auto format_sig      = [](std::string const &sig) {
+    auto format_sig = [](std::string const &sig) {
       auto tmp_res = std::regex_replace(sig, std::regex(R"(\n\s+)"), "\n        ");
       return std::regex_replace(tmp_res, std::regex(R"(\n\s+->)"), "\n     ->");
     };
     std::stringstream fs;
-    fs << "Dispatched C++ functions::\n\n";
+    fs << "Function dispatched to the following (C++) functions::\n\n";
     int n = 1;
     for (auto const &ov : ov_list) fs << "   [" << n++ << "] " << format_sig(ov->signature()) << "\n\n";
+    constexpr auto hline = ".. raw:: html\n\n   <hr>\n";
     fs << hline << "\n\n" << doc_string << "\n";
     return fs.str();
   }
 
+  // ---------------------------------
   template struct dispatcher_t<pycfun_kw, false>;
   template struct dispatcher_t<pycfun_kw, true>;
   template struct dispatcher_t<pycfun23, false>;
