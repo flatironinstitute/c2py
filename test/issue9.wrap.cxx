@@ -34,7 +34,7 @@ template <> constexpr initproc c2py::tp_init<dummy_class> = c2py::pyfkw_construc
 // do_thing
 static auto const fun_0 = c2py::dispatcher_f_kw_t{
    c2py::cmethod([](dummy_class &self, const std::function<double(const dummy_class::myarray<1> &)> &x) { return self.do_thing(x); }, "self", "x")};
-static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -61,9 +61,9 @@ static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](const std::array
 // h
 static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::array<int, 3> a) { return h(a); }, "a")};
 
-static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
-static const auto doc_d_2 = fun_2.doc({R"DOC(   )DOC"});
-static const auto doc_d_3 = fun_3.doc({R"DOC(   )DOC"});
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
+static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

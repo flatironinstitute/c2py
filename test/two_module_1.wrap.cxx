@@ -50,7 +50,7 @@ template <> constexpr initproc c2py::tp_init<N::A> = synth_constructor_0;
 
 // f
 static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cmethod([](N::A &self, int i) { return self.f(i); }, "self", "i")};
-static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -79,7 +79,7 @@ constinit PyGetSetDef c2py::tp_getset<N::A>[] = {c2py::getsetdef_from_member<&N:
 // f
 static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return N::f(); })};
 
-static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

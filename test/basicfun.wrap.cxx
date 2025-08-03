@@ -56,67 +56,18 @@ static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return 
 // isfinite
 static auto const fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](const dcomplex &x) { return N::isfinite(x); }, "x")};
 
-// play_with_vector
-static auto const fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::vector<int> v) { return play_with_vector(v); }, "v"),
-                                                  c2py::cfun([](std::vector<std::vector<int>> v) { return play_with_vector(v); }, "v")};
-
 // ret_with_alias
-static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return ret_with_alias(); })};
+static auto const fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return ret_with_alias(); })};
 
-static constexpr auto doc_f_0_0 = R"DOC(   )DOC";
-static constexpr auto doc_f_0_1 = R"DOC(   )DOC";
-static constexpr auto doc_f_0_2 = R"DOC(   )DOC";
-static constexpr auto doc_f_0_3 = R"DOC(   )DOC";
-static constexpr auto doc_f_0_4 = R"DOC(   )DOC";
-static const auto doc_d_0       = fun_0.doc({doc_f_0_0, doc_f_0_1, doc_f_0_2, doc_f_0_3, doc_f_0_4});
-static constexpr auto doc_f_1_0 = R"DOC(   A doc for f(x)
-   
-   Parameters
-   ----------
-   
-   x:
-      The doc of x)DOC";
-static constexpr auto doc_f_1_1 = R"DOC(   A doc for f(x,y)
-   
-   Parameters
-   ----------
-   
-   x:
-      The doc of x
-   y:
-      The doc of y)DOC";
-static const auto doc_d_1       = fun_1.doc({doc_f_1_0, doc_f_1_1});
-static const auto doc_d_2       = fun_2.doc({R"DOC(   )DOC"});
-static const auto doc_d_3       = fun_3.doc({R"DOC(   )DOC"});
-static const auto doc_d_4       = fun_4.doc({R"DOC(   )DOC"});
-static const auto doc_d_5       = fun_5.doc({R"DOC(   )DOC"});
-static constexpr auto doc_f_6_0 = R"DOC(   )DOC";
-static constexpr auto doc_f_6_1 = R"DOC(   )DOC";
-static constexpr auto doc_f_6_2 = R"DOC(   )DOC";
-static const auto doc_d_6       = fun_6.doc({doc_f_6_0, doc_f_6_1, doc_f_6_2});
-static const auto doc_d_7       = fun_7.doc({R"DOC(   )DOC"});
-static constexpr auto doc_f_8_0 = R"DOC(   Parameters
-   ----------
-   
-   v:
-      A vector of integers
-   
-   Returns
-   -------
-   
-      Something new)DOC";
-static constexpr auto doc_f_8_1 = R"DOC(   Parameters
-   ----------
-   
-   v:
-      A vector of vectors of integers
-   
-   Returns
-   -------
-   
-      Something)DOC";
-static const auto doc_d_8       = fun_8.doc({doc_f_8_0, doc_f_8_1});
-static const auto doc_d_9       = fun_9.doc({R"DOC(   )DOC"});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
+static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
+static const auto doc_d_4 = fun_4.doc(R"DOC()DOC");
+static const auto doc_d_5 = fun_5.doc(R"DOC()DOC");
+static const auto doc_d_6 = fun_6.doc(R"DOC()DOC");
+static const auto doc_d_7 = fun_7.doc(R"DOC()DOC");
+static const auto doc_d_8 = fun_8.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
@@ -128,8 +79,7 @@ static PyMethodDef module_methods[] = {
    {"h", (PyCFunction)c2py::pyfkw<fun_5>, METH_VARARGS | METH_KEYWORDS, doc_d_5.c_str()},
    {"hf", (PyCFunction)c2py::pyfkw<fun_6>, METH_VARARGS | METH_KEYWORDS, doc_d_6.c_str()},
    {"isfinite", (PyCFunction)c2py::pyfkw<fun_7>, METH_VARARGS | METH_KEYWORDS, doc_d_7.c_str()},
-   {"play_with_vector", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
-   {"ret_with_alias", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
+   {"ret_with_alias", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 

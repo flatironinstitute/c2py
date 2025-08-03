@@ -6,12 +6,6 @@
 #include <vector>
 #include <iostream>
 
-/**
- Brief description of A
-
- A long description of A.
- with multiple lines
-*/
 struct A {
   int k                 = 12;
   const int k_immutable = 23; //NOLINT

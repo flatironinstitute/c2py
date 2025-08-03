@@ -13,19 +13,8 @@
 C2PY_RENAME(hf) int f1(int x) { return x * 3; }
 double f1(double x) { return -x * 10; }
 
-/** 
- * A doc for f(x)
- * 
- * @param x The doc of x
- */
 int f(int x) { return x * 3; }
 
-/** 
- * A doc for f(x,y)
- * 
- * @param x The doc of x
- * @param y The doc of y
- */
 int f(int x, int y) { return x + 10 * y; }
 
 int f(int x);
@@ -72,14 +61,14 @@ using mylong = long;
 template C2PY_RENAME(hf) auto N::h(mylong x);
 template C2PY_RENAME(hf) auto N::h(double x);
 
-// Playing with the doc generation
+//// Playing with the doc generation
 /**
  * @brief A silly function to play with a vector of integers
  * 
  * @param v A vector of integers
  * @return Something new  
  */
-std::vector<int> play_with_vector(std::vector<int> v) { return v; }
+//std::vector<int> play_with_vector(std::vector<int> v) { return v; }
 
 /**
  * @brief A nice function to play with a vector of vectors of integers 
@@ -87,7 +76,7 @@ std::vector<int> play_with_vector(std::vector<int> v) { return v; }
  * @param v  A vector of vectors of integers 
  * @return Something 
  */
-std::vector<double> play_with_vector(std::vector<std::vector<int>> v) { return {2.0, 3.0, 4.0}; }
+//std::vector<double> play_with_vector(std::vector<std::vector<int>> v) { return {2.0, 3.0, 4.0}; }
 
 int get_arg() { return 42; }
 int dd(int x, int y = 8) { return 1; }

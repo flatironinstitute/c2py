@@ -27,11 +27,8 @@ template <> constexpr bool c2py::is_wrapped<dummy_class> = true;
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<A> = "cls_basic.A";
-template <>
-inline constexpr const char *c2py::tp_doc<A> = R"DOC(   Brief description of A
-   
-   A long description of A. with multiple lines)DOC";
+template <> inline constexpr auto c2py::tp_name<A>       = "cls_basic.A";
+template <> inline constexpr const char *c2py::tp_doc<A> = R"DOC(   )DOC";
 
 static auto init_0                              = c2py::dispatcher_c_kw_t{c2py::c_constructor<A>(), c2py::c_constructor<A, int>("i")};
 template <> constexpr initproc c2py::tp_init<A> = c2py::pyfkw_constructor<init_0>;
@@ -64,20 +61,16 @@ static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self) { re
 static auto const fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](int i) { return A::static_method(i); }, "i")};
 
 // tpl
-static auto const fun_8         = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self, double x) { return self.tpl(x); }, "self", "x")};
-static constexpr auto doc_f_0_0 = R"DOC(   )DOC";
-static constexpr auto doc_f_0_1 = R"DOC(   )DOC";
-static const auto doc_d_0       = fun_0.doc({doc_f_0_0, doc_f_0_1});
-static const auto doc_d_1       = fun_1.doc({R"DOC(   )DOC"});
-static const auto doc_d_2       = fun_2.doc({R"DOC(   )DOC"});
-static const auto doc_d_3       = fun_3.doc({R"DOC(   )DOC"});
-static const auto doc_d_4       = fun_4.doc({R"DOC(   )DOC"});
-static constexpr auto doc_f_5_0 = R"DOC(   )DOC";
-static constexpr auto doc_f_5_1 = R"DOC(   )DOC";
-static const auto doc_d_5       = fun_5.doc({doc_f_5_0, doc_f_5_1});
-static const auto doc_d_6       = fun_6.doc({R"DOC(   )DOC"});
-static const auto doc_d_7       = fun_7.doc({R"DOC(   )DOC"});
-static const auto doc_d_8       = fun_8.doc({R"DOC(   )DOC"});
+static auto const fun_8   = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self, double x) { return self.tpl(x); }, "self", "x")};
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
+static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
+static const auto doc_d_4 = fun_4.doc(R"DOC()DOC");
+static const auto doc_d_5 = fun_5.doc(R"DOC()DOC");
+static const auto doc_d_6 = fun_6.doc(R"DOC()DOC");
+static const auto doc_d_7 = fun_7.doc(R"DOC()DOC");
+static const auto doc_d_8 = fun_8.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -129,7 +122,7 @@ static auto init_1                                        = c2py::dispatcher_c_k
 template <> constexpr initproc c2py::tp_init<dummy_class> = c2py::pyfkw_constructor<init_1>;
 // do_thing
 static auto const fun_9   = c2py::dispatcher_f_kw_t{c2py::cmethod([](dummy_class &self, double x) { return self.do_thing(x); }, "self", "x")};
-static const auto doc_d_9 = fun_9.doc({R"DOC(   )DOC"});
+static const auto doc_d_9 = fun_9.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -153,8 +146,8 @@ static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_m
 // nop
 static auto const fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
 
-static const auto doc_d_10 = fun_10.doc({R"DOC(   )DOC"});
-static const auto doc_d_11 = fun_11.doc({R"DOC(   )DOC"});
+static const auto doc_d_10 = fun_10.doc(R"DOC()DOC");
+static const auto doc_d_11 = fun_11.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

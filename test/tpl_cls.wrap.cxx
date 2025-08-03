@@ -44,10 +44,10 @@ static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self,
 
 // tpl
 static auto const fun_3   = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) { return self.tpl(x); }, "self", "x")};
-static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
-static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
-static const auto doc_d_2 = fun_2.doc({R"DOC(   )DOC"});
-static const auto doc_d_3 = fun_3.doc({R"DOC(   )DOC"});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
+static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>

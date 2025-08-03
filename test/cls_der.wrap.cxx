@@ -34,7 +34,7 @@ static auto init_0                              = c2py::dispatcher_c_kw_t{c2py::
 template <> constexpr initproc c2py::tp_init<B> = c2py::pyfkw_constructor<init_0>;
 // b
 static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self, int u) { return self.b(u); }, "self", "u")};
-static const auto doc_d_0 = fun_0.doc({R"DOC(   )DOC"});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -59,7 +59,7 @@ static auto init_1                              = c2py::dispatcher_c_kw_t{c2py::
 template <> constexpr initproc c2py::tp_init<A> = c2py::pyfkw_constructor<init_1>;
 // a
 static auto const fun_1   = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self, int i, int j) { return self.a(i, j); }, "self", "i", "j")};
-static const auto doc_d_1 = fun_1.doc({R"DOC(   )DOC"});
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
