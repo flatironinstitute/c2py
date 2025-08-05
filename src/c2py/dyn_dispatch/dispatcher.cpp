@@ -36,8 +36,7 @@ namespace c2py {
     fs << "Function dispatched to the following (C++) functions::\n\n";
     int n = 1;
     for (auto const &ov : ov_list) fs << "   [" << n++ << "] " << format_sig(ov->signature()) << "\n\n";
-    constexpr auto hline = ".. raw:: html\n\n   <hr>\n";
-    fs << hline << "\n\n" << doc_string << "\n";
+    fs << doc_string << "\n";
     return fs.str();
   }
 
