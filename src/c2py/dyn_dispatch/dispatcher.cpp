@@ -32,8 +32,14 @@ namespace c2py {
       auto tmp_res = std::regex_replace(sig, std::regex(R"(\n\s+)"), "\n        ");
       return std::regex_replace(tmp_res, std::regex(R"(\n\s+->)"), "\n     ->");
     };
+    auto brief = [](std::string const &doc) -> std::string {
+      std::regex pattern(R"(^\s*(?:\[[^\]]*\]\s*)?([^\n]*))");
+      std::smatch match;
+      if (std::regex_search(doc, match, pattern) && match[1] != "Parameters" && match[1] != "Returns") return match[1];
+      return "";
+    };
     std::stringstream fs;
-    fs << "Function dispatched to the following (C++) functions::\n\n";
+    fs << brief(doc_string) << "\n::\n\n";
     int n = 1;
     for (auto const &ov : ov_list) fs << "   [" << n++ << "] " << format_sig(ov->signature()) << "\n\n";
     fs << doc_string << "\n";
