@@ -1,5 +1,7 @@
 #pragma once
 #include <algorithm>
+#include <string>
+#include <vector>
 #include "pycfun_kw.hpp"
 #include "binaryfunc.hpp"
 namespace c2py {
@@ -35,7 +37,8 @@ namespace c2py {
 
     // overload doc (string) in case only one overload ...
     // FIXME : to make generated code simpler in most cases.
-    [[nodiscard]] std::string doc(const char *doc_string) const;
+    [[nodiscard]] std::string doc(const char *doc_string, std::vector<std::string> const &param_types,
+                                  std::vector<std::string> const &return_types) const;
   };
 
   // ==============================
