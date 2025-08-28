@@ -53,4 +53,8 @@ namespace c2py {
     static c2py::dispatcher_f_kw_t ovs = {c2py::cfun(M)};
     return ovs(self, nullptr, nullptr);
   }
+
+  // Given a string containing placeholders {tag_i} for i=0..N-1, replace {tag_i} by the string vec[i].
+  std::string replace_tags(std::string str, std::string const &tag, std::vector<std::string> const &vec);
+  
 } // namespace c2py

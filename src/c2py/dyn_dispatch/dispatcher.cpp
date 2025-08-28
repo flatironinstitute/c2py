@@ -36,21 +36,11 @@ namespace c2py {
       auto tmp_res = std::regex_replace(sig, std::regex(R"(\n\s+)"), "\n        ");
       return std::regex_replace(tmp_res, std::regex(R"(\n\s+->)"), "\n     ->");
     };
-    auto insert_types = [](std::string str, std::string const &tag, std::vector<std::string> const &types) {
-      std::size_t pos = 0;
-      for (std::size_t i = 0; i < types.size(); ++i) {
-        std::string const placeholder = "{" + tag + "_" + std::to_string(i) + "}";
-        pos                           = str.find(placeholder, pos);
-        str.replace(pos, placeholder.size(), types[i]);
-        pos += types[i].size();
-      }
-      return str;
-    };
     std::stringstream fs;
-    fs << "Dispatched C++ function(s).\n\n::\n\n";
+    fs << "Dispatched C++ " << (Constructors ? "constructor(s)" : "function(s)") << ".\n\n::\n\n";
     int n = 1;
     for (auto const &ov : ov_list) fs << "   [" << n++ << "] " << format_sig(ov->signature()) << "\n\n";
-    fs << insert_types(insert_types(doc_string, "par", param_types), "ret", return_types) << "\n";
+    fs << replace_tags(replace_tags(doc_string, "par", param_types), "ret", return_types) << "\n";
     return fs.str();
   }
 
@@ -59,5 +49,16 @@ namespace c2py {
   template struct dispatcher_t<pycfun_kw, true>;
   template struct dispatcher_t<pycfun23, false>;
   template struct dispatcher_t<pycfun23, true>;
+
+  std::string replace_tags(std::string str, std::string const &tag, std::vector<std::string> const &vec) {
+    std::size_t pos = 0;
+    for (std::size_t i = 0; i < vec.size(); ++i) {
+      std::string const placeholder = "{" + tag + "_" + std::to_string(i) + "}";
+      pos                           = str.find(placeholder, pos);
+      str.replace(pos, placeholder.size(), vec[i]);
+      pos += vec[i].size();
+    }
+    return str;
+  }
 
 } // namespace c2py
