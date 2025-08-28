@@ -11,6 +11,18 @@ namespace c2py {
   template <typename Enum>
     requires(std::is_enum_v<Enum>)
   struct py_converter<Enum> {
+    static std::string tp_name() {
+      std::ostringstream out;
+      out << "str {";
+      std::string sep;
+      for (auto const &p : enum_to_string<Enum>) {
+        out << sep << "\""<< p.second << "\"";
+        sep = ", ";
+      }
+      out << "}";
+      return out.str();
+    }
+
     // In python, just a string
     static PyObject *c2py(Enum x) { return PyUnicode_FromString(enum_to_string<Enum>.find(x)->second.c_str()); }
 
