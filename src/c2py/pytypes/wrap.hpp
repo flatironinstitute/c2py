@@ -32,8 +32,8 @@ namespace c2py {
     Py_TYPE(self)->tp_free((PyObject *)self);
   }
 
-  template <typename T> static constexpr initproc tp_init   = nullptr;
-  template <typename T> static constexpr const char *tp_doc = nullptr;
+  template <typename T> static constexpr initproc tp_init = nullptr;
+  template <typename T> inline const std::string tp_doc   = {};
   template <typename T> static PyObject *tp_repr(PyObject *self); // impl below
   template <typename T> static PyObject *tp_str(PyObject *self) { return tp_repr<T>(self); }
   template <typename T> static constinit PyMappingMethods tp_as_mapping = {nullptr, nullptr, nullptr}; //NOLINT
@@ -67,7 +67,7 @@ namespace c2py {
         0,                                        // tp_setattro
         0,                                        // tp_as_buffer
         Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE, // tp_flags
-        tp_doc<T>,                                // tp_doc
+        0,                                        // tp_doc
         0,                                        // tp_traverse
         0,                                        // tp_clear
         &tp_richcompare<T>,                       // tp_richcompare

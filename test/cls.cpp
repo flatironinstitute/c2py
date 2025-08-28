@@ -29,10 +29,10 @@ static_assert(c2py::concepts::IsConvertible<int>);
 
 // =============== struct A =====================
 namespace c2py {
-//  template <> inline const std::string cpp_name<A> = "[C++ A]";
+  //  template <> inline const std::string cpp_name<A> = "[C++ A]";
 
-  template <> constexpr auto tp_name<A>       = "cls.A";
-  template <> constexpr const char *tp_doc<A> = "Doc A ";
+  template <> constexpr auto tp_name<A>   = "cls.A";
+  template <> const std::string tp_doc<A> = "Doc A ";
 } // namespace c2py
 //      --- constructor ---
 static int init_1(PyObject *self, PyObject *args, PyObject *kwargs) {
@@ -135,8 +135,10 @@ template <> PyMappingMethods c2py::tp_as_mapping<A> = {tpxx_size<A>, fun_3, fun_
 // ----() ----
 
 static PyObject *fun_call(PyObject *self, PyObject *args, PyObject *kwargs) {
-  static dispatcher_f_kw_t ovs = {cfun(static_cast<int (A::*)(int)>(&A::operator()), "i"),
-                                  cfun(static_cast<int (A::*)(int, int) const>(&A::operator()), "i", "j")};
+  static dispatcher_f_kw_t ovs = {
+    cfun(static_cast<int (A::*)(int)>(&A::operator()), "i"),
+    cfun(static_cast<int (A::*)(int, int) const>(&A::operator()), "i", "j")
+  };
   return ovs(self, args, kwargs);
 };
 

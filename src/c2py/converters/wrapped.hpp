@@ -21,6 +21,7 @@ namespace c2py {
 
   // get the PyTypeObject from the table in __main__.
   template <typename T> void add_type_object_to_main(const char *pyname, PyObject *_main_, pto_table_t &conv_table) {
+    c2py::wrap_pytype<T>.tp_doc = c2py::tp_doc<T>.data();
     Py_INCREF(&c2py::wrap_pytype<T>);
     PyModule_AddObject(_main_, pyname, (PyObject *)&c2py::wrap_pytype<T>);
     conv_table[std::type_index(typeid(T)).name()] = &c2py::wrap_pytype<T>;
