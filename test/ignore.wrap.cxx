@@ -28,8 +28,7 @@ template <> constexpr bool c2py::is_wrapped<opaque2>  = true;
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<a_struct>       = "ignore.AStruct";
-template <> inline constexpr const char *c2py::tp_doc<a_struct> = R"DOC(   * a: int)DOC";
+template <> inline constexpr auto c2py::tp_name<a_struct> = "ignore.AStruct";
 
 static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
@@ -49,6 +48,17 @@ static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs)
 }
 
 template <> constexpr initproc c2py::tp_init<a_struct> = synth_constructor_0;
+
+template <>
+const std::string c2py::tp_ctor_doc<a_struct> =
+   c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+
+Parameters
+----------
+a : {par_0}
+
+)DOC",
+                      "par", std::vector<std::string>{std::vector<std::string>{c2py::python_typename<int>()}});
 
 // ----- Method table ----
 template <>
@@ -72,8 +82,8 @@ constinit PyGetSetDef c2py::tp_getset<a_struct>[] = {c2py::getsetdef_from_member
                                                      {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
                                                      {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline constexpr auto c2py::tp_name<opaque>       = "ignore.Opaque";
-template <> inline constexpr const char *c2py::tp_doc<opaque> = R"DOC(   )DOC";
+template <> const std::string c2py::tp_doc<a_struct>    = R"DOC()DOC" + c2py::tp_ctor_doc<a_struct>;
+template <> inline constexpr auto c2py::tp_name<opaque> = "ignore.Opaque";
 
 // ----- Method table ----
 template <>
@@ -89,11 +99,11 @@ constinit PyGetSetDef c2py::tp_getset<opaque>[] = {
 
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline constexpr auto c2py::tp_name<opaque2>       = "ignore.Opaque2";
-template <> inline constexpr const char *c2py::tp_doc<opaque2> = R"DOC(   )DOC";
-
-static auto init_0                                    = c2py::dispatcher_c_kw_t{c2py::c_constructor<opaque2>()};
-template <> constexpr initproc c2py::tp_init<opaque2> = c2py::pyfkw_constructor<init_0>;
+template <> const std::string c2py::tp_doc<opaque>       = R"DOC()DOC" + c2py::tp_ctor_doc<opaque>;
+template <> inline constexpr auto c2py::tp_name<opaque2> = "ignore.Opaque2";
+static auto init_0                                       = c2py::dispatcher_c_kw_t{c2py::c_constructor<opaque2>()};
+template <> constexpr initproc c2py::tp_init<opaque2>    = c2py::pyfkw_constructor<init_0>;
+template <> const std::string c2py::tp_ctor_doc<opaque2> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 
 // ----- Method table ----
 template <>
@@ -108,6 +118,8 @@ template <>
 constinit PyGetSetDef c2py::tp_getset<opaque2>[] = {
 
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
+template <> const std::string c2py::tp_doc<opaque2> = R"DOC()DOC" + c2py::tp_ctor_doc<opaque2>;
 
 // ==================== module functions ====================
 
@@ -129,12 +141,12 @@ static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](const opaque &w)
 // take_opaque2
 static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](const opaque2 &w) { return take_opaque2(w); }, "w")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
-static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
-static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
-static const auto doc_d_4 = fun_4.doc(R"DOC()DOC");
-static const auto doc_d_5 = fun_5.doc(R"DOC()DOC");
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_2 = fun_2.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_3 = fun_3.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_4 = fun_4.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_5 = fun_5.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

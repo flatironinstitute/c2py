@@ -26,8 +26,7 @@ template <> constexpr bool c2py::is_wrapped<a_struct> = true;
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<a_struct>       = "pointer.AStruct";
-template <> inline constexpr const char *c2py::tp_doc<a_struct> = R"DOC(   * a: int = 30)DOC";
+template <> inline constexpr auto c2py::tp_name<a_struct> = "pointer.AStruct";
 
 static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
@@ -47,6 +46,17 @@ static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs)
 }
 
 template <> constexpr initproc c2py::tp_init<a_struct> = synth_constructor_0;
+
+template <>
+const std::string c2py::tp_ctor_doc<a_struct> =
+   c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+
+Parameters
+----------
+a : {par_0}, default=30
+
+)DOC",
+                      "par", std::vector<std::string>{std::vector<std::string>{c2py::python_typename<int>()}});
 
 // ----- Method table ----
 template <>
@@ -70,6 +80,8 @@ constinit PyGetSetDef c2py::tp_getset<a_struct>[] = {c2py::getsetdef_from_member
                                                      {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
                                                      {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
+template <> const std::string c2py::tp_doc<a_struct> = R"DOC()DOC" + c2py::tp_ctor_doc<a_struct>;
+
 // ==================== module functions ====================
 
 // inc
@@ -78,8 +90,8 @@ static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](a_struct *a) { r
 // read
 static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](const a_struct *a) { return read(a); }, "a")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

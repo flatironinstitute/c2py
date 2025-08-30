@@ -28,11 +28,10 @@ template <> constexpr bool c2py::is_wrapped<N::cls_comp>   = true;
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<N::cls_equal>       = "comparison.ClsEqual";
-template <> inline constexpr const char *c2py::tp_doc<N::cls_equal> = R"DOC(   )DOC";
-
-static auto init_0                                         = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::cls_equal>()};
-template <> constexpr initproc c2py::tp_init<N::cls_equal> = c2py::pyfkw_constructor<init_0>;
+template <> inline constexpr auto c2py::tp_name<N::cls_equal> = "comparison.ClsEqual";
+static auto init_0                                            = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::cls_equal>()};
+template <> constexpr initproc c2py::tp_init<N::cls_equal>    = c2py::pyfkw_constructor<init_0>;
+template <> const std::string c2py::tp_ctor_doc<N::cls_equal> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 
 // ----- Method table ----
 template <>
@@ -50,11 +49,11 @@ constinit PyGetSetDef c2py::tp_getset<N::cls_equal>[] = {c2py::getsetdef_from_me
 
                                                          {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline constexpr auto c2py::tp_name<N::cls_equal2>       = "comparison.ClsEqual2";
-template <> inline constexpr const char *c2py::tp_doc<N::cls_equal2> = R"DOC(   )DOC";
-
-static auto init_1                                          = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::cls_equal2>()};
-template <> constexpr initproc c2py::tp_init<N::cls_equal2> = c2py::pyfkw_constructor<init_1>;
+template <> const std::string c2py::tp_doc<N::cls_equal>       = R"DOC()DOC" + c2py::tp_ctor_doc<N::cls_equal>;
+template <> inline constexpr auto c2py::tp_name<N::cls_equal2> = "comparison.ClsEqual2";
+static auto init_1                                             = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::cls_equal2>()};
+template <> constexpr initproc c2py::tp_init<N::cls_equal2>    = c2py::pyfkw_constructor<init_1>;
+template <> const std::string c2py::tp_ctor_doc<N::cls_equal2> = init_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 
 // ----- Method table ----
 template <>
@@ -72,11 +71,11 @@ constinit PyGetSetDef c2py::tp_getset<N::cls_equal2>[] = {c2py::getsetdef_from_m
 
                                                           {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline constexpr auto c2py::tp_name<N::cls_comp>       = "comparison.ClsComp";
-template <> inline constexpr const char *c2py::tp_doc<N::cls_comp> = R"DOC(   )DOC";
-
-static auto init_2                                        = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::cls_comp>()};
-template <> constexpr initproc c2py::tp_init<N::cls_comp> = c2py::pyfkw_constructor<init_2>;
+template <> const std::string c2py::tp_doc<N::cls_equal2>    = R"DOC()DOC" + c2py::tp_ctor_doc<N::cls_equal2>;
+template <> inline constexpr auto c2py::tp_name<N::cls_comp> = "comparison.ClsComp";
+static auto init_2                                           = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::cls_comp>()};
+template <> constexpr initproc c2py::tp_init<N::cls_comp>    = c2py::pyfkw_constructor<init_2>;
+template <> const std::string c2py::tp_ctor_doc<N::cls_comp> = init_2.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 
 // ----- Method table ----
 template <>
@@ -93,6 +92,8 @@ template <>
 constinit PyGetSetDef c2py::tp_getset<N::cls_comp>[] = {c2py::getsetdef_from_member<&N::cls_comp::value, N::cls_comp>("value", doc_member_2),
 
                                                         {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
+template <> const std::string c2py::tp_doc<N::cls_comp> = R"DOC()DOC" + c2py::tp_ctor_doc<N::cls_comp>;
 
 // ==================== module functions ====================
 

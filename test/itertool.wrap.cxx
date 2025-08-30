@@ -26,14 +26,14 @@ template <> constexpr bool c2py::is_wrapped<a_class> = true;
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<a_class>       = "itertool.AClass";
-template <> inline constexpr const char *c2py::tp_doc<a_class> = R"DOC(   )DOC";
-
-static auto init_0                                    = c2py::dispatcher_c_kw_t{c2py::c_constructor<a_class>()};
-template <> constexpr initproc c2py::tp_init<a_class> = c2py::pyfkw_constructor<init_0>;
+template <> inline constexpr auto c2py::tp_name<a_class> = "itertool.AClass";
+static auto init_0                                       = c2py::dispatcher_c_kw_t{c2py::c_constructor<a_class>()};
+template <> constexpr initproc c2py::tp_init<a_class>    = c2py::pyfkw_constructor<init_0>;
+template <> const std::string c2py::tp_ctor_doc<a_class> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 // values
-static auto const fun_0   = c2py::dispatcher_f_kw_t{c2py::cmethod([](a_class const &self) { return self.values(); }, "self")};
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](a_class const &self) { return self.values(); }, "self")};
+
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 
 // ----- Method table ----
 template <>
@@ -51,12 +51,14 @@ constinit PyGetSetDef c2py::tp_getset<a_class>[] = {c2py::getsetdef_from_member<
 
                                                     {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
+template <> const std::string c2py::tp_doc<a_class> = R"DOC()DOC" + c2py::tp_ctor_doc<a_class>;
+
 // ==================== module functions ====================
 
 // trf
 static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int n) { return trf(n); }, "n")};
 
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

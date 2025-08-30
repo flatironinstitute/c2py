@@ -138,7 +138,7 @@ class TestDocumentation(unittest.TestCase):
         lines = self.skip_signatures(s.splitlines())
         self.assertEqual(lines[0], 'Parameters')
         self.assertEqual(lines[1], '----------')
-        self.assertEqual(lines[2], 'x')
+        self.assertEqual(lines[2], 'x : int')
         self.assertTrue(lines[3].startswith(' '))
         self.assertEqual(lines[3].strip(), 'Parameter - line 1.')
         self.assertTrue(lines[4].startswith(' '))
@@ -150,11 +150,12 @@ class TestDocumentation(unittest.TestCase):
         lines = self.skip_signatures(s.splitlines())
         self.assertEqual(lines[0], 'Returns')
         self.assertEqual(lines[1], '-------')
-        self.assertTrue(lines[2].startswith(' '))
-        self.assertEqual(lines[2].strip(), 'Return - line 1.')
+        self.assertEqual(lines[2], 'int')
         self.assertTrue(lines[3].startswith(' '))
-        self.assertEqual(lines[3].strip(), 'Return - line 2.')
-        self.assert_blank_lines(lines[4:])
+        self.assertEqual(lines[3].strip(), 'Return - line 1.')
+        self.assertTrue(lines[4].startswith(' '))
+        self.assertEqual(lines[4].strip(), 'Return - line 2.')
+        self.assert_blank_lines(lines[5:])
 
     def test_f13(self):
         s = D.f13.__doc__
@@ -184,15 +185,16 @@ class TestDocumentation(unittest.TestCase):
         self.assertEqual(lines[21], '')
         self.assertEqual(lines[22], 'Parameters')
         self.assertEqual(lines[23], '----------')
-        self.assertEqual(lines[24], 'x')
+        self.assertEqual(lines[24], 'x : int')
         self.assertTrue(lines[25].startswith(' '))
         self.assertEqual(lines[25].strip(), 'Parameter - line 1.')
         self.assertEqual(lines[26], '')
         self.assertEqual(lines[27], 'Returns')
         self.assertEqual(lines[28], '-------')
-        self.assertTrue(lines[29].startswith(' '))
-        self.assertEqual(lines[29].strip(), 'Return - line 1.')
-        self.assert_blank_lines(lines[30:])
+        self.assertEqual(lines[29], 'int')
+        self.assertTrue(lines[30].startswith(' '))
+        self.assertEqual(lines[30].strip(), 'Return - line 1.')
+        self.assert_blank_lines(lines[31:])
         
 
 if __name__ == '__main__':

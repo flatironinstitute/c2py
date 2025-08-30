@@ -2,5 +2,6 @@
 
 #ifndef C2PY_HXX_DECLARATION_tpl_cls_GUARDS
 #define C2PY_HXX_DECLARATION_tpl_cls_GUARDS
-template <> constexpr bool c2py::is_wrapped<A<int>> = true;
+template <> constexpr bool c2py::is_wrapped<A<int>>     = true;
+template <> inline constexpr auto c2py::tp_name<A<int>> = "tpl_cls.AA";
 #endif

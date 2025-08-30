@@ -28,11 +28,10 @@ template <> constexpr bool c2py::is_wrapped<B<int>> = true;
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<C>       = "bug_tpl_type.C";
-template <> inline constexpr const char *c2py::tp_doc<C> = R"DOC(   )DOC";
-
-static auto init_0                              = c2py::dispatcher_c_kw_t{c2py::c_constructor<C>()};
-template <> constexpr initproc c2py::tp_init<C> = c2py::pyfkw_constructor<init_0>;
+template <> inline constexpr auto c2py::tp_name<C> = "bug_tpl_type.C";
+static auto init_0                                 = c2py::dispatcher_c_kw_t{c2py::c_constructor<C>()};
+template <> constexpr initproc c2py::tp_init<C>    = c2py::pyfkw_constructor<init_0>;
+template <> const std::string c2py::tp_ctor_doc<C> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 
 // ----- Method table ----
 template <>
@@ -48,15 +47,16 @@ constinit PyGetSetDef c2py::tp_getset<C>[] = {
 
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline constexpr auto c2py::tp_name<A<3>>       = "bug_tpl_type.A3";
-template <> inline constexpr const char *c2py::tp_doc<A<3>> = R"DOC(   )DOC";
-
-static auto init_1                                 = c2py::dispatcher_c_kw_t{c2py::c_constructor<A<3>>()};
-template <> constexpr initproc c2py::tp_init<A<3>> = c2py::pyfkw_constructor<init_1>;
+template <> const std::string c2py::tp_doc<C>         = R"DOC()DOC" + c2py::tp_ctor_doc<C>;
+template <> inline constexpr auto c2py::tp_name<A<3>> = "bug_tpl_type.A3";
+static auto init_1                                    = c2py::dispatcher_c_kw_t{c2py::c_constructor<A<3>>()};
+template <> constexpr initproc c2py::tp_init<A<3>>    = c2py::pyfkw_constructor<init_1>;
+template <> const std::string c2py::tp_ctor_doc<A<3>> = init_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 // f
 static auto const fun_0 =
    c2py::dispatcher_f_kw_t{c2py::cmethod([](A<3> &self, std::vector<std::array<int, 3>> v) { return self.f(v); }, "self", "v")};
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 
 // ----- Method table ----
 template <>
@@ -72,15 +72,16 @@ constinit PyGetSetDef c2py::tp_getset<A<3>>[] = {
 
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> inline constexpr auto c2py::tp_name<B<int>>       = "bug_tpl_type.Bi";
-template <> inline constexpr const char *c2py::tp_doc<B<int>> = R"DOC(   )DOC";
-
-static auto init_2                                   = c2py::dispatcher_c_kw_t{c2py::c_constructor<B<int>>()};
-template <> constexpr initproc c2py::tp_init<B<int>> = c2py::pyfkw_constructor<init_2>;
+template <> const std::string c2py::tp_doc<A<3>>        = R"DOC()DOC" + c2py::tp_ctor_doc<A<3>>;
+template <> inline constexpr auto c2py::tp_name<B<int>> = "bug_tpl_type.Bi";
+static auto init_2                                      = c2py::dispatcher_c_kw_t{c2py::c_constructor<B<int>>()};
+template <> constexpr initproc c2py::tp_init<B<int>>    = c2py::pyfkw_constructor<init_2>;
+template <> const std::string c2py::tp_ctor_doc<B<int>> = init_2.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 // f
 static auto const fun_1 =
    c2py::dispatcher_f_kw_t{c2py::cmethod([](B<int> &self, std::vector<std::array<int, 3>> v) { return self.f(v); }, "self", "v")};
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 
 // ----- Method table ----
 template <>
@@ -95,6 +96,8 @@ template <>
 constinit PyGetSetDef c2py::tp_getset<B<int>>[] = {
 
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
+template <> const std::string c2py::tp_doc<B<int>> = R"DOC()DOC" + c2py::tp_ctor_doc<B<int>>;
 
 // ==================== module functions ====================
 

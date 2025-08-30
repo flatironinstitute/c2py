@@ -65,8 +65,8 @@ static auto const fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return
 // f9
 static auto const fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f9(x); }, "x")};
 
-static const auto doc_d_0  = fun_0.doc(R"DOC()DOC");
-static const auto doc_d_1  = fun_1.doc(R"DOC(
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_1 = fun_1.doc(R"DOC(
 Warning:
 
 .. warning::
@@ -75,20 +75,25 @@ Warning:
    Warning - line 2.
 
 After warning.
-)DOC");
-static const auto doc_d_2  = fun_2.doc(R"DOC(
+)DOC",
+                                      std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_2 =
+   fun_2.doc(R"DOC(
 Parameters
 ----------
-x
+x : {par_0}
    Parameter - line 1.
    Parameter - line 2.
-)DOC");
+)DOC",
+             std::vector<std::string>{c2py::join(std::vector<std::string>{c2py::python_typename<int>()}, ", ")}, std::vector<std::string>{});
 static const auto doc_d_3  = fun_3.doc(R"DOC(
 Returns
 -------
+{ret_0}
    Return - line 1.
    Return - line 2.
-)DOC");
+)DOC",
+                                       std::vector<std::string>{}, std::vector<std::string>{std::vector<std::string>{c2py::python_typename<int>()}});
 static const auto doc_d_4  = fun_4.doc(R"DOC(
 Brief - line 1.
 Brief - line 2.
@@ -114,21 +119,26 @@ After list.
 
 Parameters
 ----------
-x
+x : {par_0}
    Parameter - line 1.
 
 Returns
 -------
+{ret_0}
    Return - line 1.
-)DOC");
+)DOC",
+                                       std::vector<std::string>{c2py::join(std::vector<std::string>{c2py::python_typename<int>()}, ", ")},
+                                       std::vector<std::string>{std::vector<std::string>{c2py::python_typename<int>()}});
 static const auto doc_d_5  = fun_5.doc(R"DOC(
 Implicit details - line 1.
-)DOC");
+)DOC",
+                                       std::vector<std::string>{}, std::vector<std::string>{});
 static const auto doc_d_6  = fun_6.doc(R"DOC(
 Implicit details - line 1.
 
 Implicit details - line 2.
-)DOC");
+)DOC",
+                                       std::vector<std::string>{}, std::vector<std::string>{});
 static const auto doc_d_7  = fun_7.doc(R"DOC(
 Explicit brief - line 1.
 Explicit brief - line 2.
@@ -137,10 +147,12 @@ Explicit details - line 1.
 Explicit details - line 2.
 
 Implicit details - line 1.
-)DOC");
+)DOC",
+                                       std::vector<std::string>{}, std::vector<std::string>{});
 static const auto doc_d_8  = fun_8.doc(R"DOC(
 Inline math: :math:`x = 3.1415`.
-)DOC");
+)DOC",
+                                       std::vector<std::string>{}, std::vector<std::string>{});
 static const auto doc_d_9  = fun_9.doc(R"DOC(
 Multiline math:
 
@@ -149,7 +161,8 @@ Multiline math:
    x = 3.1415 \; .
 
 After math.
-)DOC");
+)DOC",
+                                       std::vector<std::string>{}, std::vector<std::string>{});
 static const auto doc_d_10 = fun_10.doc(R"DOC(
 Math environment:
 
@@ -161,7 +174,8 @@ Math environment:
    \end{eqnarray*}
 
 After math.
-)DOC");
+)DOC",
+                                        std::vector<std::string>{}, std::vector<std::string>{});
 static const auto doc_d_11 = fun_11.doc(R"DOC(
 Code block:
 
@@ -173,7 +187,8 @@ Code block:
    }
 
 After code.
-)DOC");
+)DOC",
+                                        std::vector<std::string>{}, std::vector<std::string>{});
 static const auto doc_d_12 = fun_12.doc(R"DOC(
 Note:
 
@@ -183,7 +198,8 @@ Note:
    Note - line 2.
 
 After note.
-)DOC");
+)DOC",
+                                        std::vector<std::string>{}, std::vector<std::string>{});
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

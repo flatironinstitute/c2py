@@ -29,11 +29,10 @@ template <> constexpr bool c2py::is_wrapped<N1::tpl_params_ndc<int>> = true;
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<N1::A_ndc>       = "synth_init.ANdc";
-template <> inline constexpr const char *c2py::tp_doc<N1::A_ndc> = R"DOC(   )DOC";
-
-static auto init_0                                      = c2py::dispatcher_c_kw_t{c2py::c_constructor<N1::A_ndc, int>("i")};
-template <> constexpr initproc c2py::tp_init<N1::A_ndc> = c2py::pyfkw_constructor<init_0>;
+template <> inline constexpr auto c2py::tp_name<N1::A_ndc> = "synth_init.ANdc";
+static auto init_0                                         = c2py::dispatcher_c_kw_t{c2py::c_constructor<N1::A_ndc, int>("i")};
+template <> constexpr initproc c2py::tp_init<N1::A_ndc>    = c2py::pyfkw_constructor<init_0>;
+template <> const std::string c2py::tp_ctor_doc<N1::A_ndc> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
 
 // ----- Method table ----
 template <>
@@ -51,18 +50,8 @@ constinit PyGetSetDef c2py::tp_getset<N1::A_ndc>[] = {c2py::getsetdef_from_membe
 
                                                       {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
+template <> const std::string c2py::tp_doc<N1::A_ndc>       = R"DOC()DOC" + c2py::tp_ctor_doc<N1::A_ndc>;
 template <> inline constexpr auto c2py::tp_name<N1::params> = "synth_init.Params";
-template <>
-inline constexpr const char *c2py::tp_doc<N1::params> = R"DOC(   * i: int
-      An int
-   
-   * v: std::vector<int>
-      A vector of int
-   
-   * x: double = 10
-      A double
-   
-   * w: std::vector<int> = {1, 2, 3})DOC";
 
 static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
@@ -86,6 +75,25 @@ static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs)
 
 template <> constexpr initproc c2py::tp_init<N1::params> = synth_constructor_0;
 
+template <>
+const std::string c2py::tp_ctor_doc<N1::params> =
+   c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+
+Parameters
+----------
+i : {par_0}
+
+v : {par_1}
+
+x : {par_2}, default=10
+
+w : {par_3}, default={1, 2, 3}
+
+)DOC",
+                      "par",
+                      std::vector<std::string>{std::vector<std::string>{c2py::python_typename<int>(), c2py::python_typename<std::vector<int>>(),
+                                                                        c2py::python_typename<double>(), c2py::python_typename<std::vector<int>>()}});
+
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<N1::params>[] = {
@@ -93,9 +101,9 @@ PyMethodDef c2py::tp_methods<N1::params>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
-constexpr auto doc_member_1 = R"DOC(/// An int)DOC";
-constexpr auto doc_member_2 = R"DOC(/// A double)DOC";
-constexpr auto doc_member_3 = R"DOC(/// A vector of int)DOC";
+constexpr auto doc_member_1 = R"DOC(An int)DOC";
+constexpr auto doc_member_2 = R"DOC(A double)DOC";
+constexpr auto doc_member_3 = R"DOC(A vector of int)DOC";
 constexpr auto doc_member_4 = R"DOC()DOC";
 static PyObject *prop_get_dict_0(PyObject *self, void *) {
   auto &self_c = *(((c2py::wrap<N1::params> *)self)->_c);
@@ -117,25 +125,8 @@ constinit PyGetSetDef c2py::tp_getset<N1::params>[] = {c2py::getsetdef_from_memb
                                                        {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
+template <> const std::string c2py::tp_doc<N1::params>          = R"DOC()DOC" + c2py::tp_ctor_doc<N1::params>;
 template <> inline constexpr auto c2py::tp_name<N1::params_ndc> = "synth_init.ParamsNdc";
-template <>
-inline constexpr const char *c2py::tp_doc<N1::params_ndc> = R"DOC(   * i: int
-      An int
-   
-   * ndc1: N1::A_ndc
-      A non default constructible object
-   
-   * v: std::vector<int>
-      A vector of int
-   
-   * x: double = 10
-      A double
-      with a long doc
-   
-   * ndc2: N1::A_ndc = A_ndc{9}
-      A non default constructible object with a default init
-   
-   * w: std::vector<int> = {1, 2, 3})DOC";
 
 static int synth_constructor_1(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
@@ -160,6 +151,30 @@ static int synth_constructor_1(PyObject *self, PyObject *args, PyObject *kwargs)
 
 template <> constexpr initproc c2py::tp_init<N1::params_ndc> = synth_constructor_1;
 
+template <>
+const std::string c2py::tp_ctor_doc<N1::params_ndc> =
+   c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+
+Parameters
+----------
+i : {par_0}
+
+ndc1 : {par_1}
+
+v : {par_2}
+
+x : {par_3}, default=10
+
+ndc2 : {par_4}, default=A_ndc{9}
+
+w : {par_5}, default={1, 2, 3}
+
+)DOC",
+                      "par",
+                      std::vector<std::string>{std::vector<std::string>{
+                         c2py::python_typename<int>(), c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>(),
+                         c2py::python_typename<double>(), c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>()}});
+
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<N1::params_ndc>[] = {
@@ -167,12 +182,12 @@ PyMethodDef c2py::tp_methods<N1::params_ndc>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
-constexpr auto doc_member_5  = R"DOC(/// An int)DOC";
-constexpr auto doc_member_6  = R"DOC(/// A double
-    /// with a long doc)DOC";
-constexpr auto doc_member_7  = R"DOC(/// A non default constructible object)DOC";
-constexpr auto doc_member_8  = R"DOC(/// A non default constructible object with a default init)DOC";
-constexpr auto doc_member_9  = R"DOC(/// A vector of int)DOC";
+constexpr auto doc_member_5  = R"DOC(An int)DOC";
+constexpr auto doc_member_6  = R"DOC(A double
+with a long doc)DOC";
+constexpr auto doc_member_7  = R"DOC(A non default constructible object)DOC";
+constexpr auto doc_member_8  = R"DOC(A non default constructible object with a default init)DOC";
+constexpr auto doc_member_9  = R"DOC(A vector of int)DOC";
 constexpr auto doc_member_10 = R"DOC()DOC";
 static PyObject *prop_get_dict_1(PyObject *self, void *) {
   auto &self_c = *(((c2py::wrap<N1::params_ndc> *)self)->_c);
@@ -198,25 +213,8 @@ constinit PyGetSetDef c2py::tp_getset<N1::params_ndc>[] = {c2py::getsetdef_from_
                                                            {"__dict__", (getter)prop_get_dict_1, nullptr, "", nullptr},
                                                            {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
+template <> const std::string c2py::tp_doc<N1::params_ndc>               = R"DOC()DOC" + c2py::tp_ctor_doc<N1::params_ndc>;
 template <> inline constexpr auto c2py::tp_name<N1::tpl_params_ndc<int>> = "synth_init.TplParamNdcInt";
-template <>
-inline constexpr const char *c2py::tp_doc<N1::tpl_params_ndc<int>> = R"DOC(   * i: int
-      An int
-   
-   * x: double
-      A double
-      with a long doc
-   
-   * ndc1: N1::A_ndc
-      A non default constructible object
-   
-   * ndc2: N1::A_ndc
-      A non default constructible object with a default init
-   
-   * v: std::vector<int>
-      A vector of int
-   
-   * w: std::vector<int>)DOC";
 
 static int synth_constructor_2(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
@@ -241,6 +239,30 @@ static int synth_constructor_2(PyObject *self, PyObject *args, PyObject *kwargs)
 
 template <> constexpr initproc c2py::tp_init<N1::tpl_params_ndc<int>> = synth_constructor_2;
 
+template <>
+const std::string c2py::tp_ctor_doc<N1::tpl_params_ndc<int>> =
+   c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+
+Parameters
+----------
+i : {par_0}
+
+x : {par_1}
+
+ndc1 : {par_2}
+
+ndc2 : {par_3}
+
+v : {par_4}
+
+w : {par_5}
+
+)DOC",
+                      "par",
+                      std::vector<std::string>{std::vector<std::string>{
+                         c2py::python_typename<int>(), c2py::python_typename<double>(), c2py::python_typename<N1::A_ndc>(),
+                         c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>(), c2py::python_typename<std::vector<int>>()}});
+
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<N1::tpl_params_ndc<int>>[] = {
@@ -248,12 +270,12 @@ PyMethodDef c2py::tp_methods<N1::tpl_params_ndc<int>>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
-constexpr auto doc_member_11 = R"DOC(/// An int)DOC";
-constexpr auto doc_member_12 = R"DOC(/// A double
-    /// with a long doc)DOC";
-constexpr auto doc_member_13 = R"DOC(/// A non default constructible object)DOC";
-constexpr auto doc_member_14 = R"DOC(/// A non default constructible object with a default init)DOC";
-constexpr auto doc_member_15 = R"DOC(/// A vector of int)DOC";
+constexpr auto doc_member_11 = R"DOC(An int)DOC";
+constexpr auto doc_member_12 = R"DOC(A double
+with a long doc)DOC";
+constexpr auto doc_member_13 = R"DOC(A non default constructible object)DOC";
+constexpr auto doc_member_14 = R"DOC(A non default constructible object with a default init)DOC";
+constexpr auto doc_member_15 = R"DOC(A vector of int)DOC";
 constexpr auto doc_member_16 = R"DOC()DOC";
 static PyObject *prop_get_dict_2(PyObject *self, void *) {
   auto &self_c = *(((c2py::wrap<N1::tpl_params_ndc<int>> *)self)->_c);
@@ -279,6 +301,8 @@ constinit PyGetSetDef c2py::tp_getset<N1::tpl_params_ndc<int>>[] = {
    c2py::getsetdef_from_member<&N1::tpl_params_ndc<int>::w, N1::tpl_params_ndc<int>>("w", doc_member_16),
    {"__dict__", (getter)prop_get_dict_2, nullptr, "", nullptr},
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
+template <> const std::string c2py::tp_doc<N1::tpl_params_ndc<int>> = R"DOC()DOC" + c2py::tp_ctor_doc<N1::tpl_params_ndc<int>>;
 
 // ==================== module functions ====================
 
