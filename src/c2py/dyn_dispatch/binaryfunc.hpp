@@ -11,7 +11,7 @@ namespace c2py {
   // -------------------  pycfun23--------------------
 
   class pycfun23 {
-    std::string (*sig)(); //NOLINT No clue why the unused warning
+    [[maybe_unused]] std::string (*sig)();
     using conv_f_t = bool (*)(PyObject *, bool);
     std::vector<conv_f_t> c_args;
     virtual PyObject *call(PyObject *x, PyObject *y, PyObject *z) const = 0;
@@ -59,10 +59,10 @@ namespace c2py {
     PyObject *call(PyObject *x, PyObject *y, PyObject *z) const override {
       auto l = [ff = this->f]<typename Tu, size_t... Is>(std::index_sequence<Is...>, Tu &&tu) {
         if constexpr (std::is_same_v<void, R>) {
-          ff(py2cxx<T>(std::get<Is>(tu))...);
+          ff(py2cxx<T>(std::get<Is>(std::forward<Tu>(tu)))...);
           Py_RETURN_NONE;
         } else
-          return cxx2py(ff(py2cxx<T>(std::get<Is>(tu))...));
+          return cxx2py(ff(py2cxx<T>(std::get<Is>(std::forward<Tu>(tu)))...));
       };
       using seq_t = std::make_index_sequence<sizeof...(T)>;
       if constexpr (sizeof...(T) == 2)

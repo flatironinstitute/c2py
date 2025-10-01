@@ -4,8 +4,6 @@
 
 using c2py::operator""_a;
 
-const double precision = 1.e-9;
-
 // Test 1 : call a simple function written in Python
 void callback1() {
 
@@ -46,6 +44,7 @@ def callback(f, arg):
 // Test 2 : Pass a function and call it
 
 void callback3() {
+  const double precision = 1.e-9;
 
   // Test 3 : A scipy example for the demo
   auto fun = [](double x) {

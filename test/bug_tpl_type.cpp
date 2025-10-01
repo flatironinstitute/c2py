@@ -7,13 +7,13 @@ struct C {};
 template <int N> struct A {
   A() {}
   //static_assert(N != 3, "NO!!");
-  void f(std::vector<std::array<int, N>> v) {}
+  void f([[maybe_unused]] std::vector<std::array<int, N>> v) {}
   //void g(std::array<int, N> v) {}
 };
 
 template <typename T> struct B {
   B() {}
-  void f(std::vector<std::array<T, 3>> v) {}
+  void f([[maybe_unused]] std::vector<std::array<T, 3>> v) {}
 };
 
 template struct A<3>;
