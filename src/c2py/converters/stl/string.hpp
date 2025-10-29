@@ -48,18 +48,8 @@ namespace c2py {
     }
   };
 
-  template <> struct py_converter<unsigned char> {
-
-    static PyObject *c2py(unsigned char c) { return PyBytes_FromStringAndSize(reinterpret_cast<char *>(&c), 1); } // NOLINT
-
-    static unsigned char py2c(PyObject *ob) { return static_cast<unsigned char>(PyBytes_AsString(ob)[0]); } // NOLINT
-
-    static bool is_convertible(PyObject *ob, bool raise_exception) {
-      if (PyBytes_Check(ob) and PyBytes_Size(ob) == 1) return true;
-      if (raise_exception) { PyErr_SetString(PyExc_TypeError, ("Cannot convert "s + to_string(ob) + " to unsigned char"s).c_str()); }
-      return false;
-    }
-  };
+  // Note: unsigned char (uint8_t) is treated as an integer type, not a character type
+  // See basic_types.hpp for the integer converter. Use std::byte for byte operations.
 
   template <> struct py_converter<const char *> {
 

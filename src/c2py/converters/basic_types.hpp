@@ -18,6 +18,8 @@
 
 #pragma once
 #include <cstddef>
+#include <cstdint>
+#include <limits>
 #include "../py_converter.hpp"
 #include "../pyref.hpp"
 #include "../util/numpy_includer.hpp"
@@ -62,38 +64,93 @@ namespace c2py {
 
       static constexpr const char *tp_name = "int";
 
-      static PyObject *c2py(I i) { return PyLong_FromLong(long(i)); }
+      static PyObject *c2py(I i) {
+        if constexpr (std::is_signed_v<I>) {
+          return PyLong_FromLongLong(static_cast<long long>(i));
+        } else {
+          return PyLong_FromUnsignedLongLong(static_cast<unsigned long long>(i));
+        }
+      }
+
       static I py2c(PyObject *ob) {
-        if (PyLong_Check(ob)) { return I(PyLong_AsLong(ob)); }
+        if (PyLong_Check(ob)) {
+          if constexpr (std::is_signed_v<I>) {
+            return static_cast<I>(PyLong_AsLongLong(ob));
+          } else {
+            return static_cast<I>(PyLong_AsUnsignedLongLong(ob));
+          }
+        }
         // Convert NPY Scalar Type to Builtin Type
         pyref py_builtin = PyObject_CallMethod(ob, "item", nullptr); //NOLINT
-        return I(PyLong_AsLong(py_builtin));
+        if constexpr (std::is_signed_v<I>) {
+          return static_cast<I>(PyLong_AsLongLong(py_builtin));
+        } else {
+          return static_cast<I>(PyLong_AsUnsignedLongLong(py_builtin));
+        }
       }
+
       static bool is_convertible(PyObject *ob, bool raise_exception) {
         // first check if ob is a python long
         if (PyLong_Check(ob)) {
-          // now check that the int from python is within the limits of the C++ type
-          if (PyLong_AsLong(ob) < std::numeric_limits<I>::min() or PyLong_AsLong(ob) > std::numeric_limits<I>::max()) {
+          // Get value using appropriate Python C API function
+          auto val = [&]() {
+            if constexpr (std::is_signed_v<I>) {
+              return PyLong_AsLongLong(ob);
+            } else {
+              return PyLong_AsUnsignedLongLong(ob);
+            }
+          }();
+
+          // Check for Python errors (e.g., value out of range for long long)
+          if (PyErr_Occurred()) {
+            // Error is already set with appropriate message by PyLong_As*
+            if (not raise_exception) PyErr_Clear();
+            return false;
+          }
+
+          // Check that the value is within the limits of the target C++ type
+          auto min_val = static_cast<decltype(val)>(std::numeric_limits<I>::min());
+          auto max_val = static_cast<decltype(val)>(std::numeric_limits<I>::max());
+          if (val < min_val or val > max_val) {
             if (raise_exception) {
               PyErr_SetString(PyExc_TypeError, ("Cannot convert "s + to_string(ob) + " to integer type, out of bounds"s).c_str());
             }
             return false;
-          } else
-            return true;
+          }
+          return true;
         }
 
+        // Check NumPy scalar types
         if (PyArray_CheckScalar(ob)) {
           pyref py_arr = PyArray_FromScalar(ob, nullptr);
-          if (PyArray_ISINTEGER((PyArrayObject *)(PyObject *)py_arr)) return true; //NOLINT
+          if (PyArray_ISINTEGER((PyArrayObject *)(PyObject *)py_arr)) {
+            // Convert NumPy scalar to Python int and check bounds
+            pyref py_int = PyObject_CallMethod(ob, "item", nullptr);
+            if (not py_int) {
+              if (not raise_exception) PyErr_Clear();
+              return false;
+            }
+            // Recursively check if the converted Python int is valid
+            return is_convertible(py_int, raise_exception);
+          }
         }
+
         if (raise_exception) { PyErr_SetString(PyExc_TypeError, ("Cannot convert "s + to_string(ob) + " to integer type"s).c_str()); }
         return false;
       }
     };
   } // namespace details
 
-  template <> struct py_converter<long> : details::py_converter_impl<long> {};
+  // Integer types
+  // Note: Fixed-width types (int8_t, int16_t, int32_t, int64_t, uint8_t, uint16_t, uint32_t, uint64_t)
+  // are typedefs to the standard types below and are automatically supported.
+  template <> struct py_converter<signed char> : details::py_converter_impl<signed char> {};
+  template <> struct py_converter<short> : details::py_converter_impl<short> {};
   template <> struct py_converter<int> : details::py_converter_impl<int> {};
+  template <> struct py_converter<long> : details::py_converter_impl<long> {};
+  template <> struct py_converter<long long> : details::py_converter_impl<long long> {};
+  template <> struct py_converter<unsigned char> : details::py_converter_impl<unsigned char> {};
+  template <> struct py_converter<unsigned short> : details::py_converter_impl<unsigned short> {};
   template <> struct py_converter<unsigned int> : details::py_converter_impl<unsigned int> {};
   template <> struct py_converter<unsigned long> : details::py_converter_impl<unsigned long> {};
   template <> struct py_converter<unsigned long long> : details::py_converter_impl<unsigned long long> {};
