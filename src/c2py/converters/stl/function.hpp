@@ -1,3 +1,4 @@
+#pragma once
 #include <functional>
 #include "./common.hpp"
 #include "../../dyn_dispatch/dispatcher.hpp"
