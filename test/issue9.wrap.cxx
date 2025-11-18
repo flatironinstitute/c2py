@@ -29,12 +29,12 @@ template <> constexpr bool c2py::is_wrapped<dummy_class> = true;
 template <> inline constexpr auto c2py::tp_name<dummy_class> = "issue9.DummyClass";
 static auto init_0                                           = c2py::dispatcher_c_kw_t{c2py::c_constructor<dummy_class>()};
 template <> constexpr initproc c2py::tp_init<dummy_class>    = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<dummy_class> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<dummy_class> = init_0.doc(R"DOC()DOC");
 // do_thing
 static auto const fun_0 = c2py::dispatcher_f_kw_t{
    c2py::cmethod([](dummy_class &self, const std::function<double(const dummy_class::myarray<1> &)> &x) { return self.do_thing(x); }, "self", "x")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -63,9 +63,9 @@ static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](const std::array
 // h
 static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::array<int, 3> a) { return h(a); }, "a")};
 
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_2 = fun_2.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_3 = fun_3.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
+static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

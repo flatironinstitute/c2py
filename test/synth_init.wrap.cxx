@@ -32,7 +32,7 @@ template <> constexpr bool c2py::is_wrapped<N1::tpl_params_ndc<int>> = true;
 template <> inline constexpr auto c2py::tp_name<N1::A_ndc> = "synth_init.ANdc";
 static auto init_0                                         = c2py::dispatcher_c_kw_t{c2py::c_constructor<N1::A_ndc, int>("i")};
 template <> constexpr initproc c2py::tp_init<N1::A_ndc>    = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<N1::A_ndc> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<N1::A_ndc> = init_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -76,8 +76,7 @@ static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs)
 template <> constexpr initproc c2py::tp_init<N1::params> = synth_constructor_0;
 
 template <>
-const std::string c2py::tp_ctor_doc<N1::params> =
-   c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+const std::string c2py::tp_ctor_doc<N1::params> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
 
 Parameters
 ----------
@@ -90,9 +89,9 @@ x : {par_2}, default=10
 w : {par_3}, default={1, 2, 3}
 
 )DOC",
-                      "par",
-                      std::vector<std::string>{std::vector<std::string>{c2py::python_typename<int>(), c2py::python_typename<std::vector<int>>(),
-                                                                        c2py::python_typename<double>(), c2py::python_typename<std::vector<int>>()}});
+                                                                     "par",
+                                                                     {c2py::python_typename<int>(), c2py::python_typename<std::vector<int>>(),
+                                                                      c2py::python_typename<double>(), c2py::python_typename<std::vector<int>>()});
 
 // ----- Method table ----
 template <>
@@ -171,9 +170,8 @@ w : {par_5}, default={1, 2, 3}
 
 )DOC",
                       "par",
-                      std::vector<std::string>{std::vector<std::string>{
-                         c2py::python_typename<int>(), c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>(),
-                         c2py::python_typename<double>(), c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>()}});
+                      {c2py::python_typename<int>(), c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>(),
+                       c2py::python_typename<double>(), c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>()});
 
 // ----- Method table ----
 template <>
@@ -259,9 +257,8 @@ w : {par_5}
 
 )DOC",
                       "par",
-                      std::vector<std::string>{std::vector<std::string>{
-                         c2py::python_typename<int>(), c2py::python_typename<double>(), c2py::python_typename<N1::A_ndc>(),
-                         c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>(), c2py::python_typename<std::vector<int>>()}});
+                      {c2py::python_typename<int>(), c2py::python_typename<double>(), c2py::python_typename<N1::A_ndc>(),
+                       c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>(), c2py::python_typename<std::vector<int>>()});
 
 // ----- Method table ----
 template <>

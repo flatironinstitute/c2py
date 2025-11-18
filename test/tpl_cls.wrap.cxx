@@ -29,7 +29,7 @@ template <> constexpr bool c2py::is_wrapped<A<int>> = true;
 template <> inline constexpr auto c2py::tp_name<A<int>> = "tpl_cls.AA";
 static auto init_0                                   = c2py::dispatcher_c_kw_t{c2py::c_constructor<A<int>>(), c2py::c_constructor<A<int>, int>("i")};
 template <> constexpr initproc c2py::tp_init<A<int>> = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<A<int>> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<A<int>> = init_0.doc(R"DOC()DOC");
 // __call__
 static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> const &self, int i) { return self.operator()(i); }, "self", "i")};
 
@@ -44,10 +44,10 @@ static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self,
 // tpl
 static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) { return self.tpl(x); }, "self", "x")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_2 = fun_2.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_3 = fun_3.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
+static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>

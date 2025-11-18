@@ -48,15 +48,14 @@ static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs)
 template <> constexpr initproc c2py::tp_init<a_struct> = synth_constructor_0;
 
 template <>
-const std::string c2py::tp_ctor_doc<a_struct> =
-   c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+const std::string c2py::tp_ctor_doc<a_struct> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
 
 Parameters
 ----------
 a : {par_0}, default=30
 
 )DOC",
-                      "par", std::vector<std::string>{std::vector<std::string>{c2py::python_typename<int>()}});
+                                                                   "par", {c2py::python_typename<int>()});
 
 // ----- Method table ----
 template <>
@@ -90,8 +89,8 @@ static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](a_struct *a) { r
 // read
 static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](const a_struct *a) { return read(a); }, "a")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

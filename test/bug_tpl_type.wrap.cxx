@@ -31,7 +31,7 @@ template <> constexpr bool c2py::is_wrapped<B<int>> = true;
 template <> inline constexpr auto c2py::tp_name<C> = "bug_tpl_type.C";
 static auto init_0                                 = c2py::dispatcher_c_kw_t{c2py::c_constructor<C>()};
 template <> constexpr initproc c2py::tp_init<C>    = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<C> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<C> = init_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -51,12 +51,12 @@ template <> const std::string c2py::tp_doc<C>         = R"DOC()DOC" + c2py::tp_c
 template <> inline constexpr auto c2py::tp_name<A<3>> = "bug_tpl_type.A3";
 static auto init_1                                    = c2py::dispatcher_c_kw_t{c2py::c_constructor<A<3>>()};
 template <> constexpr initproc c2py::tp_init<A<3>>    = c2py::pyfkw_constructor<init_1>;
-template <> const std::string c2py::tp_ctor_doc<A<3>> = init_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<A<3>> = init_1.doc(R"DOC()DOC");
 // f
 static auto const fun_0 =
    c2py::dispatcher_f_kw_t{c2py::cmethod([](A<3> &self, std::vector<std::array<int, 3>> v) { return self.f(v); }, "self", "v")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -76,12 +76,12 @@ template <> const std::string c2py::tp_doc<A<3>>        = R"DOC()DOC" + c2py::tp
 template <> inline constexpr auto c2py::tp_name<B<int>> = "bug_tpl_type.Bi";
 static auto init_2                                      = c2py::dispatcher_c_kw_t{c2py::c_constructor<B<int>>()};
 template <> constexpr initproc c2py::tp_init<B<int>>    = c2py::pyfkw_constructor<init_2>;
-template <> const std::string c2py::tp_ctor_doc<B<int>> = init_2.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<B<int>> = init_2.doc(R"DOC()DOC");
 // f
 static auto const fun_1 =
    c2py::dispatcher_f_kw_t{c2py::cmethod([](B<int> &self, std::vector<std::array<int, 3>> v) { return self.f(v); }, "self", "v")};
 
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>

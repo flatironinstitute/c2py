@@ -31,7 +31,7 @@ template <> constexpr bool c2py::is_wrapped<N::cls_comp>   = true;
 template <> inline constexpr auto c2py::tp_name<N::cls_equal> = "comparison.ClsEqual";
 static auto init_0                                            = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::cls_equal>()};
 template <> constexpr initproc c2py::tp_init<N::cls_equal>    = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<N::cls_equal> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<N::cls_equal> = init_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -53,7 +53,7 @@ template <> const std::string c2py::tp_doc<N::cls_equal>       = R"DOC()DOC" + c
 template <> inline constexpr auto c2py::tp_name<N::cls_equal2> = "comparison.ClsEqual2";
 static auto init_1                                             = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::cls_equal2>()};
 template <> constexpr initproc c2py::tp_init<N::cls_equal2>    = c2py::pyfkw_constructor<init_1>;
-template <> const std::string c2py::tp_ctor_doc<N::cls_equal2> = init_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<N::cls_equal2> = init_1.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -75,7 +75,7 @@ template <> const std::string c2py::tp_doc<N::cls_equal2>    = R"DOC()DOC" + c2p
 template <> inline constexpr auto c2py::tp_name<N::cls_comp> = "comparison.ClsComp";
 static auto init_2                                           = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::cls_comp>()};
 template <> constexpr initproc c2py::tp_init<N::cls_comp>    = c2py::pyfkw_constructor<init_2>;
-template <> const std::string c2py::tp_ctor_doc<N::cls_comp> = init_2.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<N::cls_comp> = init_2.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>

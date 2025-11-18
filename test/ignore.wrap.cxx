@@ -50,15 +50,14 @@ static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs)
 template <> constexpr initproc c2py::tp_init<a_struct> = synth_constructor_0;
 
 template <>
-const std::string c2py::tp_ctor_doc<a_struct> =
-   c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+const std::string c2py::tp_ctor_doc<a_struct> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
 
 Parameters
 ----------
 a : {par_0}
 
 )DOC",
-                      "par", std::vector<std::string>{std::vector<std::string>{c2py::python_typename<int>()}});
+                                                                   "par", {c2py::python_typename<int>()});
 
 // ----- Method table ----
 template <>
@@ -103,7 +102,7 @@ template <> const std::string c2py::tp_doc<opaque>       = R"DOC()DOC" + c2py::t
 template <> inline constexpr auto c2py::tp_name<opaque2> = "ignore.Opaque2";
 static auto init_0                                       = c2py::dispatcher_c_kw_t{c2py::c_constructor<opaque2>()};
 template <> constexpr initproc c2py::tp_init<opaque2>    = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<opaque2> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<opaque2> = init_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -141,12 +140,12 @@ static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](const opaque &w)
 // take_opaque2
 static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](const opaque2 &w) { return take_opaque2(w); }, "w")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_2 = fun_2.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_3 = fun_3.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_4 = fun_4.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_5 = fun_5.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
+static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
+static const auto doc_d_4 = fun_4.doc(R"DOC()DOC");
+static const auto doc_d_5 = fun_5.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

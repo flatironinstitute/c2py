@@ -35,8 +35,8 @@ static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](E1 x) { return f
 // f2
 static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](E2 x) { return f2(x); }, "x")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {

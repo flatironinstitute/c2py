@@ -29,11 +29,11 @@ template <> constexpr bool c2py::is_wrapped<a_class> = true;
 template <> inline constexpr auto c2py::tp_name<a_class> = "itertool.AClass";
 static auto init_0                                       = c2py::dispatcher_c_kw_t{c2py::c_constructor<a_class>()};
 template <> constexpr initproc c2py::tp_init<a_class>    = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<a_class> = init_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+template <> const std::string c2py::tp_ctor_doc<a_class> = init_0.doc(R"DOC()DOC");
 // values
 static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](a_class const &self) { return self.values(); }, "self")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -58,7 +58,7 @@ template <> const std::string c2py::tp_doc<a_class> = R"DOC()DOC" + c2py::tp_cto
 // trf
 static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int n) { return trf(n); }, "n")};
 
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC", std::vector<std::string>{}, std::vector<std::string>{});
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
