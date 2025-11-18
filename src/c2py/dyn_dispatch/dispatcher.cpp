@@ -1,4 +1,5 @@
 #include "dispatcher.hpp"
+#include "../util/str.hpp"
 #include <cstddef>
 #include <regex>
 #include <sstream>
@@ -30,7 +31,7 @@ namespace c2py {
   }
 
   template <typename Eraser, bool Constructors>
-  [[nodiscard]] std::string dispatcher_t<Eraser, Constructors>::doc(const char *doc_string, std::vector<std::string> const &param_types,
+  [[nodiscard]] std::string dispatcher_t<Eraser, Constructors>::doc(const char *doc_string, std::vector<std::vector<std::string>> const &param_types,
                                                                     std::vector<std::string> const &return_types) const {
     auto format_sig = [](std::string const &sig) {
       auto tmp_res = std::regex_replace(sig, std::regex(R"(\n\s+)"), "\n        ");
@@ -40,7 +41,9 @@ namespace c2py {
     fs << "Dispatched C++ " << (Constructors ? "constructor(s)" : "function(s)") << ".\n\n::\n\n";
     int n = 1;
     for (auto const &ov : ov_list) fs << "   [" << n++ << "] " << format_sig(ov->signature()) << "\n\n";
-    fs << replace_tags(replace_tags(doc_string, "par", param_types), "ret", return_types) << "\n";
+    auto param_types_joined = std::vector<std::string>{};
+    for (auto const &pt : param_types) param_types_joined.push_back(join(pt, ", "));
+    fs << replace_tags(replace_tags(doc_string, "par", param_types_joined), "ret", return_types) << "\n";
     return fs.str();
   }
 

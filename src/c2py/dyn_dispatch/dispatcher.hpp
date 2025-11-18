@@ -37,8 +37,8 @@ namespace c2py {
 
     // overload doc (string) in case only one overload ...
     // FIXME : to make generated code simpler in most cases.
-    [[nodiscard]] std::string doc(const char *doc_string, std::vector<std::string> const &param_types,
-                                  std::vector<std::string> const &return_types) const;
+    [[nodiscard]] std::string doc(const char *doc_string, std::vector<std::vector<std::string>> const &param_types = {},
+                                  std::vector<std::string> const &return_types = {}) const;
   };
 
   // ==============================
@@ -56,5 +56,5 @@ namespace c2py {
 
   // Given a string containing placeholders {tag_i} for i=0..N-1, replace {tag_i} by the string vec[i].
   std::string replace_tags(std::string str, std::string const &tag, std::vector<std::string> const &vec);
-  
+
 } // namespace c2py
