@@ -1,5 +1,5 @@
 file(GLOB_RECURSE sources *.cpp)
-add_library(c2py ${sources})
+add_library(c2py STATIC ${sources})
 add_library(c2py::c2py ALIAS c2py)
 
 # Enable warnings
