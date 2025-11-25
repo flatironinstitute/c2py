@@ -36,7 +36,7 @@ endmacro()
 c2py_add_test(cls LOW_LEVEL)
 set (c2py_all_low_level_tests cls CACHE INTERNAL "") # Keep this, used in clair 
 
-set(c2py_all_full_tests 
+set(c2py_all_full_tests
   any
   basicfun
   bug_tpl_type
@@ -52,6 +52,7 @@ set(c2py_all_full_tests
   ignore
   generator
   enumcxx
+  integers
   synth_init
   tpl_cls
   tpl_derived

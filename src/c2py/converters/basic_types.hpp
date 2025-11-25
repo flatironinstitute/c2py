@@ -18,6 +18,8 @@
 
 #pragma once
 #include <cstddef>
+#include <cstdint>
+#include <limits>
 #include "../py_converter.hpp"
 #include "../pyref.hpp"
 #include "../util/numpy_includer.hpp"
@@ -55,45 +57,71 @@ namespace c2py {
     }
   };
 
-  // --- long
+  // --- integer types
 
   namespace details {
+
+    // Helper: extract Python long as integer type I
+    template <typename I> I pylong_as(PyObject *ob) {
+      if constexpr (std::is_signed_v<I>)
+        return static_cast<I>(PyLong_AsLongLong(ob));
+      else
+        return static_cast<I>(PyLong_AsUnsignedLongLong(ob));
+    }
+
     template <typename I> struct py_converter_impl {
 
       static constexpr const char *tp_name = "int";
 
-      static PyObject *c2py(I i) { return PyLong_FromLong(long(i)); }
+      static PyObject *c2py(I i) {
+        if constexpr (std::is_signed_v<I>)
+          return PyLong_FromLongLong(static_cast<long long>(i));
+        else
+          return PyLong_FromUnsignedLongLong(static_cast<unsigned long long>(i));
+      }
+
       static I py2c(PyObject *ob) {
-        if (PyLong_Check(ob)) { return I(PyLong_AsLong(ob)); }
+        if (PyLong_Check(ob)) return pylong_as<I>(ob);
         // Convert NPY Scalar Type to Builtin Type
         pyref py_builtin = PyObject_CallMethod(ob, "item", nullptr); //NOLINT
-        return I(PyLong_AsLong(py_builtin));
+        return pylong_as<I>(py_builtin);
       }
+
       static bool is_convertible(PyObject *ob, bool raise_exception) {
-        // first check if ob is a python long
         if (PyLong_Check(ob)) {
-          // now check that the int from python is within the limits of the C++ type
-          if (PyLong_AsLong(ob) < std::numeric_limits<I>::min() or PyLong_AsLong(ob) > std::numeric_limits<I>::max()) {
-            if (raise_exception) {
-              PyErr_SetString(PyExc_TypeError, ("Cannot convert "s + to_string(ob) + " to integer type, out of bounds"s).c_str());
-            }
+          using ll_type = std::conditional_t<std::is_signed_v<I>, long long, unsigned long long>;
+          auto val      = pylong_as<ll_type>(ob);
+          if (PyErr_Occurred()) {
+            if (not raise_exception) PyErr_Clear();
             return false;
-          } else
-            return true;
+          }
+          if (val < std::numeric_limits<I>::min() or val > std::numeric_limits<I>::max()) {
+            if (raise_exception) PyErr_SetString(PyExc_OverflowError, ("Cannot convert "s + to_string(ob) + " to integer type, out of bounds"s).c_str());
+            return false;
+          }
+          return true;
         }
 
+        // NumPy scalars: convert via .item() and check recursively
         if (PyArray_CheckScalar(ob)) {
-          pyref py_arr = PyArray_FromScalar(ob, nullptr);
-          if (PyArray_ISINTEGER((PyArrayObject *)(PyObject *)py_arr)) return true; //NOLINT
+          pyref py_int = PyObject_CallMethod(ob, "item", nullptr);
+          if (py_int) return is_convertible(py_int, raise_exception);
         }
-        if (raise_exception) { PyErr_SetString(PyExc_TypeError, ("Cannot convert "s + to_string(ob) + " to integer type"s).c_str()); }
+
+        if (raise_exception) PyErr_SetString(PyExc_TypeError, ("Cannot convert "s + to_string(ob) + " to integer type"s).c_str());
         return false;
       }
     };
   } // namespace details
 
-  template <> struct py_converter<long> : details::py_converter_impl<long> {};
+  // Integer types
+  // Note: Fixed-width types (int16_t, int32_t, int64_t, uint16_t, uint32_t, uint64_t)
+  // are typedefs to the standard types below and are automatically supported.
+  template <> struct py_converter<short> : details::py_converter_impl<short> {};
   template <> struct py_converter<int> : details::py_converter_impl<int> {};
+  template <> struct py_converter<long> : details::py_converter_impl<long> {};
+  template <> struct py_converter<long long> : details::py_converter_impl<long long> {};
+  template <> struct py_converter<unsigned short> : details::py_converter_impl<unsigned short> {};
   template <> struct py_converter<unsigned int> : details::py_converter_impl<unsigned int> {};
   template <> struct py_converter<unsigned long> : details::py_converter_impl<unsigned long> {};
   template <> struct py_converter<unsigned long long> : details::py_converter_impl<unsigned long long> {};
