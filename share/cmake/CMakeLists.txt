@@ -4,6 +4,7 @@ install(
   FILES
     ${CMAKE_CURRENT_BINARY_DIR}/c2py-config.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/c2py-config-version.cmake
+    ${CMAKE_CURRENT_SOURCE_DIR}/clair_c2py_generate_bindings.cmake
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/c2py
 )
 
