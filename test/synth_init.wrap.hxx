@@ -2,6 +2,10 @@
 
 #ifndef C2PY_HXX_DECLARATION_synth_init_GUARDS
 #define C2PY_HXX_DECLARATION_synth_init_GUARDS
+template <> constexpr bool c2py::is_wrapped<N1::no_defaults>             = true;
+template <> inline constexpr auto c2py::tp_name<N1::no_defaults>         = "synth_init.NoDefaults";
+template <> constexpr bool c2py::is_wrapped<N1::with_defaults>           = true;
+template <> inline constexpr auto c2py::tp_name<N1::with_defaults>       = "synth_init.WithDefaults";
 template <> constexpr bool c2py::is_wrapped<N1::A_ndc>                   = true;
 template <> inline constexpr auto c2py::tp_name<N1::A_ndc>               = "synth_init.ANdc";
 template <> constexpr bool c2py::is_wrapped<N1::params>                  = true;

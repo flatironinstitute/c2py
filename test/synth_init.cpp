@@ -3,6 +3,14 @@
 #include <string>
 namespace N1 {
 
+  struct no_defaults {
+    int a;
+  };
+
+  struct with_defaults {
+    int a = 5;
+  };
+
   struct A_ndc {
     int u;
     A_ndc(int i) : u(i) {}

@@ -1,8 +1,18 @@
 import unittest
 import numpy as np
-from synth_init import Params, ParamsNdc, ANdc,TplParamNdcInt
+from synth_init import Params, ParamsNdc, ANdc,TplParamNdcInt, NoDefaults, WithDefaults
 
 class TestIterable(unittest.TestCase):
+   
+   def test_synthesized_ctor(self):
+        nd = NoDefaults(a=7)
+        self.assertEqual(nd.a, 7)
+        with self.assertRaises(RuntimeError):
+             nd = NoDefaults()
+        wd = WithDefaults()
+        self.assertEqual(wd.a, 5)
+        wd = WithDefaults(a=10)
+        self.assertEqual(wd.a, 10)
 
    def test_call(self):
 
