@@ -83,6 +83,9 @@ constinit PyGetSetDef c2py::tp_getset<a_struct>[] = {c2py::getsetdef_from_member
 
 template <> const std::string c2py::tp_doc<a_struct>    = R"DOC()DOC" + c2py::tp_ctor_doc<a_struct>;
 template <> inline constexpr auto c2py::tp_name<opaque> = "ignore.Opaque";
+static auto init_0                                      = c2py::dispatcher_c_kw_t{c2py::c_constructor<opaque>()};
+template <> constexpr initproc c2py::tp_init<opaque>    = c2py::pyfkw_constructor<init_0>;
+template <> const std::string c2py::tp_ctor_doc<opaque> = init_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -100,9 +103,9 @@ constinit PyGetSetDef c2py::tp_getset<opaque>[] = {
 
 template <> const std::string c2py::tp_doc<opaque>       = R"DOC()DOC" + c2py::tp_ctor_doc<opaque>;
 template <> inline constexpr auto c2py::tp_name<opaque2> = "ignore.Opaque2";
-static auto init_0                                       = c2py::dispatcher_c_kw_t{c2py::c_constructor<opaque2>()};
-template <> constexpr initproc c2py::tp_init<opaque2>    = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<opaque2> = init_0.doc(R"DOC()DOC");
+static auto init_1                                       = c2py::dispatcher_c_kw_t{c2py::c_constructor<opaque2>()};
+template <> constexpr initproc c2py::tp_init<opaque2>    = c2py::pyfkw_constructor<init_1>;
+template <> const std::string c2py::tp_ctor_doc<opaque2> = init_1.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
