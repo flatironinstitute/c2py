@@ -127,12 +127,12 @@ namespace c2py {
     template <typename T> decltype(auto) arg_cast(int pos, PyObject *args, PyObject *kwargs) const {
       using conv_t = py_converter<std::decay_t<T>>;
       PyObject *p  = get_pyarg(pos, args, kwargs);
-      if constexpr (std::is_reference_v<T> and not std::is_const_v<T>) {
+      if constexpr (std::is_reference_v<T> and not std::is_const_v<std::remove_reference_t<T>>) {
         return conv_t::py2c(p);
       } else {
         using conv_r_t = decltype(conv_t::py2c(p));
-        static_assert(std::is_same_v<std::decay_t<conv_r_t>, T>);
-        using r_t = std::conditional_t<std::is_reference_v<conv_r_t>, T const &, T>;
+        static_assert(std::is_same_v<std::decay_t<conv_r_t>, std::decay_t<T>>);
+        using r_t = std::conditional_t<std::is_reference_v<conv_r_t>, std::decay_t<T> const &, std::decay_t<T>>;
         // ensure return type if the same in both branch, as fixed by the converter.
         if (p != nullptr)
           return static_cast<r_t>(conv_t::py2c(p));
