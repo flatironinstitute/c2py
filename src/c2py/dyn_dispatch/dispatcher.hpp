@@ -63,6 +63,13 @@ namespace c2py {
     return ovs(self, nullptr, nullptr);
   }
 
+  // Same as getter_from_method, but for inherited methods where M has base class type.
+  // Cls is the derived class that we are wrapping.
+  template <typename Cls, auto M> static PyObject *getter_from_method_B(PyObject *self, void *) {
+    static c2py::dispatcher_f_kw_t ovs = {c2py::cfun_B<Cls>(M)};
+    return ovs(self, nullptr, nullptr);
+  }
+
   // Getter from a free function whose first argument is self
   template <auto F> static PyObject *getter_from_fun(PyObject *self, void *) {
     static c2py::dispatcher_f_kw_t ovs = {c2py::cmethod(F, "self")};
