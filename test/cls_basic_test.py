@@ -99,9 +99,11 @@ class TestIterable(unittest.TestCase):
         a = M.DummyClass()
         self.assertEqual(a.do_thing(1), 3.0)
 
-   def test_renamed_class(self):
+   def test_renamed_class_and_method(self):
         a = M.renamed_class()
         self.assertEqual(a.x, 0)
+        a.renamed_method(5)
+        self.assertEqual(a.x, 5)
 
   
 #

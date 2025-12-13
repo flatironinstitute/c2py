@@ -173,11 +173,15 @@ x : {par_0}, default=0
 
 )DOC",
                                                                      "par", {c2py::python_typename<int>()});
+// renamed_method
+static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cmethod([](some_class &self, int y) { return self.some_method(y); }, "self", "y")};
+
+static const auto doc_d_10 = fun_10.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<some_class>[] = {
-
+   {"renamed_method", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -201,18 +205,18 @@ template <> const std::string c2py::tp_doc<some_class> = R"DOC()DOC" + c2py::tp_
 // ==================== module functions ====================
 
 // my_module_init
-static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
+static auto const fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
 
 // nop
-static auto const fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
+static auto const fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
 
-static const auto doc_d_10 = fun_10.doc(R"DOC()DOC");
 static const auto doc_d_11 = fun_11.doc(R"DOC()DOC");
+static const auto doc_d_12 = fun_12.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"my_module_init", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
-   {"nop", (PyCFunction)c2py::pyfkw<fun_11>, METH_VARARGS | METH_KEYWORDS, doc_d_11.c_str()},
+   {"my_module_init", (PyCFunction)c2py::pyfkw<fun_11>, METH_VARARGS | METH_KEYWORDS, doc_d_11.c_str()},
+   {"nop", (PyCFunction)c2py::pyfkw<fun_12>, METH_VARARGS | METH_KEYWORDS, doc_d_12.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
