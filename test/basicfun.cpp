@@ -91,7 +91,7 @@ int dd(int x, std::string y = "blabla") { return 1; }
 template <typename T> auto zz(T const &x) { return x.y + 2; }
 struct A {
   int y = 42;
-  A() = default;
+  A()   = default;
 };
 template auto zz(A const &);
 
@@ -100,5 +100,8 @@ template auto zz(A const &);
 void zfoo(int x = {}) { std::cout << x << "\n"; }
 void zfoo(std::string x = {}) { std::cout << x << "\n"; }
 
+// Forward declared function should be wrapped correctly
+int zfwd_decl_fnt(int);
+int zfwd_decl_fnt(int x) { return x + 1; }
 
 #include "basicfun.wrap.cxx"

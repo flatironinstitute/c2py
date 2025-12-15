@@ -34,6 +34,8 @@ class TestIterable(unittest.TestCase):
    def test_foo(self):
         a = B.A()
         self.assertEqual(B.zz(a), 44)
+   def test_forward_declared_function(self):
+        self.assertEqual(B.zfwd_decl_fnt(3), 4)
 
 if __name__ == '__main__':
     unittest.main()
