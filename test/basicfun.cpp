@@ -85,4 +85,8 @@ int dd(int x, bool y = false) { return 1; }
 int dd(int x, double z, int y = get_arg()) { return 1; }
 int dd(int x, std::string y = "blabla") { return 1; }
 
+// Forward declared function should be wrapped correctly
+int fwd_decl_fnt(int);
+int fwd_decl_fnt(int x) { return x + 1; }
+
 #include "basicfun.wrap.cxx"
