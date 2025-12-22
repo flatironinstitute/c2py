@@ -115,6 +115,7 @@ C2PY_MODULE_INIT void my_module_init() { std::cout << "===== Starting module !!=
 
 struct C2PY_RENAME(renamed_class) some_class {
   int x = 0;
+  some_class() = default;
   C2PY_RENAME(renamed_method) void some_method(int y) { x += y; } 
 };
 

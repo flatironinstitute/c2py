@@ -144,35 +144,9 @@ template <>
 const std::string c2py::tp_doc<dummy_class> =
    R"DOC(test implementation outside of class)DOC" + std::string{"\n\n----------\n\n"} + c2py::tp_ctor_doc<dummy_class>;
 template <> inline constexpr auto c2py::tp_name<some_class> = "cls_basic.renamed_class";
-
-static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs) {
-  if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
-    PyErr_SetString(PyExc_RuntimeError, ("Error in constructing some_class.\nNo positional arguments allowed. Use keywords arguments"));
-    return -1;
-  }
-  c2py::pydict_extractor de{kwargs};
-  try {
-    ((c2py::wrap<some_class> *)self)->_c = new some_class{};
-  } catch (std::exception const &e) {
-    PyErr_SetString(PyExc_RuntimeError, ("Error in constructing some_class from a Python dict.\n   "s + e.what()).c_str());
-    return -1;
-  }
-  auto &self_c = *(((c2py::wrap<some_class> *)self)->_c);
-  de("x", self_c.x, true);
-  return de.check();
-}
-
-template <> constexpr initproc c2py::tp_init<some_class> = synth_constructor_0;
-
-template <>
-const std::string c2py::tp_ctor_doc<some_class> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
-
-Parameters
-----------
-x : {par_0}, default=0
-
-)DOC",
-                                                                     "par", {c2py::python_typename<int>()});
+static auto init_2                                          = c2py::dispatcher_c_kw_t{c2py::c_constructor<some_class>()};
+template <> constexpr initproc c2py::tp_init<some_class>    = c2py::pyfkw_constructor<init_2>;
+template <> const std::string c2py::tp_ctor_doc<some_class> = init_2.doc(R"DOC()DOC");
 // renamed_method
 static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cmethod([](some_class &self, int y) { return self.some_method(y); }, "self", "y")};
 
@@ -186,18 +160,12 @@ PyMethodDef c2py::tp_methods<some_class>[] = {
 };
 
 constexpr auto doc_member_3 = R"DOC()DOC";
-static PyObject *prop_get_dict_0(PyObject *self, void *) {
-  auto &self_c = *(((c2py::wrap<some_class> *)self)->_c);
-  c2py::pydict dic;
-  dic["x"] = self_c.x;
-  return dic.new_ref();
-}
 
 // ----- Method table ----
 
 template <>
 constinit PyGetSetDef c2py::tp_getset<some_class>[] = {c2py::getsetdef_from_member<&some_class::x, some_class>("x", doc_member_3),
-                                                       {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
+
                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
 template <> const std::string c2py::tp_doc<some_class> = R"DOC()DOC" + c2py::tp_ctor_doc<some_class>;
