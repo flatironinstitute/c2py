@@ -31,6 +31,10 @@ class TestIterable(unittest.TestCase):
    def test_is_finite(self):
         self.assertTrue(B.isfinite(1 + 2j))
 
+   def test_foo(self):
+        a = B.A()
+        self.assertEqual(B.foo(a), 44)
+
 if __name__ == '__main__':
     unittest.main()
 
