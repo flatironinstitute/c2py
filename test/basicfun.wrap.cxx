@@ -59,6 +59,9 @@ static auto const fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](const dcomplex &
 // ret_with_alias
 static auto const fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return ret_with_alias(); })};
 
+// zfwd_decl_fnt
+static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([](int) { return zfwd_decl_fnt(); }, "")};
+
 static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
@@ -68,6 +71,7 @@ static const auto doc_d_5 = fun_5.doc(R"DOC()DOC");
 static const auto doc_d_6 = fun_6.doc(R"DOC()DOC");
 static const auto doc_d_7 = fun_7.doc(R"DOC()DOC");
 static const auto doc_d_8 = fun_8.doc(R"DOC()DOC");
+static const auto doc_d_9 = fun_9.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
@@ -80,6 +84,7 @@ static PyMethodDef module_methods[] = {
    {"hf", (PyCFunction)c2py::pyfkw<fun_6>, METH_VARARGS | METH_KEYWORDS, doc_d_6.c_str()},
    {"isfinite", (PyCFunction)c2py::pyfkw<fun_7>, METH_VARARGS | METH_KEYWORDS, doc_d_7.c_str()},
    {"ret_with_alias", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
+   {"zfwd_decl_fnt", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
