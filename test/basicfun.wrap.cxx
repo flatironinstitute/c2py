@@ -20,9 +20,34 @@ using c2py::operator""_a;
 
 // ==================== Wrapped classes =====================
 
+template <> constexpr bool c2py::is_wrapped<A> = true;
+
 // ==================== enums =====================
 
 // ==================== module classes =====================
+
+template <> inline constexpr auto c2py::tp_name<A> = "basicfun.A";
+static auto init_0                                 = c2py::dispatcher_c_kw_t{c2py::c_constructor<A>()};
+template <> constexpr initproc c2py::tp_init<A>    = c2py::pyfkw_constructor<init_0>;
+template <> const std::string c2py::tp_ctor_doc<A> = init_0.doc(R"DOC()DOC");
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<A>[] = {
+
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+constexpr auto doc_member_0 = R"DOC()DOC";
+
+// ----- Method table ----
+
+template <>
+constinit PyGetSetDef c2py::tp_getset<A>[] = {c2py::getsetdef_from_member<&A::y, A>("y", doc_member_0),
+
+                                              {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
+template <> const std::string c2py::tp_doc<A> = R"DOC()DOC" + c2py::tp_ctor_doc<A>;
 
 // ==================== module functions ====================
 
@@ -59,6 +84,9 @@ static auto const fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](const dcomplex &
 // ret_with_alias
 static auto const fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return ret_with_alias(); })};
 
+// zz
+static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &x) { return zz(x); }, "x")};
+
 static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
@@ -68,6 +96,7 @@ static const auto doc_d_5 = fun_5.doc(R"DOC()DOC");
 static const auto doc_d_6 = fun_6.doc(R"DOC()DOC");
 static const auto doc_d_7 = fun_7.doc(R"DOC()DOC");
 static const auto doc_d_8 = fun_8.doc(R"DOC()DOC");
+static const auto doc_d_9 = fun_9.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
@@ -80,6 +109,7 @@ static PyMethodDef module_methods[] = {
    {"hf", (PyCFunction)c2py::pyfkw<fun_6>, METH_VARARGS | METH_KEYWORDS, doc_d_6.c_str()},
    {"isfinite", (PyCFunction)c2py::pyfkw<fun_7>, METH_VARARGS | METH_KEYWORDS, doc_d_7.c_str()},
    {"ret_with_alias", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
+   {"zz", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -111,6 +141,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_basicfun() {
   PyObject *m;
 
   if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<A>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -118,6 +149,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_basicfun() {
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
+  c2py::add_type_object_to_main<A>("A", m, conv_table);
 
   return m;
 }

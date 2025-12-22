@@ -2,5 +2,6 @@
 
 #ifndef C2PY_HXX_DECLARATION_basicfun_GUARDS
 #define C2PY_HXX_DECLARATION_basicfun_GUARDS
-
+template <> constexpr bool c2py::is_wrapped<A>     = true;
+template <> inline constexpr auto c2py::tp_name<A> = "basicfun.A";
 #endif

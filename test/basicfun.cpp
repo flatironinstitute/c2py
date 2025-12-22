@@ -87,11 +87,12 @@ int dd(int x, std::string y = "blabla") { return 1; }
 
 // AST matcher does not guarantee to see the class before the template instantiation
 // --> two-pass matching is needed 
-template <typename T> auto foo(T const &x) { return x.y + 2; }
+template <typename T> auto zz(T const &x) { return x.y + 2; }
 struct A {
   int y = 42;
+  A() = default;
 };
-template auto foo(A const &);
+template auto zz(A const &);
 
 
 #include "basicfun.wrap.cxx"

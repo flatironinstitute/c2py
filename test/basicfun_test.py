@@ -33,7 +33,7 @@ class TestIterable(unittest.TestCase):
 
    def test_foo(self):
         a = B.A()
-        self.assertEqual(B.foo(a), 44)
+        self.assertEqual(B.zz(a), 44)
 
 if __name__ == '__main__':
     unittest.main()
