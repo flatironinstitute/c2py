@@ -84,19 +84,24 @@ static auto const fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](const dcomplex &
 // ret_with_alias
 static auto const fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return ret_with_alias(); })};
 
-// zz
-static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &x) { return zz(x); }, "x")};
+// zfoo
+static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return zfoo(x); }, "x"_a = int{}),
+                                                  c2py::cfun([](std::string x) { return zfoo(x); }, "x"_a = std::string{})};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
-static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
-static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
-static const auto doc_d_4 = fun_4.doc(R"DOC()DOC");
-static const auto doc_d_5 = fun_5.doc(R"DOC()DOC");
-static const auto doc_d_6 = fun_6.doc(R"DOC()DOC");
-static const auto doc_d_7 = fun_7.doc(R"DOC()DOC");
-static const auto doc_d_8 = fun_8.doc(R"DOC()DOC");
-static const auto doc_d_9 = fun_9.doc(R"DOC()DOC");
+// zz
+static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &x) { return zz(x); }, "x")};
+
+static const auto doc_d_0  = fun_0.doc(R"DOC()DOC");
+static const auto doc_d_1  = fun_1.doc(R"DOC()DOC");
+static const auto doc_d_2  = fun_2.doc(R"DOC()DOC");
+static const auto doc_d_3  = fun_3.doc(R"DOC()DOC");
+static const auto doc_d_4  = fun_4.doc(R"DOC()DOC");
+static const auto doc_d_5  = fun_5.doc(R"DOC()DOC");
+static const auto doc_d_6  = fun_6.doc(R"DOC()DOC");
+static const auto doc_d_7  = fun_7.doc(R"DOC()DOC");
+static const auto doc_d_8  = fun_8.doc(R"DOC()DOC");
+static const auto doc_d_9  = fun_9.doc(R"DOC()DOC");
+static const auto doc_d_10 = fun_10.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
@@ -109,7 +114,8 @@ static PyMethodDef module_methods[] = {
    {"hf", (PyCFunction)c2py::pyfkw<fun_6>, METH_VARARGS | METH_KEYWORDS, doc_d_6.c_str()},
    {"isfinite", (PyCFunction)c2py::pyfkw<fun_7>, METH_VARARGS | METH_KEYWORDS, doc_d_7.c_str()},
    {"ret_with_alias", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
-   {"zz", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
+   {"zfoo", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
+   {"zz", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 

@@ -95,5 +95,10 @@ struct A {
 };
 template auto zz(A const &);
 
+// check default parameters extraction
+
+void zfoo(int x = {}) { std::cout << x << "\n"; }
+void zfoo(std::string x = {}) { std::cout << x << "\n"; }
+
 
 #include "basicfun.wrap.cxx"
