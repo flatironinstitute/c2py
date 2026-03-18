@@ -85,4 +85,15 @@ int dd(int x, bool y = false) { return 1; }
 int dd(int x, double z, int y = get_arg()) { return 1; }
 int dd(int x, std::string y = "blabla") { return 1; }
 
+// Check two pass AST matcher.
+// In one pass, it would not guarantee to see the class before the template instantiation
+// Check that two passes are indeed properly implemented
+template <typename T> auto zz(T const &x) { return x.y + 2; }
+struct A {
+  int y = 42;
+  A() = default;
+};
+template auto zz(A const &);
+
+
 #include "basicfun.wrap.cxx"
