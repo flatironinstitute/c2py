@@ -32,7 +32,7 @@ static auto init_0                                 = c2py::dispatcher_c_kw_t{c2p
 template <> constexpr initproc c2py::tp_init<A>    = c2py::pyfkw_constructor<init_0>;
 template <> const std::string c2py::tp_ctor_doc<A> = init_0.doc(R"DOC()DOC");
 // m
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self) -> decltype(auto) { return self.m(); }, "self")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self) { return self.m(); }, "self")};
 
 static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 
@@ -58,17 +58,16 @@ static auto init_1                                 = c2py::dispatcher_c_kw_t{c2p
 template <> constexpr initproc c2py::tp_init<B>    = c2py::pyfkw_constructor<init_1>;
 template <> const std::string c2py::tp_ctor_doc<B> = init_1.doc(R"DOC()DOC");
 // get_a_ref
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self) -> decltype(auto) { return self.get_a_ref(); }, "self")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self) { return self.get_a_ref(); }, "self")};
 
 // get_a_ref2
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self) -> decltype(auto) { return self.get_a_ref2(); }, "self")};
+static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self) { return self.get_a_ref2(); }, "self")};
 
 // get_a_ref_switch
-static auto const fun_3 =
-   c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self, bool b) -> decltype(auto) { return self.get_a_ref_switch(b); }, "self", "b")};
+static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self, bool b) { return self.get_a_ref_switch(b); }, "self", "b")};
 
 // get_i
-static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B const &self, bool b) -> decltype(auto) { return self.get_i(b); }, "self", "b")};
+static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B const &self, bool b) { return self.get_i(b); }, "self", "b")};
 
 static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");

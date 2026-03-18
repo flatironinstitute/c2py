@@ -32,7 +32,7 @@ static auto init_0                                 = c2py::dispatcher_c_kw_t{c2p
 template <> constexpr initproc c2py::tp_init<A>    = c2py::pyfkw_constructor<init_0>;
 template <> const std::string c2py::tp_ctor_doc<A> = init_0.doc(R"DOC()DOC");
 // m
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self) -> decltype(auto) { return self.m(); }, "self")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A &self) { return self.m(); }, "self")};
 
 static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 
@@ -83,11 +83,15 @@ a1 : {par_0}, default=A{5}
 
 )DOC",
                                                             "par", {c2py::python_typename<A>()});
+// get_a_ref_global
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self) { return self.get_a_ref_global(); }, "self")};
+
+static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<B>[] = {
-
+   {"get_a_ref_global", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 

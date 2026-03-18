@@ -54,7 +54,7 @@ template <> constexpr initproc c2py::tp_init<A<3>>    = c2py::pyfkw_constructor<
 template <> const std::string c2py::tp_ctor_doc<A<3>> = init_1.doc(R"DOC()DOC");
 // f
 static auto const fun_0 =
-   c2py::dispatcher_f_kw_t{c2py::cmethod([](A<3> &self, std::vector<std::array<int, 3>> v) -> decltype(auto) { return self.f(v); }, "self", "v")};
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](A<3> &self, std::vector<std::array<int, 3>> v) { return self.f(v); }, "self", "v")};
 
 static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 
@@ -79,7 +79,7 @@ template <> constexpr initproc c2py::tp_init<B<int>>    = c2py::pyfkw_constructo
 template <> const std::string c2py::tp_ctor_doc<B<int>> = init_2.doc(R"DOC()DOC");
 // f
 static auto const fun_1 =
-   c2py::dispatcher_f_kw_t{c2py::cmethod([](B<int> &self, std::vector<std::array<int, 3>> v) -> decltype(auto) { return self.f(v); }, "self", "v")};
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](B<int> &self, std::vector<std::array<int, 3>> v) { return self.f(v); }, "self", "v")};
 
 static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 

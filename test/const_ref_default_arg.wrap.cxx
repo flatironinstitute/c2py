@@ -27,7 +27,7 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // f1
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](int const &x) { return f1(x); }, "x"_a = 5)};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](const int &x) { return f1(x); }, "x"_a = 5)};
 
 // f2
 static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](const std::string &s) { return f2(s); }, "s"_a = "hello")};
