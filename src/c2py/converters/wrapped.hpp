@@ -1,6 +1,7 @@
 #pragma once
 #include "../py_converter.hpp"
 #include "../pytypes/wrap.hpp"
+#include <type_traits>
 
 // A global table of PyTypeObject to be stored at the top of interpreter
 // so that each module can retrieve the PyTypeObject of types wrapped by other modules.
@@ -31,26 +32,20 @@ namespace c2py {
 
   template <typename T>
     requires(is_wrapped<T>)
-  struct py_converter<T> { // hence T , T &, T const & for T wrapped.
+  struct py_converter<T> {
 
-    using wrap = struct {
-      PyObject_HEAD //
-         T *_c;
-    };
-
-    using is_wrapped = void; // to recognize
-    static_assert(not std::is_reference_v<T>, "Not implemented");
+    static_assert(not std::is_reference_v<T>); // The T = U& case is a separate specialization
 
     template <typename U> static PyObject *c2py(U &&x) {
       PyTypeObject *p = get_type_ptr(typeid(T));
       if (p == nullptr) return nullptr;
-      auto *self = (wrap *)p->tp_alloc(p, 0);
+      auto *self = (wrap<T> *)p->tp_alloc(p, 0);
       if (self != NULL) { self->_c = new T{std::forward<U>(x)}; } // NOLINT
       return (PyObject *)self;
     }
 
     static T &py2c(PyObject *ob) {
-      auto *_c = ((wrap *)ob)->_c;
+      auto *_c = ((wrap<T> *)ob)->_c;
       if (_c == NULL) {
         std::cerr << "Severe internal error : _c is null in py2c\n";
         std::terminate();
@@ -58,11 +53,13 @@ namespace c2py {
       return *_c;
     }
 
+    static bool is_const(PyObject *ob) { return ((wrap<T> *)ob)->is_const; } // specific to this converter
+
     static bool is_convertible(PyObject *ob, bool raise_exception) {
       PyTypeObject *p = get_type_ptr(typeid(T));
       if (p == nullptr) return false;
       if (PyObject_TypeCheck(ob, p)) {
-        if (((wrap *)ob)->_c != NULL) return true;
+        if (((wrap<T> *)ob)->_c != NULL) return true;
         auto err = std::string{"Severe internal error : Python object of "} + p->tp_name + " has a _c NULL pointer !!";
         if (raise_exception) PyErr_SetString(PyExc_TypeError, err.c_str());
         return false;
@@ -71,6 +68,32 @@ namespace c2py {
       if (raise_exception) PyErr_SetString(PyExc_TypeError, err.c_str());
       return false;
     }
+  };
+
+  // ------------------------------------
+
+  template <typename T>
+    requires(is_wrapped<std::remove_const_t<T>>)
+  struct py_converter<T &> {
+    // this converter is only used C-> Py. For Py-> C, the pycfun_kw takes care of the reference.
+    // FIXME : it should not. The previous converter should return T, and we should use this one in pycfun_kw.
+    static bool is_convertible(PyObject *ob, bool raise_exception) = delete;
+    static T &py2c(PyObject *ob)                                   = delete;
+
+    //
+    static PyObject *c2py(T &x, PyObject *guardian) {
+      PyTypeObject *p = get_type_ptr(typeid(T));
+      if (p == nullptr) return nullptr;
+      auto *self = (wrap<T> *)p->tp_alloc(p, 0);
+      if (self != NULL) {
+        self->_c       = &x;
+        self->parent   = guardian;
+        self->is_const = std::is_const_v<T>;
+        Py_XINCREF(guardian); // parent owns a reference
+      }
+      return (PyObject *)self;
+    }
+    // p2yc and is_convertible are never used.
   };
 
 } // namespace c2py
