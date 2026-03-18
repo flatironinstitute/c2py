@@ -54,6 +54,30 @@ namespace c2py {
     return ovs(self, nullptr, nullptr);
   }
 
+  // Getter from a free function whose first argument is self
+  template <auto F> static PyObject *getter_from_fun(PyObject *self, void *) {
+    static c2py::dispatcher_f_kw_t ovs = {c2py::cmethod(F, "self")};
+    return ovs(self, nullptr, nullptr);
+  }
+
+  // Setter from a method pointer.
+  // closure must point to the attribute-name C-string used in the "cannot delete" error.
+  template <auto F> static int setter_from_method(PyObject *self, PyObject *value, void *closure) {
+    if (value == nullptr) return (PyErr_SetString(PyExc_AttributeError, static_cast<const char *>(closure)), -1);
+    static c2py::dispatcher_f_kw_t d = {c2py::cfun(F, "i")};
+    d(self, c2py::pyref(PyTuple_Pack(1, value)), nullptr);
+    return 0;
+  }
+
+  // Setter from a free function whose first argument is self.
+  // closure must point to the attribute-name C-string used in the "cannot delete" error.
+  template <auto F> static int setter_from_fun(PyObject *self, PyObject *value, void *closure) {
+    if (value == nullptr) return (PyErr_SetString(PyExc_AttributeError, static_cast<const char *>(closure)), -1);
+    static c2py::dispatcher_f_kw_t d = {c2py::cmethod(F, "self", "i")};
+    d(self, c2py::pyref(PyTuple_Pack(1, value)), nullptr);
+    return 0;
+  }
+
   // Given a string containing placeholders {tag_i} for i=0..N-1, replace {tag_i} by the string vec[i].
   std::string replace_tags(std::string str, std::string const &tag, std::vector<std::string> const &vec);
 
