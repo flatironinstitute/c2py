@@ -39,5 +39,20 @@ class TestFreeFunctionPropertyAnnotations(unittest.TestCase):
         self.assertAlmostEqual(b.dval, 6.0)  # 4 * 1.5
 
 
+class TestWrapNoArgMethodsAsProperties(unittest.TestCase):
+
+    def test_no_arg_method_is_property(self):
+        """value() has no args: must be accessible as a property, not a callable."""
+        c = M.C()
+        self.assertEqual(c.value, 42)
+        with self.assertRaises(TypeError):
+            c.value()  # property returns int, which is not callable
+
+    def test_method_with_arg_is_not_property(self):
+        """add(n) has an argument: must remain a callable method."""
+        c = M.C()
+        self.assertEqual(c.add(8), 50)
+
+
 if __name__ == '__main__':
     unittest.main()

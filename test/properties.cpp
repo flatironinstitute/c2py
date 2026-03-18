@@ -39,4 +39,15 @@ double b_get_dval(B const &b) { return b.val_ * 1.5; }
 C2PY_PROPERTY_SET(dval)
 void b_set_dval(B &b, double v) { b.val_ = static_cast<int>(v); }
 
+// ---- wrap_no_arg_methods_as_properties option ----
+// Enabled via properties.toml.  No-arg const methods become properties;
+// methods with arguments remain callable.
+
+struct C {
+  int v_ = 42;
+
+  int value() const { return v_; }  // no-arg: becomes a property
+  int add(int n) const { return v_ + n; } // has arg: stays a method
+};
+
 #include "properties.wrap.cxx"
