@@ -38,6 +38,7 @@ set (c2py_all_low_level_tests cls CACHE INTERNAL "") # Keep this, used in clair
 
 set(c2py_all_full_tests
   any
+  accessor
   basicfun
   bug_tpl_type
   cls_basic
@@ -60,11 +61,17 @@ set(c2py_all_full_tests
   std_container
   two_module_1
   two_module_2
+  refcount
+  const_ref_default_arg
   CACHE INTERNAL "")
 
 foreach(t ${c2py_all_full_tests})
   c2py_add_test(${t})
 endforeach()
+
+if (IS_CLAIR_BUILD)
+  add_subdirectory(compilation_failure_checks)
+endif()
 
 # must compile 1 first to have the hxx of the wrapped objects
 add_dependencies(two_module_2 two_module_1)
