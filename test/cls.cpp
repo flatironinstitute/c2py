@@ -146,8 +146,8 @@ template <> constexpr ternaryfunc c2py::tp_call<A> = fun_call;
 
 // ------ arithmetic ---
 
-template <> struct c2py::arithmetic<A, c2py::OpName::Add> : std::tuple<triplet<A, A, A>, triplet<A, A, int>> {};
-template <> struct c2py::arithmetic<A, c2py::OpName::Sub> : std::tuple<triplet<A, A, A>> {};
+template <> struct c2py::arithmetic<A, c2py::OpName::Add> : std::tuple<std::pair<A, A>, std::pair<A, int>> {};
+template <> struct c2py::arithmetic<A, c2py::OpName::Sub> : std::tuple<std::pair<A, A>> {};
 
 template <> constexpr PyNumberMethods *c2py::tp_as_number<A> = &c2py::tp_as_number_impl<A>;
 

@@ -1,29 +1,8 @@
 #pragma once
 #include <tuple>
-#include "../util/str.hpp"
 #include "../user_api.hpp"
 #include "../py_converter.hpp"
 namespace c2py {
-
-  // A simple triplet. std::tuple could do, but less readable ?
-  template <typename U1, typename U2, typename U3> struct triplet {
-    using T1 = U1;
-    using T2 = U2;
-    using T3 = U3;
-  };
-
-  // -------- Predefined set of operations -------
-
-  namespace algebra {
-
-    // vector space of T over scalar S
-    template <typename T, typename S, OpName Op> struct vector_space;
-
-    template <typename T, typename S> struct vector_space<T, S, OpName::Add> : std::tuple<triplet<T, T, T>> {};
-    template <typename T, typename S> struct vector_space<T, S, OpName::Sub> : std::tuple<triplet<T, T, T>> {};
-    template <typename T, typename S> struct vector_space<T, S, OpName::Mul> : std::tuple<triplet<T, T, S>, triplet<T, S, T>> {};
-
-  } // namespace algebra
 
   // ----- Implement all operations as generic
 
@@ -41,14 +20,13 @@ namespace c2py {
 
 #undef ARITH_OP
 
-  // NB : we need R, in case C++ is using expression templates ...
-  template <OpName Op, typename R, typename T1, typename T2> static bool tp_arithmetic_impl1(PyObject *&r, PyObject *a1, PyObject *a2) {
+  template <OpName Op, typename T1, typename T2> static bool tp_arithmetic_impl1(PyObject *&r, PyObject *a1, PyObject *a2) {
     using conv1 = py_converter<T1>;
     using conv2 = py_converter<T2>;
     bool ok     = conv1::is_convertible(a1, false) and conv2::is_convertible(a2, false);
     if (ok) {
       try {
-        r = py_converter<R>::c2py(R{arith_op<Op>::invoke(conv1::py2c(a1), conv2::py2c(a2))});
+        r = cxx2py(arith_op<Op>::invoke(conv1::py2c(a1), conv2::py2c(a2)));
       } catch (std::exception const &e) {
         auto err = std::string(".. Error in arithmetic operation  : \n") + e.what();
         PyErr_SetString(PyExc_RuntimeError, err.c_str());
@@ -60,7 +38,7 @@ namespace c2py {
   template <typename T, OpName Op> static PyObject *tp_arithmetic_impl2(PyObject *a1, PyObject *a2) {
     return [&a1, &a2]<typename... P>(std::tuple<P...>) {
       PyObject *r = nullptr;
-      if ((tp_arithmetic_impl1<Op, typename P::T1, typename P::T2, typename P::T3>(r, a1, a2) or ...))
+      if ((tp_arithmetic_impl1<Op, typename P::first_type, typename P::second_type>(r, a1, a2) or ...))
         return r;
       else {
         Py_INCREF(Py_NotImplemented);
@@ -83,7 +61,7 @@ namespace c2py {
      tp_number_impl<T, OpName::Add>, //     binaryfunc nb_add;
      tp_number_impl<T, OpName::Sub>, //     binaryfunc nb_subtract;
      tp_number_impl<T, OpName::Mul>, //     binaryfunc nb_multiply;
-     tp_number_impl<T, OpName::Div>, //     binaryfunc nb_remainder;
+     0,                              //     binaryfunc nb_remainder;
      0,                              //     binaryfunc nb_divmod;
      0,                              //     ternaryfunc nb_power;
      0,                              //     unaryfunc nb_negative;
@@ -112,7 +90,7 @@ namespace c2py {
      0, //     binaryfunc nb_inplace_or;
 
      0, //     binaryfunc nb_floor_divide;
-     0, //     binaryfunc nb_true_divide;
+     tp_number_impl<T, OpName::Div>, //     binaryfunc nb_true_divide;
      0, //     binaryfunc nb_inplace_floor_divide;
      0, //     binaryfunc nb_inplace_true_divide;
 
