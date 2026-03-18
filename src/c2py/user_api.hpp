@@ -13,12 +13,16 @@
 #define C2PY_MODULE_INIT __attribute__((annotate("c2py_module_init")))
 #define C2PY_NOGIL __attribute__((annotate("c2py_nogil")))
 #define C2PY_RENAME(X) __attribute__((annotate("c2py_rename:" #X)))
+#define C2PY_PROPERTY_GET(X) __attribute__((annotate("c2py_property_get:" #X)))
+#define C2PY_PROPERTY_SET(X) __attribute__((annotate("c2py_property_set:" #X)))
 #else
 #define C2PY_IGNORE
 #define C2PY_WRAP_AS_METHOD
 #define C2PY_MODULE_INIT
 #define C2PY_NOGIL
 #define C2PY_RENAME(X)
+#define C2PY_PROPERTY_GET(X)
+#define C2PY_PROPERTY_SET(X)
 #endif
 
 #define C2PY_AS_STRING(...) C2PY_AS_STRING2(__VA_ARGS__)
