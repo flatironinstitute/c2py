@@ -142,7 +142,7 @@ namespace c2py {
 
       static_assert(std::is_same_v<std::decay_t<conv_r_t>, U>,
                     "Incorrect py_converter<T>::py2c. Should return U or U& or U const&, with U = decay of T");
-      static_assert(std::is_convertible_v<conv_r_t, T>); // already been checked a priori
+      static_assert(std::is_convertible_v<conv_r_t, U>); // already been checked a priori
       // a priori, we return just what the converter gives
       // except when we can have a default and the converter return a U&, we rewrite it as a U const &
       // because the default value can not be a U &

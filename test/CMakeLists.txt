@@ -61,6 +61,8 @@ set(c2py_all_full_tests
   std_container
   two_module_1
   two_module_2
+  refcount
+  const_ref_default_arg
   CACHE INTERNAL "")
 
 foreach(t ${c2py_all_full_tests})
