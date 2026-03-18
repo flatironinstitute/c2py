@@ -67,5 +67,9 @@ foreach(t ${c2py_all_full_tests})
   c2py_add_test(${t})
 endforeach()
 
+if (IS_CLAIR_BUILD)
+  add_subdirectory(compilation_failure_checks)
+endif()
+
 # must compile 1 first to have the hxx of the wrapped objects
 add_dependencies(two_module_2 two_module_1)

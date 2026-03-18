@@ -27,7 +27,7 @@ template <> constexpr bool c2py::is_wrapped<B> = true;
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<A> = "accessor.A";
+template <> inline constexpr auto c2py::tp_name<A> = "accessor_fail.A";
 static auto init_0                                 = c2py::dispatcher_c_kw_t{c2py::c_constructor<A, int>("i")};
 template <> constexpr initproc c2py::tp_init<A>    = c2py::pyfkw_constructor<init_0>;
 template <> const std::string c2py::tp_ctor_doc<A> = init_0.doc(R"DOC()DOC");
@@ -53,57 +53,66 @@ constinit PyGetSetDef c2py::tp_getset<A>[] = {c2py::getsetdef_from_member<&A::i,
                                               {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
 template <> const std::string c2py::tp_doc<A>      = R"DOC()DOC" + c2py::tp_ctor_doc<A>;
-template <> inline constexpr auto c2py::tp_name<B> = "accessor.B";
-static auto init_1                                 = c2py::dispatcher_c_kw_t{c2py::c_constructor<B>()};
-template <> constexpr initproc c2py::tp_init<B>    = c2py::pyfkw_constructor<init_1>;
-template <> const std::string c2py::tp_ctor_doc<B> = init_1.doc(R"DOC()DOC");
-// get_a_ref
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self) -> decltype(auto) { return self.get_a_ref(); }, "self")};
+template <> inline constexpr auto c2py::tp_name<B> = "accessor_fail.B";
 
-// get_a_ref2
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self) -> decltype(auto) { return self.get_a_ref2(); }, "self")};
+static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs) {
+  if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
+    PyErr_SetString(PyExc_RuntimeError, ("Error in constructing B.\nNo positional arguments allowed. Use keywords arguments"));
+    return -1;
+  }
+  c2py::pydict_extractor de{kwargs};
+  try {
+    ((c2py::wrap<B> *)self)->_c = new B{};
+  } catch (std::exception const &e) {
+    PyErr_SetString(PyExc_RuntimeError, ("Error in constructing B from a Python dict.\n   "s + e.what()).c_str());
+    return -1;
+  }
+  auto &self_c = *(((c2py::wrap<B> *)self)->_c);
+  de("a1", self_c.a1, true);
+  return de.check();
+}
 
-// get_a_ref_switch
-static auto const fun_3 =
-   c2py::dispatcher_f_kw_t{c2py::cmethod([](B &self, bool b) -> decltype(auto) { return self.get_a_ref_switch(b); }, "self", "b")};
+template <> constexpr initproc c2py::tp_init<B> = synth_constructor_0;
 
-// get_i
-static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cmethod([](B const &self, bool b) -> decltype(auto) { return self.get_i(b); }, "self", "b")};
+template <>
+const std::string c2py::tp_ctor_doc<B> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
 
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
-static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
-static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
-static const auto doc_d_4 = fun_4.doc(R"DOC()DOC");
+Parameters
+----------
+a1 : {par_0}, default=A{5}
+
+)DOC",
+                                                            "par", {c2py::python_typename<A>()});
 
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<B>[] = {
-   {"get_a_ref", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
-   {"get_a_ref2", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
-   {"get_a_ref_switch", (PyCFunction)c2py::pyfkw<fun_3>, METH_VARARGS | METH_KEYWORDS, doc_d_3.c_str()},
-   {"get_i", (PyCFunction)c2py::pyfkw<fun_4>, METH_VARARGS | METH_KEYWORDS, doc_d_4.c_str()},
+
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+
+constexpr auto doc_member_1 = R"DOC()DOC";
+static PyObject *prop_get_dict_0(PyObject *self, void *) {
+  auto &self_c = *(((c2py::wrap<B> *)self)->_c);
+  c2py::pydict dic;
+  dic["a1"] = self_c.a1;
+  return dic.new_ref();
+}
 
 // ----- Method table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<B>[] = {
-
-   {nullptr, nullptr, nullptr, nullptr, nullptr}};
+constinit PyGetSetDef c2py::tp_getset<B>[] = {c2py::getsetdef_from_member<&B::a1, B>("a1", doc_member_1),
+                                              {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
+                                              {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
 template <> const std::string c2py::tp_doc<B> = R"DOC()DOC" + c2py::tp_ctor_doc<B>;
 
 // ==================== module functions ====================
 
-// f
-static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](A &a) { return f(a); }, "a")};
-
-static const auto doc_d_5 = fun_5.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"f", (PyCFunction)c2py::pyfkw<fun_5>, METH_VARARGS | METH_KEYWORDS, doc_d_5.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -112,7 +121,7 @@ static PyMethodDef module_methods[] = {
 //// module doc directly in the code or "" if not present...
 /// Or mandatory ?
 static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
-                                        "accessor",        /* name of module */
+                                        "accessor_fail",   /* name of module */
                                         R"RAWDOC()RAWDOC", /* module documentation, may be NULL */
                                         -1, /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
                                         module_methods,
@@ -123,9 +132,9 @@ static struct PyModuleDef module_def = {PyModuleDef_HEAD_INIT,
 
 //--------------------- module init function -----------------------------
 
-extern "C" __attribute__((visibility("default"))) PyObject *PyInit_accessor() {
+extern "C" __attribute__((visibility("default"))) PyObject *PyInit_accessor_fail() {
 
-  if (not c2py::check_python_version("accessor")) return NULL;
+  if (not c2py::check_python_version("accessor_fail")) return NULL;
 
   // import numpy iff 'numpy/arrayobject.h' included
 #ifdef Py_ARRAYOBJECT_H
