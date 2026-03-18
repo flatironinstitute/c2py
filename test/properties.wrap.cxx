@@ -22,6 +22,7 @@ using c2py::operator""_a;
 
 template <> constexpr bool c2py::is_wrapped<A> = true;
 template <> constexpr bool c2py::is_wrapped<B> = true;
+template <> constexpr bool c2py::is_wrapped<C> = true;
 
 // ==================== enums =====================
 
@@ -152,7 +153,67 @@ constinit PyGetSetDef c2py::tp_getset<B>[] = {
    {"__dict__", (getter)prop_get_dict_1, nullptr, "", nullptr},
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<B> = R"DOC()DOC" + c2py::tp_ctor_doc<B>;
+template <> const std::string c2py::tp_doc<B>      = R"DOC()DOC" + c2py::tp_ctor_doc<B>;
+template <> inline constexpr auto c2py::tp_name<C> = "properties.C";
+
+static int synth_constructor_2(PyObject *self, PyObject *args, PyObject *kwargs) {
+  if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
+    PyErr_SetString(PyExc_RuntimeError, ("Error in constructing C.\nNo positional arguments allowed. Use keywords arguments"));
+    return -1;
+  }
+  c2py::pydict_extractor de{kwargs};
+  try {
+    ((c2py::wrap<C> *)self)->_c = new C{};
+  } catch (std::exception const &e) {
+    PyErr_SetString(PyExc_RuntimeError, ("Error in constructing C from a Python dict.\n   "s + e.what()).c_str());
+    return -1;
+  }
+  auto &self_c = *(((c2py::wrap<C> *)self)->_c);
+  de("v_", self_c.v_, true);
+  return de.check();
+}
+
+template <> constexpr initproc c2py::tp_init<C> = synth_constructor_2;
+
+template <>
+const std::string c2py::tp_ctor_doc<C> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+
+Parameters
+----------
+v_ : {par_0}, default=42
+
+)DOC",
+                                                            "par", {c2py::python_typename<int>()});
+// add
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](C const &self, int n) -> decltype(auto) { return self.add(n); }, "self", "n")};
+
+static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<C>[] = {
+   {"add", (PyCFunction)c2py::pyfkw<fun_0>, METH_VARARGS | METH_KEYWORDS, doc_d_0.c_str()},
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+constexpr auto doc_member_3 = R"DOC()DOC";
+static PyObject *prop_get_dict_2(PyObject *self, void *) {
+  auto &self_c = *(((c2py::wrap<C> *)self)->_c);
+  c2py::pydict dic;
+  dic["v_"] = self_c.v_;
+  return dic.new_ref();
+}
+static constexpr auto prop_doc_5 = R"DOC()DOC";
+
+// ----- Method table ----
+
+template <>
+constinit PyGetSetDef c2py::tp_getset<C>[] = {c2py::getsetdef_from_member<&C::v_, C>("v_", doc_member_3),
+                                              {"value", c2py::getter_from_method<c2py::castmc<>(&C::value)>, nullptr, prop_doc_5, nullptr},
+                                              {"__dict__", (getter)prop_get_dict_2, nullptr, "", nullptr},
+                                              {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
+template <> const std::string c2py::tp_doc<C> = R"DOC()DOC" + c2py::tp_ctor_doc<C>;
 
 // ==================== module functions ====================
 
@@ -192,6 +253,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_properties() 
   if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<A>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<B>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<C>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -201,6 +263,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_properties() 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
   c2py::add_type_object_to_main<A>("A", m, conv_table);
   c2py::add_type_object_to_main<B>("B", m, conv_table);
+  c2py::add_type_object_to_main<C>("C", m, conv_table);
 
   return m;
 }

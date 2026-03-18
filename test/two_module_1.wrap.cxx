@@ -57,7 +57,7 @@ k : {par_0}, default=5
 )DOC",
                                                                "par", {c2py::python_typename<int>()});
 // f
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](N::A &self, int i) { return self.f(i); }, "self", "i")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](N::A &self, int i) -> decltype(auto) { return self.f(i); }, "self", "i")};
 
 static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 

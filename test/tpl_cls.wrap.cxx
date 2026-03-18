@@ -31,18 +31,19 @@ static auto init_0                                   = c2py::dispatcher_c_kw_t{c
 template <> constexpr initproc c2py::tp_init<A<int>> = c2py::pyfkw_constructor<init_0>;
 template <> const std::string c2py::tp_ctor_doc<A<int>> = init_0.doc(R"DOC()DOC");
 // __call__
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> const &self, int i) { return self.operator()(i); }, "self", "i")};
+static auto const fun_0 =
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> const &self, int i) -> decltype(auto) { return self.operator()(i); }, "self", "i")};
 
 template <> inline constexpr ternaryfunc c2py::tp_call<A<int>> = c2py::pyfkw<fun_0>;
 
 // f
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> const &self, int x) { return self.f(x); }, "self", "x")};
+static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> const &self, int x) -> decltype(auto) { return self.f(x); }, "self", "x")};
 
 // g
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) { return self.g(x); }, "self", "x")};
+static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) -> decltype(auto) { return self.g(x); }, "self", "x")};
 
 // tpl
-static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) { return self.tpl(x); }, "self", "x")};
+static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) -> decltype(auto) { return self.tpl(x); }, "self", "x")};
 
 static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
