@@ -1,6 +1,5 @@
-#include <iostream>
 #include <c2py/c2py.hpp>
-
+#include <iostream>
 struct A {
   int i = 10;
   A(int i) : i{i} {}
@@ -47,3 +46,5 @@ struct B {
   //A & get_a_ref_global() { return a_global;}
   //A & get_a_ref_switch_wrong(bool b) { if (b) return a1; else return a_global;}
 };
+
+#include "accessor.wrap.cxx"

@@ -225,7 +225,7 @@ namespace c2py {
     // call it : simply convert all arguments and call f
     PyObject *call(PyObject *self, PyObject *args, PyObject *kwargs) const override {
       auto l = [&]<size_t... Is>(std::index_sequence<Is...>) -> decltype(auto) {
-        C2PY_ASSERT(py_converter<Self>::is_convertible(self, false));
+        C2PY_ASSERT(py_converter<std::decay_t<Self>>::is_convertible(self, false));
         if constexpr (is_wrapped<std::decay_t<Self>> and not std::is_const_v<std::remove_reference_t<Self>>) {
           // Check that we are not calling a non const method for a const &
           // the C cast to wrap<T> will not see the const, we need to check
