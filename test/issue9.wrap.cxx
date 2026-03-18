@@ -31,8 +31,9 @@ static auto init_0                                           = c2py::dispatcher_
 template <> constexpr initproc c2py::tp_init<dummy_class>    = c2py::pyfkw_constructor<init_0>;
 template <> const std::string c2py::tp_ctor_doc<dummy_class> = init_0.doc(R"DOC()DOC");
 // do_thing
-static auto const fun_0 = c2py::dispatcher_f_kw_t{
-   c2py::cmethod([](dummy_class &self, const std::function<double(const dummy_class::myarray<1> &)> &x) { return self.do_thing(x); }, "self", "x")};
+static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod(
+   [](dummy_class &self, const std::function<double(const dummy_class::myarray<1> &)> &x) -> decltype(auto) { return self.do_thing(x); }, "self",
+   "x")};
 
 static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
 
