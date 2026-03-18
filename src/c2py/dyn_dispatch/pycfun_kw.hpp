@@ -1,6 +1,5 @@
 #pragma once
 #include <optional>
-#include <ratio>
 #include <sstream>
 #include <type_traits>
 #include <vector>
@@ -35,7 +34,6 @@ namespace c2py {
 
   // Handle one argument of a dynamically dispatched function pycfun_kw
   // Erase the C++ type and convertible call
-  // We need a set of erased argument to determine which function to call
   struct argument_t {
     std::string name;                  // name of the argument. Can be empty
     std::string (*python_typename)();  // Name of the type in Python, for doc
@@ -71,6 +69,10 @@ namespace c2py {
                       default_value_repr<A>};
   }
 
+  inline std::string arg_cast_const_err_msg(argument_t const &arg) {
+    return "Argument " + arg.name + " is a wrapped const reference and therefore can not be used as a lvalue of type " + arg.python_typename() + ".";
+  }
+
   // =========================== pycfun_kw =====================
 
   // Abstract class for the eraser for a C++ function into a python function
@@ -101,11 +103,14 @@ namespace c2py {
     pycfun_kw &operator=(pycfun_kw &&)      = default;
 
     private:
-    // Impl detail of arg_cast. Not a lambda, as it does not depend on a T.
+    // Impl detail of arg_cast.
+    // NB Does not depend on T, so do not use lambda in arg_cast.
     // pos: position of the argument
     // returns
-    //   -  args[pos] if pos < size of args else
-    //   -  kwargs[ c_arguments[pos].name ]
+    //    args[pos] if pos < #positional_arguments
+    //      else kwargs[ c_arguments[pos].name ] or null if kwargs does not have the argument name
+    // .
+    // FIXME : we could pass n_arg_pos_py to avoid recomputing it
     PyObject *get_pyarg(int pos, PyObject *args, PyObject *kwargs) const {
       long n_arg_pos_py = (args == nullptr ? 0 : long(PySequence_Size(args)));
       if (pos < n_arg_pos_py)
@@ -117,29 +122,56 @@ namespace c2py {
     }
 
     protected:
-    // FIXME : n_arg_positional_py should be passed here too
+    // FIXME : n_arg_pos_py should be passed here too
 
     // Convert the 'pos' argument into C++.
     // by taking it from the arg list args, or from the dictionnary.
-    // if T is non-const &, simply convert, no default if possible.
-    // else return T or T const & like the converter does
+    // T is the argument taken by the function.
+    // T can be a U, U &, U const & where U is decay<T>
+    // The return type is :
+    // If T is U & : return T
+    // else return T or T const &. If the converter returns a U and T = U const &,
+    // we must return a U, not a T to avoid a dangling reference
     //
     template <typename T> decltype(auto) arg_cast(int pos, PyObject *args, PyObject *kwargs) const {
-      using conv_t = py_converter<std::decay_t<T>>;
-      PyObject *p  = get_pyarg(pos, args, kwargs);
-      if constexpr (std::is_reference_v<T> and not std::is_const_v<T>) {
+      using U      = std::decay_t<T>;
+      using conv_t = py_converter<U>;
+
+      PyObject *p    = get_pyarg(pos, args, kwargs);
+      using conv_r_t = decltype(conv_t::py2c(p));
+
+      static_assert(std::is_same_v<std::decay_t<conv_r_t>, U>,
+                    "Incorrect py_converter<T>::py2c. Should return U or U& or U const&, with U = decay of T");
+      // a priori, we return just what the converter gives
+      // except when we can have a default and the converter return a U&, we rewrite it as a U const &
+      // because the default value can not be a U &
+      if constexpr (std::is_same_v<T, U &>) {
+        static_assert(std::is_same_v<conv_r_t, U &>, "Incorrect py_converter<T>::py2c. Should return exactly T if T is U&");
+        // there can not be any default.
+        C2PY_ASSERT(p); // the is_convertible must have ensured by now that the argument is present.
+        // Additional security : T is wrapped, if it is a wrapped reference, check its const.
+        if constexpr (is_wrapped<U>)
+          if (conv_t::is_const(p)) throw std::runtime_error{arg_cast_const_err_msg(c_arguments[pos])};
         return conv_t::py2c(p);
       } else {
-        using conv_r_t = decltype(conv_t::py2c(p));
-        static_assert(std::is_same_v<std::decay_t<conv_r_t>, T>);
-        using r_t = std::conditional_t<std::is_reference_v<conv_r_t>, T const &, T>;
-        // ensure return type if the same in both branch, as fixed by the converter.
-        if (p != nullptr)
-          return static_cast<r_t>(conv_t::py2c(p));
-        else
-          return std::any_cast<r_t>(c_arguments[pos].default_value);
+        // T is U or U const &, so a default is permitted.
+        // if the converter return null, we take the default.
+        // if the converter return a U &, we return a U const & since the default must be const & .
+        // and we must use the same type for both branches of the inner if.
+        if constexpr (std::is_same_v<conv_r_t, U &>) {
+          if (p != nullptr)
+            return static_cast<U const &>(conv_t::py2c(p));
+          else
+            return std::any_cast<U const &>(c_arguments[pos].default_value);
+        } else { // conv_r_t is U or U const &. we return a conv_r_t.
+          if (p != nullptr)
+            return conv_t::py2c(p);
+          else
+            return std::any_cast<conv_r_t>(c_arguments[pos].default_value);
+        }
       }
     }
+
     // ------------------
 
     public:
@@ -193,12 +225,25 @@ namespace c2py {
 
     // call it : simply convert all arguments and call f
     PyObject *call(PyObject *self, PyObject *args, PyObject *kwargs) const override {
-      auto l = [&]<size_t... Is>(std::index_sequence<Is...>) { return f(py2cxx<Self>(self), this->arg_cast<T>(Is, args, kwargs)...); };
+      auto l = [&]<size_t... Is>(std::index_sequence<Is...>) -> decltype(auto) {
+        C2PY_ASSERT(py_converter<std::decay_t<Self>>::is_convertible(self, false));
+        if constexpr (is_wrapped<std::decay_t<Self>> and not std::is_const_v<std::remove_reference_t<Self>>) {
+          // Check that we are not calling a non const method for a const &
+          // the C cast to wrap<T> will not see the const, we need to check
+          if (py_converter<std::decay_t<Self>>::is_const(self)) throw std::runtime_error{"Method is not const but called with a wrapped const &"};
+        }
+        return f(py2cxx<Self>(self), this->arg_cast<T>(Is, args, kwargs)...);
+      };
       if constexpr (std::is_same_v<void, R>) {
         l(std::make_index_sequence<sizeof...(T)>{});
         Py_RETURN_NONE;
-      } else
-        return py_converter<R>::c2py(l(std::make_index_sequence<sizeof...(T)>{}));
+      } else {
+        if constexpr (std::is_reference_v<R>) {
+          static_assert(is_wrapped<std::decay_t<R>>);
+          return py_converter<R>::c2py(l(std::make_index_sequence<sizeof...(T)>{}), self /*guardian */);
+        } else
+          return py_converter<R>::c2py(l(std::make_index_sequence<sizeof...(T)>{}));
+      }
     }
   };
 
@@ -214,18 +259,27 @@ namespace c2py {
     c_method_impl_t(fnt_ptr_t f, U &&...u) noexcept : pycfun_kw{{make_argument<T>(std::forward<U>(u))...}, python_typename<R>}, f{f} {}
 
     PyObject *call(PyObject *self, PyObject *args, PyObject *kwargs) const override {
-      auto l = [&]<size_t... Is>(std::index_sequence<Is...>) {
-        // FIXME Why wrong ??
-        //assert(py_converter<Cls>::is_convertible(self, false)); // true by construction
+      auto l = [&]<size_t... Is>(std::index_sequence<Is...>) -> decltype(auto) {
+        C2PY_ASSERT(py_converter<Cls>::is_convertible(self, false));
         // grab the class by reference, except std::function, cf callable
         decltype(auto) self_c = py_converter<Cls>::py2c(self);
+        if constexpr (is_wrapped<Cls> and not is_const) {
+          // Check that we are not calling a non const method for a const &
+          // the C cast to wrap<T> will not see the const, we need to check
+          if (py_converter<Cls>::is_const(self)) throw std::runtime_error{"Method is not const but called with a wrapped const &"};
+        }
         return (self_c.*f)(this->arg_cast<T>(Is, args, kwargs)...); // call the method
       };
       if constexpr (std::is_same_v<void, R>) {
         l(std::make_index_sequence<sizeof...(T)>{});
         Py_RETURN_NONE;
-      } else
-        return py_converter<R>::c2py(l(std::make_index_sequence<sizeof...(T)>{}));
+      } else {
+        if constexpr (std::is_reference_v<R>) {
+          static_assert(is_wrapped<std::decay_t<R>>);
+          return py_converter<R>::c2py(l(std::make_index_sequence<sizeof...(T)>{}), self /*guardian*/);
+        } else
+          return py_converter<R>::c2py(l(std::make_index_sequence<sizeof...(T)>{}));
+      }
     }
   };
 
