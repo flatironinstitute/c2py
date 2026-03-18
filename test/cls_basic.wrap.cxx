@@ -22,6 +22,7 @@ using c2py::operator""_a;
 
 template <> constexpr bool c2py::is_wrapped<A>           = true;
 template <> constexpr bool c2py::is_wrapped<dummy_class> = true;
+template <> constexpr bool c2py::is_wrapped<some_class>  = true;
 
 // ==================== enums =====================
 
@@ -142,22 +143,48 @@ constinit PyGetSetDef c2py::tp_getset<dummy_class>[] = {
 template <>
 const std::string c2py::tp_doc<dummy_class> =
    R"DOC(test implementation outside of class)DOC" + std::string{"\n\n----------\n\n"} + c2py::tp_ctor_doc<dummy_class>;
+template <> inline constexpr auto c2py::tp_name<some_class> = "cls_basic.renamed_class";
+static auto init_2                                          = c2py::dispatcher_c_kw_t{c2py::c_constructor<some_class>()};
+template <> constexpr initproc c2py::tp_init<some_class>    = c2py::pyfkw_constructor<init_2>;
+template <> const std::string c2py::tp_ctor_doc<some_class> = init_2.doc(R"DOC()DOC");
+// renamed_method
+static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cmethod([](some_class &self, int y) { return self.some_method(y); }, "self", "y")};
+
+static const auto doc_d_10 = fun_10.doc(R"DOC()DOC");
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<some_class>[] = {
+   {"renamed_method", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+constexpr auto doc_member_3 = R"DOC()DOC";
+
+// ----- Method table ----
+
+template <>
+constinit PyGetSetDef c2py::tp_getset<some_class>[] = {c2py::getsetdef_from_member<&some_class::x, some_class>("x", doc_member_3),
+
+                                                       {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
+template <> const std::string c2py::tp_doc<some_class> = R"DOC()DOC" + c2py::tp_ctor_doc<some_class>;
 
 // ==================== module functions ====================
 
 // my_module_init
-static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
+static auto const fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
 
 // nop
-static auto const fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
+static auto const fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
 
-static const auto doc_d_10 = fun_10.doc(R"DOC()DOC");
 static const auto doc_d_11 = fun_11.doc(R"DOC()DOC");
+static const auto doc_d_12 = fun_12.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"my_module_init", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
-   {"nop", (PyCFunction)c2py::pyfkw<fun_11>, METH_VARARGS | METH_KEYWORDS, doc_d_11.c_str()},
+   {"my_module_init", (PyCFunction)c2py::pyfkw<fun_11>, METH_VARARGS | METH_KEYWORDS, doc_d_11.c_str()},
+   {"nop", (PyCFunction)c2py::pyfkw<fun_12>, METH_VARARGS | METH_KEYWORDS, doc_d_12.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -194,6 +221,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls_basic() {
   if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<A>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<dummy_class>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<some_class>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -203,6 +231,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls_basic() {
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
   c2py::add_type_object_to_main<A>("A", m, conv_table);
   c2py::add_type_object_to_main<dummy_class>("DummyClass", m, conv_table);
+  c2py::add_type_object_to_main<some_class>("renamed_class", m, conv_table);
 
   // Initialization of the module
   my_module_init();
