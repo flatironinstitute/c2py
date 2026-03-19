@@ -36,7 +36,7 @@ namespace c2py {
   }
 
   template <typename T, OpName Op> static PyObject *tp_arithmetic_impl2(PyObject *a1, PyObject *a2) {
-    return [&a1, &a2]<typename... P>(std::tuple<P...>) {
+    return [&a1, &a2]<typename... P>(std::tuple<P...> *) {
       PyObject *r = nullptr;
       if ((tp_arithmetic_impl1<Op, typename P::first_type, typename P::second_type>(r, a1, a2) or ...))
         return r;
@@ -44,12 +44,12 @@ namespace c2py {
         Py_INCREF(Py_NotImplemented);
         return Py_NotImplemented;
       }
-    }(arithmetic<T, Op>{});
+    }(static_cast<arithmetic<T, Op> *>(nullptr));
   }
 
   template <typename T, OpName Op>
   static constexpr binaryfunc tp_number_impl = []() {
-    if constexpr (requires { std::get<0>(arithmetic<T, Op>{}); })
+    if constexpr (arithmetic_is_specialized<T, Op>)
       return &tp_arithmetic_impl2<T, Op>;
     else
       return (binaryfunc) nullptr;
@@ -100,14 +100,11 @@ namespace c2py {
      0, //     binaryfunc nb_inplace_matrix_multiply;
   };
 
-  // FIXME : relies on Add always defined
-  template <typename T> constexpr auto _arith_defined() -> decltype(arithmetic<T, OpName::Add>{}) { return arithmetic<T, OpName::Add>{}; }
-
   // tp_as_number
   template <typename T>
   // NOLINTNEXTLINE
   static constexpr PyNumberMethods *tp_as_number = []() {
-    if constexpr (requires { _arith_defined<T>(); })
+    if constexpr (has_any_arithmetic<T>)
       return &c2py::tp_as_number_impl<T>;
     else
       return (PyNumberMethods *)nullptr;

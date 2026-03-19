@@ -66,7 +66,19 @@ namespace c2py {
   // Name of operations
   enum class OpName { Add, Sub, Mul, Div };
 
-  // The user specialize this struct for type T and operation Op
-  template <typename T, OpName Op> struct arithmetic;
+  // The user specializes this struct for type T and operation Op.
+  // Specializations inherit from std::tuple<std::pair<T1,T2>, ...>.
+  // The primary template is defined (empty) so that is_specialized detection works
+  // without requiring default-constructibility of the wrapped types.
+  template <typename T, OpName Op> struct arithmetic {};
+
+  // Detect whether arithmetic<T, Op> has been specialized (i.e. inherits from a non-empty tuple)
+  template <typename T, OpName Op>
+  concept arithmetic_is_specialized = !std::is_empty_v<arithmetic<T, Op>>;
+
+  // Detect whether T has any arithmetic operator specialized
+  template <typename T>
+  concept has_any_arithmetic = arithmetic_is_specialized<T, OpName::Add> or arithmetic_is_specialized<T, OpName::Sub>
+                               or arithmetic_is_specialized<T, OpName::Mul> or arithmetic_is_specialized<T, OpName::Div>;
 
 } // namespace c2py
