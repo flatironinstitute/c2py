@@ -118,6 +118,12 @@ static int setitem_0(PyObject *self, PyObject *key, PyObject *val) {
 
 template <> PyMappingMethods c2py::tp_as_mapping<A> = {c2py::tpxx_size<A>, getitem_0, setitem_0};
 
+template <> struct c2py::arithmetic<A, c2py::OpName::Add> : std::tuple<std::pair<A, A>, std::pair<A, int>> {};
+
+template <> struct c2py::arithmetic<A, c2py::OpName::Sub> : std::tuple<std::pair<A, A>> {};
+
+template <> constexpr PyNumberMethods *c2py::tp_as_number<A> = &c2py::tp_as_number_impl<A>;
+
 template <> const std::string c2py::tp_doc<A>                = R"DOC()DOC" + c2py::tp_ctor_doc<A>;
 template <> inline constexpr auto c2py::tp_name<dummy_class> = "cls_basic.DummyClass";
 static auto init_1                                           = c2py::dispatcher_c_kw_t{c2py::c_constructor<dummy_class>()};
