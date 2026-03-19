@@ -209,6 +209,8 @@ namespace c2py {
         l(std::make_index_sequence<sizeof...(T)>{});
         Py_RETURN_NONE;
       } else {
+        // NB the c2py must be inside the lambda to ensure arg_cast temporaries are still alive when the return value is converted.
+        // indeed arg_cast can return a ref to a temporary if the argument has a default value, and we must ensure it is still alive when c2py is called.
         auto l = [&]<size_t... Is>(std::index_sequence<Is...>) -> PyObject * {
           return py_converter<R>::c2py(f(this->arg_cast<T>(Is, args, kwargs)...));
         };
@@ -242,6 +244,7 @@ namespace c2py {
         l(std::make_index_sequence<sizeof...(T)>{});
         Py_RETURN_NONE;
       } else {
+        // NB the c2py must be inside the lambda to ensure arg_cast temporaries are still alive when the return value is converted.
         auto l = [&]<size_t... Is>(std::index_sequence<Is...>) -> PyObject * {
           if constexpr (std::is_reference_v<R>) {
             static_assert(is_wrapped<std::decay_t<R>>);
@@ -280,6 +283,7 @@ namespace c2py {
         l(std::make_index_sequence<sizeof...(T)>{});
         Py_RETURN_NONE;
       } else {
+        // NB the c2py must be inside the lambda to ensure arg_cast temporaries are still alive when the return value is converted.
         auto l = [&]<size_t... Is>(std::index_sequence<Is...>) -> PyObject * {
           if constexpr (std::is_reference_v<R>) {
             static_assert(is_wrapped<std::decay_t<R>>);
