@@ -246,8 +246,7 @@ namespace c2py {
       } else {
         // NB the c2py must be inside the lambda to ensure arg_cast temporaries are still alive when the return value is converted.
         auto l = [&]<size_t... Is>(std::index_sequence<Is...>) -> PyObject * {
-          if constexpr (std::is_reference_v<R>) {
-            static_assert(is_wrapped<std::decay_t<R>>);
+          if constexpr (std::is_reference_v<R> and is_wrapped<std::decay_t<R>>) {
             return py_converter<R>::c2py(f(py2cxx<Self>(self), this->arg_cast<T>(Is, args, kwargs)...), self /*guardian */);
           } else {
             return py_converter<R>::c2py(f(py2cxx<Self>(self), this->arg_cast<T>(Is, args, kwargs)...));
@@ -285,8 +284,7 @@ namespace c2py {
       } else {
         // NB the c2py must be inside the lambda to ensure arg_cast temporaries are still alive when the return value is converted.
         auto l = [&]<size_t... Is>(std::index_sequence<Is...>) -> PyObject * {
-          if constexpr (std::is_reference_v<R>) {
-            static_assert(is_wrapped<std::decay_t<R>>);
+          if constexpr (std::is_reference_v<R> and is_wrapped<std::decay_t<R>>) {
             return py_converter<R>::c2py((self_c.*f)(this->arg_cast<T>(Is, args, kwargs)...), self /*guardian*/);
           } else {
             return py_converter<R>::c2py((self_c.*f)(this->arg_cast<T>(Is, args, kwargs)...));
