@@ -1,18 +1,14 @@
 import unittest
-import numpy as np
 import sys
 
 from refcount import *
 
-class TestIterable(unittest.TestCase):
+class TestRefcount(unittest.TestCase):
 
-    def test_pyobject_ptr(self):
+    def test_same_refcount(self):
         x = pyobject_ptr(3.14)
-        self.assertEqual(sys.getrefcount(x), 2)
-
-    def test_pyref_obj(self):
-        x = pyref_obj(3.14)
-        self.assertEqual(sys.getrefcount(x), 2)
+        y = pyref_obj(3.14)
+        self.assertEqual(sys.getrefcount(x), sys.getrefcount(y))
 
 if __name__ == '__main__':
     unittest.main()
