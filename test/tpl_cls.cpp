@@ -20,6 +20,9 @@ template <typename T> struct A {
   // Template method with non-deducible return type
   template <typename R> R convert(auto x) { return R(x + 1); }
 
+  // Template method with non-deducible return type and variadic pack
+  template <typename R, typename... U> R call(U &&...x) { return R(sizeof...(x)); }
+
   bool operator==(A const &) const = default;
 
   int operator()(int i) const { return i + k; }
@@ -33,6 +36,7 @@ template <typename T> bool operator<(A<T> const &x, A<T> const &y) { return x.k 
 
 template double A<int>::tpl(int);
 template int A<int>::convert(double);
+template double A<int>::call(long const &);
 
 // FIXME https://godbolt.org/z/bK8rTo9Ez
 

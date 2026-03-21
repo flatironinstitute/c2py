@@ -33,6 +33,11 @@ class TestIterable(unittest.TestCase):
         # int convert(double) -> int(x + 1)
         self.assertEqual(a.convert(2.7), 3)
         self.assertIsInstance(a.convert(2.7), int)
+
+   def test_variadic_pack_method(self):
+        a = AA()
+        # double call(long const &) -> double(sizeof...(x)) = 1.0
+        self.assertEqual(a.call(42), 1.0)
         #self.assertEqual(M.a_friend(a),  -3)
 
    def test_call(self):

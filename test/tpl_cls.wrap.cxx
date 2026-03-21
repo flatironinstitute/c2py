@@ -36,18 +36,22 @@ static auto const fun_0 =
 
 template <> inline constexpr ternaryfunc c2py::tp_call<A<int>> = c2py::pyfkw<fun_0>;
 
-// convert
+// call
 static auto const fun_1 = c2py::dispatcher_f_kw_t{
+   c2py::cmethod([](A<int> &self, const long &x) -> decltype(auto) { return self.template call<double, const long &>(x); }, "self", "x")};
+
+// convert
+static auto const fun_2 = c2py::dispatcher_f_kw_t{
    c2py::cmethod([](A<int> &self, double x) -> decltype(auto) { return self.template convert<int, double>(x); }, "self", "x")};
 
 // f
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) -> decltype(auto) { return self.f(x); }, "self", "x")};
+static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) -> decltype(auto) { return self.f(x); }, "self", "x")};
 
 // g
-static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) -> decltype(auto) { return self.g(x); }, "self", "x")};
+static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) -> decltype(auto) { return self.g(x); }, "self", "x")};
 
 // tpl
-static auto const fun_4 =
+static auto const fun_5 =
    c2py::dispatcher_f_kw_t{c2py::cmethod([](A<int> &self, int x) -> decltype(auto) { return self.template tpl<int>(x); }, "self", "x")};
 
 static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
@@ -55,14 +59,16 @@ static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
 static const auto doc_d_2 = fun_2.doc(R"DOC()DOC");
 static const auto doc_d_3 = fun_3.doc(R"DOC()DOC");
 static const auto doc_d_4 = fun_4.doc(R"DOC()DOC");
+static const auto doc_d_5 = fun_5.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<A<int>>[] = {
-   {"convert", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
-   {"f", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
-   {"g", (PyCFunction)c2py::pyfkw<fun_3>, METH_VARARGS | METH_KEYWORDS, doc_d_3.c_str()},
-   {"tpl", (PyCFunction)c2py::pyfkw<fun_4>, METH_VARARGS | METH_KEYWORDS, doc_d_4.c_str()},
+   {"call", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
+   {"convert", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
+   {"f", (PyCFunction)c2py::pyfkw<fun_3>, METH_VARARGS | METH_KEYWORDS, doc_d_3.c_str()},
+   {"g", (PyCFunction)c2py::pyfkw<fun_4>, METH_VARARGS | METH_KEYWORDS, doc_d_4.c_str()},
+   {"tpl", (PyCFunction)c2py::pyfkw<fun_5>, METH_VARARGS | METH_KEYWORDS, doc_d_5.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
