@@ -27,6 +27,12 @@ class TestIterable(unittest.TestCase):
         a = AA(3)
         self.assertEqual(a.f(2),  4)
         self.assertEqual(a.tpl(2),  258)
+
+   def test_non_deducible_method(self):
+        a = AA()
+        # int convert(double) -> int(x + 1)
+        self.assertEqual(a.convert(2.7), 3)
+        self.assertIsInstance(a.convert(2.7), int)
         #self.assertEqual(M.a_friend(a),  -3)
 
    def test_call(self):

@@ -17,6 +17,9 @@ template <typename T> struct A {
 
   double tpl(auto x) { return 256 + x; }
 
+  // Template method with non-deducible return type
+  template <typename R> R convert(auto x) { return R(x + 1); }
+
   bool operator==(A const &) const = default;
 
   int operator()(int i) const { return i + k; }
@@ -29,6 +32,7 @@ template <typename T> std::ostream &operator<<(std::ostream &out, A<T> const &a)
 template <typename T> bool operator<(A<T> const &x, A<T> const &y) { return x.k < y.k; }
 
 template double A<int>::tpl(int);
+template int A<int>::convert(double);
 
 // FIXME https://godbolt.org/z/bK8rTo9Ez
 

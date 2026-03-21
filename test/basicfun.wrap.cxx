@@ -72,27 +72,31 @@ static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x, int y) { 
 static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return get_arg(); })};
 
 // h
-static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return N::h(x); }, "x")};
+static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return N::h<int>(x); }, "x")};
 
 // hf
-static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f1(x); }, "x"), c2py::cfun([](long x) { return N::h(x); }, "x"),
-                                                  c2py::cfun([](double x) { return N::h(x); }, "x")};
+static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f1(x); }, "x"), c2py::cfun([](long x) { return N::h<long>(x); }, "x"),
+                                                  c2py::cfun([](double x) { return N::h<double>(x); }, "x")};
 
 // isfinite
 static auto const fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](const dcomplex &x) { return N::isfinite(x); }, "x")};
 
+// non_deducible
+static auto const fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([](double x) { return non_deducible<int, double>(x); }, "x"),
+                                                  c2py::cfun([](int x) { return non_deducible<double, int>(x); }, "x")};
+
 // ret_with_alias
-static auto const fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return ret_with_alias(); })};
+static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return ret_with_alias(); })};
 
 // zfoo
-static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return zfoo(x); }, "x"_a = int{}),
-                                                  c2py::cfun([](std::string x) { return zfoo(x); }, "x"_a = std::string{})};
+static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return zfoo(x); }, "x"_a = int{}),
+                                                   c2py::cfun([](std::string x) { return zfoo(x); }, "x"_a = std::string{})};
 
 // zfwd_decl_fnt
-static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return zfwd_decl_fnt(x); }, "x")};
+static auto const fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return zfwd_decl_fnt(x); }, "x")};
 
 // zz
-static auto const fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &x) { return zz(x); }, "x")};
+static auto const fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &x) { return zz<A>(x); }, "x")};
 
 static const auto doc_d_0  = fun_0.doc(R"DOC()DOC");
 static const auto doc_d_1  = fun_1.doc(R"DOC()DOC");
@@ -106,6 +110,7 @@ static const auto doc_d_8  = fun_8.doc(R"DOC()DOC");
 static const auto doc_d_9  = fun_9.doc(R"DOC()DOC");
 static const auto doc_d_10 = fun_10.doc(R"DOC()DOC");
 static const auto doc_d_11 = fun_11.doc(R"DOC()DOC");
+static const auto doc_d_12 = fun_12.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
@@ -117,10 +122,11 @@ static PyMethodDef module_methods[] = {
    {"h", (PyCFunction)c2py::pyfkw<fun_5>, METH_VARARGS | METH_KEYWORDS, doc_d_5.c_str()},
    {"hf", (PyCFunction)c2py::pyfkw<fun_6>, METH_VARARGS | METH_KEYWORDS, doc_d_6.c_str()},
    {"isfinite", (PyCFunction)c2py::pyfkw<fun_7>, METH_VARARGS | METH_KEYWORDS, doc_d_7.c_str()},
-   {"ret_with_alias", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
-   {"zfoo", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
-   {"zfwd_decl_fnt", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
-   {"zz", (PyCFunction)c2py::pyfkw<fun_11>, METH_VARARGS | METH_KEYWORDS, doc_d_11.c_str()},
+   {"non_deducible", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
+   {"ret_with_alias", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
+   {"zfoo", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
+   {"zfwd_decl_fnt", (PyCFunction)c2py::pyfkw<fun_11>, METH_VARARGS | METH_KEYWORDS, doc_d_11.c_str()},
+   {"zz", (PyCFunction)c2py::pyfkw<fun_12>, METH_VARARGS | METH_KEYWORDS, doc_d_12.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 

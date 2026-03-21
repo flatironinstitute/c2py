@@ -37,6 +37,11 @@ class TestIterable(unittest.TestCase):
    def test_forward_declared_function(self):
         self.assertEqual(B.zfwd_decl_fnt(3), 4)
 
+   def test_non_deducible(self):
+        # int non_deducible(double) -> int(x + 1)
+        self.assertEqual(B.non_deducible(2.7), 3)
+        self.assertIsInstance(B.non_deducible(2.7), int)
+
 if __name__ == '__main__':
     unittest.main()
 

@@ -95,6 +95,12 @@ struct A {
 };
 template auto zz(A const &);
 
+// Non-deducible template parameter: R cannot be deduced from the argument.
+// The codegen must emit explicit template arguments in the lambda call.
+template <typename R> R non_deducible(auto x) { return R(x + 1); }
+template int non_deducible(double);
+template double non_deducible(int);
+
 // check default parameters extraction
 
 void zfoo(int x = {}) { std::cout << x << "\n"; }
