@@ -51,7 +51,7 @@ namespace c2py {
   // Two makers for argument_t
   // Can not use constructor because it is explicitely called with <A>
   // First one for argument without a default value.
-  template <typename A> auto make_argument(std::string const &name) {
+  template <typename A> __attribute__((noinline)) auto make_argument(std::string const &name) {
     return argument_t{name,
                       python_typename<std::decay_t<A>>,
                       [](PyObject *ob, bool re) -> bool { return py_converter<std::decay_t<A>>::is_convertible(ob, re); },
@@ -61,7 +61,7 @@ namespace c2py {
                       {}};
   }
   // Second one with for an argument with a default value.
-  template <typename A, typename T> auto make_argument(nv_pair<T> &&nvp) {
+  template <typename A, typename T> __attribute__((noinline)) auto make_argument(nv_pair<T> &&nvp) {
     return argument_t{std::move(nvp).name, //
                       python_typename<std::decay_t<A>>,
                       [](PyObject *ob, bool re) -> bool { return py_converter<std::decay_t<A>>::is_convertible(ob, re); }, //

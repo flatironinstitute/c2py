@@ -110,4 +110,7 @@ void zfoo(std::string x = {}) { std::cout << x << "\n"; }
 int zfwd_decl_fnt(int);
 int zfwd_decl_fnt(int x) { return x + 1; }
 
+int doc_d_1(int){ return 8;}
+
+
 #include "basicfun.wrap.cxx"
