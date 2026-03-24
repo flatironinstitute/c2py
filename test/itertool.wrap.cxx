@@ -18,51 +18,51 @@
 
 using c2py::operator""_a;
 
-// ==================== Wrapped classes =====================
-
-template <> constexpr bool c2py::is_wrapped<a_class> = true;
-
 // ==================== enums =====================
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<a_class> = "itertool.AClass";
-static auto init_0                                       = c2py::dispatcher_c_kw_t{c2py::c_constructor<a_class>()};
-template <> constexpr initproc c2py::tp_init<a_class>    = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<a_class> = init_0.doc(R"DOC()DOC");
+// --------- class _c2py_cls_0 -----------
+using _c2py_cls_0                                            = a_class;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "itertool.AClass";
+static auto _c2py_init_0                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
 // values
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](a_class const &self) -> decltype(auto) { return self.values(); }, "self")};
+static auto const _c2py_fun_0 =
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 const &self) -> decltype(auto) { return self.values(); }, "self")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
-PyMethodDef c2py::tp_methods<a_class>[] = {
-   {"values", (PyCFunction)c2py::pyfkw<fun_0>, METH_VARARGS | METH_KEYWORDS, doc_d_0.c_str()},
+PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
+   {"values", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
-constexpr auto doc_member_0 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_0 = R"DOC()DOC";
 
-// ----- Method table ----
+// ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<a_class>[] = {c2py::getsetdef_from_member<&a_class::v, a_class>("v", doc_member_0),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_0>[] = {c2py::getsetdef_from_member<&_c2py_cls_0::v, _c2py_cls_0>("v", _c2py_doc_member_0),
 
-                                                    {nullptr, nullptr, nullptr, nullptr, nullptr}};
+                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<a_class> = R"DOC()DOC" + c2py::tp_ctor_doc<a_class>;
+template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
 
 // ==================== module functions ====================
 
 // trf
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int n) { return trf(n); }, "n")};
+static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int n) { return trf(n); }, "n")};
 
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"trf", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
+   {"trf", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -94,7 +94,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_itertool() {
   PyObject *m;
 
   if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<a_class>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -102,7 +102,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_itertool() {
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
-  c2py::add_type_object_to_main<a_class>("AClass", m, conv_table);
+#define _add_type(T, N) c2py::add_type_object_to_main<T>(N, m, conv_table)
+  _add_type(_c2py_cls_0, "AClass");
+#undef _add_type
 
   return m;
 }

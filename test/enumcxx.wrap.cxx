@@ -18,8 +18,6 @@
 
 using c2py::operator""_a;
 
-// ==================== Wrapped classes =====================
-
 // ==================== enums =====================
 
 template <> std::map<E1, str_t> c2py::enum_to_string<E1> = {{E1::a, "a"}, {E1::b, "b"}, {E1::c, "c"}};
@@ -30,18 +28,18 @@ template <> std::map<E2, str_t> c2py::enum_to_string<E2> = {{E2::A, "A"}, {E2::B
 // ==================== module functions ====================
 
 // f1
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](E1 x) { return f1(x); }, "x")};
+static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](E1 x) { return f1(x); }, "x")};
 
 // f2
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](E2 x) { return f2(x); }, "x")};
+static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](E2 x) { return f2(x); }, "x")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
+static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"f1", (PyCFunction)c2py::pyfkw<fun_0>, METH_VARARGS | METH_KEYWORDS, doc_d_0.c_str()},
-   {"f2", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
+   {"f1", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
+   {"f2", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -80,6 +78,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_enumcxx() {
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
+#define _add_type(T, N) c2py::add_type_object_to_main<T>(N, m, conv_table)
+
+#undef _add_type
 
   return m;
 }

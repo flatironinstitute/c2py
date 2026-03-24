@@ -18,67 +18,61 @@
 
 using c2py::operator""_a;
 
-// ==================== Wrapped classes =====================
-
-template <> constexpr bool c2py::is_wrapped<N::my_base>  = true;
-template <> constexpr bool c2py::is_wrapped<N::my_class> = true;
-
 // ==================== enums =====================
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<N::my_base> = "tpl_derived.MyBase";
-static auto init_0                                          = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::my_base>()};
-template <> constexpr initproc c2py::tp_init<N::my_base>    = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<N::my_base> = init_0.doc(R"DOC()DOC");
+// --------- class _c2py_cls_0 -----------
+using _c2py_cls_0                                            = N::my_base;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "tpl_derived.MyBase";
+static auto _c2py_init_0                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
 // f_base
-static auto const fun_0 =
-   c2py::dispatcher_f_kw_t{c2py::cmethod([](N::my_base &self, int u) -> decltype(auto) { return self.f_base(u); }, "self", "u")};
+static auto const _c2py_fun_0 =
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 &self, int u) -> decltype(auto) { return self.f_base(u); }, "self", "u")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
-PyMethodDef c2py::tp_methods<N::my_base>[] = {
-   {"f_base", (PyCFunction)c2py::pyfkw<fun_0>, METH_VARARGS | METH_KEYWORDS, doc_d_0.c_str()},
+PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
+   {"f_base", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
-// ----- Method table ----
-
-template <>
-constinit PyGetSetDef c2py::tp_getset<N::my_base>[] = {
-
-   {nullptr, nullptr, nullptr, nullptr, nullptr}};
-
-template <> const std::string c2py::tp_doc<N::my_base>       = R"DOC()DOC" + c2py::tp_ctor_doc<N::my_base>;
-template <> inline constexpr auto c2py::tp_name<N::my_class> = "tpl_derived.MyClass";
-static auto init_1 = c2py::dispatcher_c_kw_t{c2py::c_constructor<N::my_class>(), c2py::c_constructor<N::my_class, int>("u")};
-template <> constexpr initproc c2py::tp_init<N::my_class>    = c2py::pyfkw_constructor<init_1>;
-template <> const std::string c2py::tp_ctor_doc<N::my_class> = init_1.doc(R"DOC()DOC");
+template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
+// --------- class _c2py_cls_1 -----------
+using _c2py_cls_1                                            = N::my_class;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_1>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_1> = "tpl_derived.MyClass";
+static auto _c2py_init_1 = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_1>(), c2py::c_constructor<_c2py_cls_1, int>("u")};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_1>    = c2py::pyfkw_constructor<_c2py_init_1>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_1> = _c2py_init_1.doc(R"DOC()DOC");
 // get
-static auto const fun_1 =
-   c2py::dispatcher_f_kw_t{c2py::cmethod([](N::my_class const &self, long i) -> decltype(auto) { return self.get(i); }, "self", "i")};
+static auto const _c2py_fun_1 =
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_1 const &self, long i) -> decltype(auto) { return self.get(i); }, "self", "i")};
 
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
-PyMethodDef c2py::tp_methods<N::my_class>[] = {
-   {"get", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
+PyMethodDef c2py::tp_methods<_c2py_cls_1>[] = {
+   {"get", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
-constexpr auto doc_member_0 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_0 = R"DOC()DOC";
 
-// ----- Method table ----
+// ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<N::my_class>[] = {c2py::getsetdef_from_member<&N::my_class::i, N::my_class>("i", doc_member_0),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_1>[] = {c2py::getsetdef_from_member<&_c2py_cls_1::i, _c2py_cls_1>("i", _c2py_doc_member_0),
 
                                                         {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<N::my_class> = R"DOC()DOC" + c2py::tp_ctor_doc<N::my_class>;
+template <> const std::string c2py::tp_doc<_c2py_cls_1> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_1>;
 
 // ==================== module functions ====================
 
@@ -116,9 +110,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_tpl_derived()
   PyObject *m;
 
   if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<N::my_base>) < 0) return NULL;
-  c2py::wrap_pytype<N::my_class>.tp_base = &c2py::wrap_pytype<N::my_base>;
-  if (PyType_Ready(&c2py::wrap_pytype<N::my_class>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
+  c2py::wrap_pytype<_c2py_cls_1>.tp_base = &c2py::wrap_pytype<N::my_base>;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_1>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -126,8 +120,10 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_tpl_derived()
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
-  c2py::add_type_object_to_main<N::my_base>("MyBase", m, conv_table);
-  c2py::add_type_object_to_main<N::my_class>("MyClass", m, conv_table);
+#define _add_type(T, N) c2py::add_type_object_to_main<T>(N, m, conv_table)
+  _add_type(_c2py_cls_0, "MyBase");
+  _add_type(_c2py_cls_1, "MyClass");
+#undef _add_type
 
   return m;
 }

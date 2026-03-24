@@ -18,15 +18,14 @@
 
 using c2py::operator""_a;
 
-// ==================== Wrapped classes =====================
-
-template <> constexpr bool c2py::is_wrapped<N::A> = true;
-
 // ==================== enums =====================
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<N::A> = "two_module_1.A";
+// --------- class _c2py_cls_0 -----------
+using _c2py_cls_0                                            = N::A;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "two_module_1.A";
 
 static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
@@ -35,66 +34,67 @@ static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs)
   }
   c2py::pydict_extractor de{kwargs};
   try {
-    ((c2py::wrap<N::A> *)self)->_c = new N::A{};
+    ((c2py::wrap<_c2py_cls_0> *)self)->_c = new _c2py_cls_0{};
   } catch (std::exception const &e) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N::A from a Python dict.\n   "s + e.what()).c_str());
     return -1;
   }
-  auto &self_c = *(((c2py::wrap<N::A> *)self)->_c);
+  auto &self_c = *(((c2py::wrap<_c2py_cls_0> *)self)->_c);
   de("k", self_c.k, true);
   return de.check();
 }
 
-template <> constexpr initproc c2py::tp_init<N::A> = synth_constructor_0;
+template <> constexpr initproc c2py::tp_init<_c2py_cls_0> = synth_constructor_0;
 
 template <>
-const std::string c2py::tp_ctor_doc<N::A> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+const std::string c2py::tp_ctor_doc<_c2py_cls_0> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
 
 Parameters
 ----------
 k : {par_0}, default=5
 
 )DOC",
-                                                               "par", {c2py::python_typename<int>()});
+                                                                      "par", {c2py::python_typename<int>()});
 // f
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](N::A &self, int i) -> decltype(auto) { return self.f(i); }, "self", "i")};
+static auto const _c2py_fun_0 =
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 &self, int i) -> decltype(auto) { return self.f(i); }, "self", "i")};
 
-static const auto doc_d_0 = fun_0.doc(R"DOC()DOC");
+static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
-PyMethodDef c2py::tp_methods<N::A>[] = {
-   {"f", (PyCFunction)c2py::pyfkw<fun_0>, METH_VARARGS | METH_KEYWORDS, doc_d_0.c_str()},
+PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
+   {"f", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
-constexpr auto doc_member_0 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_0 = R"DOC()DOC";
 static PyObject *prop_get_dict_0(PyObject *self, void *) {
-  auto &self_c = *(((c2py::wrap<N::A> *)self)->_c);
+  auto &self_c = *(((c2py::wrap<_c2py_cls_0> *)self)->_c);
   c2py::pydict dic;
   dic["k"] = self_c.k;
   return dic.new_ref();
 }
 
-// ----- Method table ----
+// ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<N::A>[] = {c2py::getsetdef_from_member<&N::A::k, N::A>("k", doc_member_0),
-                                                 {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
-                                                 {nullptr, nullptr, nullptr, nullptr, nullptr}};
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_0>[] = {c2py::getsetdef_from_member<&_c2py_cls_0::k, _c2py_cls_0>("k", _c2py_doc_member_0),
+                                                        {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
+                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<N::A> = R"DOC()DOC" + c2py::tp_ctor_doc<N::A>;
+template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
 
 // ==================== module functions ====================
 
 // f
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return N::f(); })};
+static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return N::f(); })};
 
-static const auto doc_d_1 = fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"f", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
+   {"f", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -126,7 +126,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_two_module_1(
   PyObject *m;
 
   if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<N::A>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -134,7 +134,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_two_module_1(
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
-  c2py::add_type_object_to_main<N::A>("A", m, conv_table);
+#define _add_type(T, N) c2py::add_type_object_to_main<T>(N, m, conv_table)
+  _add_type(_c2py_cls_0, "A");
+#undef _add_type
 
   return m;
 }

@@ -18,8 +18,6 @@
 
 using c2py::operator""_a;
 
-// ==================== Wrapped classes =====================
-
 // ==================== enums =====================
 
 // ==================== module classes =====================
@@ -27,46 +25,46 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // f1
-static auto const fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f1(x); }, "x")};
+static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f1(x); }, "x")};
 
 // f10
-static auto const fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f10(x); }, "x")};
+static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f10(x); }, "x")};
 
 // f11
-static auto const fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f11(x); }, "x")};
+static auto const _c2py_fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f11(x); }, "x")};
 
 // f12
-static auto const fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f12(x); }, "x")};
+static auto const _c2py_fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f12(x); }, "x")};
 
 // f13
-static auto const fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f13(x); }, "x")};
+static auto const _c2py_fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f13(x); }, "x")};
 
 // f2
-static auto const fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f2(x); }, "x")};
+static auto const _c2py_fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f2(x); }, "x")};
 
 // f3
-static auto const fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f3(x); }, "x")};
+static auto const _c2py_fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f3(x); }, "x")};
 
 // f4
-static auto const fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f4(x); }, "x")};
+static auto const _c2py_fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f4(x); }, "x")};
 
 // f5
-static auto const fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f5(x); }, "x")};
+static auto const _c2py_fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f5(x); }, "x")};
 
 // f6
-static auto const fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f6(x); }, "x")};
+static auto const _c2py_fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f6(x); }, "x")};
 
 // f7
-static auto const fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f7(x); }, "x")};
+static auto const _c2py_fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f7(x); }, "x")};
 
 // f8
-static auto const fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f8(x); }, "x")};
+static auto const _c2py_fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f8(x); }, "x")};
 
 // f9
-static auto const fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f9(x); }, "x")};
+static auto const _c2py_fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f9(x); }, "x")};
 
-static const auto doc_d_0  = fun_0.doc(R"DOC()DOC");
-static const auto doc_d_1  = fun_1.doc(R"DOC(
+static const auto _c2py_doc_0  = _c2py_fun_0.doc(R"DOC()DOC");
+static const auto _c2py_doc_1  = _c2py_fun_1.doc(R"DOC(
 Warning:
 
 .. warning::
@@ -76,23 +74,23 @@ Warning:
 
 After warning.
 )DOC");
-static const auto doc_d_2  = fun_2.doc(R"DOC(
+static const auto _c2py_doc_2  = _c2py_fun_2.doc(R"DOC(
 Parameters
 ----------
 x : {par_0}
    Parameter - line 1.
    Parameter - line 2.
 )DOC",
-                                       {{c2py::python_typename<int>()}});
-static const auto doc_d_3  = fun_3.doc(R"DOC(
+                                                 {{c2py::python_typename<int>()}});
+static const auto _c2py_doc_3  = _c2py_fun_3.doc(R"DOC(
 Returns
 -------
 {ret_0}
    Return - line 1.
    Return - line 2.
 )DOC",
-                                       {}, {c2py::python_typename<int>()});
-static const auto doc_d_4  = fun_4.doc(R"DOC(
+                                                 {}, {c2py::python_typename<int>()});
+static const auto _c2py_doc_4  = _c2py_fun_4.doc(R"DOC(
 Brief - line 1.
 Brief - line 2.
 
@@ -125,16 +123,16 @@ Returns
 {ret_0}
    Return - line 1.
 )DOC",
-                                       {{c2py::python_typename<int>()}}, {c2py::python_typename<int>()});
-static const auto doc_d_5  = fun_5.doc(R"DOC(
+                                                 {{c2py::python_typename<int>()}}, {c2py::python_typename<int>()});
+static const auto _c2py_doc_5  = _c2py_fun_5.doc(R"DOC(
 Implicit details - line 1.
 )DOC");
-static const auto doc_d_6  = fun_6.doc(R"DOC(
+static const auto _c2py_doc_6  = _c2py_fun_6.doc(R"DOC(
 Implicit details - line 1.
 
 Implicit details - line 2.
 )DOC");
-static const auto doc_d_7  = fun_7.doc(R"DOC(
+static const auto _c2py_doc_7  = _c2py_fun_7.doc(R"DOC(
 Explicit brief - line 1.
 Explicit brief - line 2.
 
@@ -143,10 +141,10 @@ Explicit details - line 2.
 
 Implicit details - line 1.
 )DOC");
-static const auto doc_d_8  = fun_8.doc(R"DOC(
+static const auto _c2py_doc_8  = _c2py_fun_8.doc(R"DOC(
 Inline math: :math:`x = 3.1415`.
 )DOC");
-static const auto doc_d_9  = fun_9.doc(R"DOC(
+static const auto _c2py_doc_9  = _c2py_fun_9.doc(R"DOC(
 Multiline math:
 
 .. math::
@@ -155,7 +153,7 @@ Multiline math:
 
 After math.
 )DOC");
-static const auto doc_d_10 = fun_10.doc(R"DOC(
+static const auto _c2py_doc_10 = _c2py_fun_10.doc(R"DOC(
 Math environment:
 
 .. math::
@@ -167,7 +165,7 @@ Math environment:
 
 After math.
 )DOC");
-static const auto doc_d_11 = fun_11.doc(R"DOC(
+static const auto _c2py_doc_11 = _c2py_fun_11.doc(R"DOC(
 Code block:
 
 ::
@@ -179,7 +177,7 @@ Code block:
 
 After code.
 )DOC");
-static const auto doc_d_12 = fun_12.doc(R"DOC(
+static const auto _c2py_doc_12 = _c2py_fun_12.doc(R"DOC(
 Note:
 
 .. note::
@@ -192,19 +190,19 @@ After note.
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"f1", (PyCFunction)c2py::pyfkw<fun_0>, METH_VARARGS | METH_KEYWORDS, doc_d_0.c_str()},
-   {"f10", (PyCFunction)c2py::pyfkw<fun_1>, METH_VARARGS | METH_KEYWORDS, doc_d_1.c_str()},
-   {"f11", (PyCFunction)c2py::pyfkw<fun_2>, METH_VARARGS | METH_KEYWORDS, doc_d_2.c_str()},
-   {"f12", (PyCFunction)c2py::pyfkw<fun_3>, METH_VARARGS | METH_KEYWORDS, doc_d_3.c_str()},
-   {"f13", (PyCFunction)c2py::pyfkw<fun_4>, METH_VARARGS | METH_KEYWORDS, doc_d_4.c_str()},
-   {"f2", (PyCFunction)c2py::pyfkw<fun_5>, METH_VARARGS | METH_KEYWORDS, doc_d_5.c_str()},
-   {"f3", (PyCFunction)c2py::pyfkw<fun_6>, METH_VARARGS | METH_KEYWORDS, doc_d_6.c_str()},
-   {"f4", (PyCFunction)c2py::pyfkw<fun_7>, METH_VARARGS | METH_KEYWORDS, doc_d_7.c_str()},
-   {"f5", (PyCFunction)c2py::pyfkw<fun_8>, METH_VARARGS | METH_KEYWORDS, doc_d_8.c_str()},
-   {"f6", (PyCFunction)c2py::pyfkw<fun_9>, METH_VARARGS | METH_KEYWORDS, doc_d_9.c_str()},
-   {"f7", (PyCFunction)c2py::pyfkw<fun_10>, METH_VARARGS | METH_KEYWORDS, doc_d_10.c_str()},
-   {"f8", (PyCFunction)c2py::pyfkw<fun_11>, METH_VARARGS | METH_KEYWORDS, doc_d_11.c_str()},
-   {"f9", (PyCFunction)c2py::pyfkw<fun_12>, METH_VARARGS | METH_KEYWORDS, doc_d_12.c_str()},
+   {"f1", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
+   {"f10", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
+   {"f11", (PyCFunction)c2py::pyfkw<_c2py_fun_2>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_2.c_str()},
+   {"f12", (PyCFunction)c2py::pyfkw<_c2py_fun_3>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_3.c_str()},
+   {"f13", (PyCFunction)c2py::pyfkw<_c2py_fun_4>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_4.c_str()},
+   {"f2", (PyCFunction)c2py::pyfkw<_c2py_fun_5>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_5.c_str()},
+   {"f3", (PyCFunction)c2py::pyfkw<_c2py_fun_6>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_6.c_str()},
+   {"f4", (PyCFunction)c2py::pyfkw<_c2py_fun_7>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_7.c_str()},
+   {"f5", (PyCFunction)c2py::pyfkw<_c2py_fun_8>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_8.c_str()},
+   {"f6", (PyCFunction)c2py::pyfkw<_c2py_fun_9>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_9.c_str()},
+   {"f7", (PyCFunction)c2py::pyfkw<_c2py_fun_10>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_10.c_str()},
+   {"f8", (PyCFunction)c2py::pyfkw<_c2py_fun_11>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_11.c_str()},
+   {"f9", (PyCFunction)c2py::pyfkw<_c2py_fun_12>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_12.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -243,6 +241,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_doc() {
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
+#define _add_type(T, N) c2py::add_type_object_to_main<T>(N, m, conv_table)
+
+#undef _add_type
 
   return m;
 }

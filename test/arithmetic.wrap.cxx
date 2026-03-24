@@ -18,42 +18,41 @@
 
 using c2py::operator""_a;
 
-// ==================== Wrapped classes =====================
-
-template <> constexpr bool c2py::is_wrapped<A> = true;
-
 // ==================== enums =====================
 
 // ==================== module classes =====================
 
-template <> inline constexpr auto c2py::tp_name<A> = "arithmetic.A";
-static auto init_0                                 = c2py::dispatcher_c_kw_t{c2py::c_constructor<A, int>("k")};
-template <> constexpr initproc c2py::tp_init<A>    = c2py::pyfkw_constructor<init_0>;
-template <> const std::string c2py::tp_ctor_doc<A> = init_0.doc(R"DOC()DOC");
+// --------- class _c2py_cls_0 -----------
+using _c2py_cls_0                                            = A;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "arithmetic.A";
+static auto _c2py_init_0                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0, int>("k")};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
-PyMethodDef c2py::tp_methods<A>[] = {
+PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
 
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
-constexpr auto doc_member_0 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_0 = R"DOC()DOC";
 
-// ----- Method table ----
+// ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<A>[] = {c2py::getsetdef_from_member<&A::k, A>("k", doc_member_0),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_0>[] = {c2py::getsetdef_from_member<&_c2py_cls_0::k, _c2py_cls_0>("k", _c2py_doc_member_0),
 
-                                              {nullptr, nullptr, nullptr, nullptr, nullptr}};
+                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> struct c2py::arithmetic<A, c2py::OpName::Add> : std::tuple<std::pair<A, A>, std::pair<A, int>> {};
+template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Add> : std::tuple<std::pair<A, A>, std::pair<A, int>> {};
 
-template <> struct c2py::arithmetic<A, c2py::OpName::Sub> : std::tuple<std::pair<A, A>> {};
+template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Sub> : std::tuple<std::pair<A, A>> {};
 
-template <> constexpr PyNumberMethods *c2py::tp_as_number<A> = &c2py::tp_as_number_impl<A>;
+template <> constexpr PyNumberMethods *c2py::tp_as_number<_c2py_cls_0> = &c2py::tp_as_number_impl<_c2py_cls_0>;
 
-template <> const std::string c2py::tp_doc<A> = R"DOC()DOC" + c2py::tp_ctor_doc<A>;
+template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
 
 // ==================== module functions ====================
 
@@ -91,7 +90,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_arithmetic() 
   PyObject *m;
 
   if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<A>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -99,7 +98,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_arithmetic() 
   auto &conv_table = *c2py::conv_table_sptr.get();
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
-  c2py::add_type_object_to_main<A>("A", m, conv_table);
+#define _add_type(T, N) c2py::add_type_object_to_main<T>(N, m, conv_table)
+  _add_type(_c2py_cls_0, "A");
+#undef _add_type
 
   return m;
 }
