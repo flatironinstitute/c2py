@@ -36,14 +36,20 @@ static auto const _c2py_fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { r
 // identity_int64
 static auto const _c2py_fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](long long x) { return identity_int64(x); }, "x")};
 
+// identity_int64_with_defarg
+static auto const _c2py_fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](long long x) { return identity_int64_with_defarg(x); }, "x"_a = 42)};
+
 // identity_uint16
-static auto const _c2py_fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned short x) { return identity_uint16(x); }, "x")};
+static auto const _c2py_fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned short x) { return identity_uint16(x); }, "x")};
 
 // identity_uint32
-static auto const _c2py_fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned int x) { return identity_uint32(x); }, "x")};
+static auto const _c2py_fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned int x) { return identity_uint32(x); }, "x")};
 
 // identity_uint64
-static auto const _c2py_fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned long long x) { return identity_uint64(x); }, "x")};
+static auto const _c2py_fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned long long x) { return identity_uint64(x); }, "x")};
+
+// identity_uint64_with_defarg
+static auto const _c2py_fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned long long x) { return identity_uint64_with_defarg(x); }, "x"_a = 42)};
 
 static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
 static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
@@ -52,6 +58,8 @@ static const auto _c2py_doc_3 = _c2py_fun_3.doc(R"DOC()DOC");
 static const auto _c2py_doc_4 = _c2py_fun_4.doc(R"DOC()DOC");
 static const auto _c2py_doc_5 = _c2py_fun_5.doc(R"DOC()DOC");
 static const auto _c2py_doc_6 = _c2py_fun_6.doc(R"DOC()DOC");
+static const auto _c2py_doc_7 = _c2py_fun_7.doc(R"DOC()DOC");
+static const auto _c2py_doc_8 = _c2py_fun_8.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
@@ -59,9 +67,11 @@ static PyMethodDef module_methods[] = {
    {"identity_int16", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
    {"identity_int32", (PyCFunction)c2py::pyfkw<_c2py_fun_2>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_2.c_str()},
    {"identity_int64", (PyCFunction)c2py::pyfkw<_c2py_fun_3>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_3.c_str()},
-   {"identity_uint16", (PyCFunction)c2py::pyfkw<_c2py_fun_4>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_4.c_str()},
-   {"identity_uint32", (PyCFunction)c2py::pyfkw<_c2py_fun_5>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_5.c_str()},
-   {"identity_uint64", (PyCFunction)c2py::pyfkw<_c2py_fun_6>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_6.c_str()},
+   {"identity_int64_with_defarg", (PyCFunction)c2py::pyfkw<_c2py_fun_4>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_4.c_str()},
+   {"identity_uint16", (PyCFunction)c2py::pyfkw<_c2py_fun_5>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_5.c_str()},
+   {"identity_uint32", (PyCFunction)c2py::pyfkw<_c2py_fun_6>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_6.c_str()},
+   {"identity_uint64", (PyCFunction)c2py::pyfkw<_c2py_fun_7>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_7.c_str()},
+   {"identity_uint64_with_defarg", (PyCFunction)c2py::pyfkw<_c2py_fun_8>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_8.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
