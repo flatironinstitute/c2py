@@ -101,6 +101,9 @@ static auto const _c2py_fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { 
 // zz
 static auto const _c2py_fun_13 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &x) { return zz<A>(x); }, "x")};
 
+// zz_defarg_alias2
+static auto const _c2py_fun_14 = c2py::dispatcher_f_kw_t{c2py::cfun([](long v) { return ns::zz_defarg_alias2(v); }, "v"_a = long{0})};
+
 static const auto _c2py_doc_0  = _c2py_fun_0.doc(R"DOC()DOC");
 static const auto _c2py_doc_1  = _c2py_fun_1.doc(R"DOC()DOC");
 static const auto _c2py_doc_2  = _c2py_fun_2.doc(R"DOC()DOC");
@@ -115,6 +118,7 @@ static const auto _c2py_doc_10 = _c2py_fun_10.doc(R"DOC()DOC");
 static const auto _c2py_doc_11 = _c2py_fun_11.doc(R"DOC()DOC");
 static const auto _c2py_doc_12 = _c2py_fun_12.doc(R"DOC()DOC");
 static const auto _c2py_doc_13 = _c2py_fun_13.doc(R"DOC()DOC");
+static const auto _c2py_doc_14 = _c2py_fun_14.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
@@ -132,6 +136,7 @@ static PyMethodDef module_methods[] = {
    {"zfoo", (PyCFunction)c2py::pyfkw<_c2py_fun_11>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_11.c_str()},
    {"zfwd_decl_fnt", (PyCFunction)c2py::pyfkw<_c2py_fun_12>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_12.c_str()},
    {"zz", (PyCFunction)c2py::pyfkw<_c2py_fun_13>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_13.c_str()},
+   {"zz_defarg_alias2", (PyCFunction)c2py::pyfkw<_c2py_fun_14>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_14.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
