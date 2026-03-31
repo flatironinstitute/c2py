@@ -65,9 +65,9 @@ class TestIterable(unittest.TestCase):
         self.assertEqual(a.f(2),  4)
         self.assertEqual(a.m1(2),  21)
         self.assertEqual(a.h(2),  22)
-        # Check friend declaration are not wrapped
-        self.assertFalse(hasattr(M, "a_friend"))
-        #self.assertEqual(M.a_friend(a),  -3)
+        # Check friend functions are wrapped as module-level functions
+        self.assertEqual(M.a_friend(a),  -3)
+        self.assertEqual(M.b_friend(a),  -6)
         self.assertEqual(a.tpl(10),  266)
   
    def test_meth_with_alias(self):

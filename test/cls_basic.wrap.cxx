@@ -182,19 +182,29 @@ template <> const std::string c2py::tp_doc<_c2py_cls_2> = R"DOC()DOC" + c2py::tp
 
 // ==================== module functions ====================
 
+// a_friend
+static auto const _c2py_fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return a_friend(a); }, "a")};
+
+// b_friend
+static auto const _c2py_fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return b_friend(a); }, "a")};
+
 // my_module_init
-static auto const _c2py_fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
+static auto const _c2py_fun_13 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
 
 // nop
-static auto const _c2py_fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
+static auto const _c2py_fun_14 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
 
 static const auto _c2py_doc_11 = _c2py_fun_11.doc(R"DOC()DOC");
 static const auto _c2py_doc_12 = _c2py_fun_12.doc(R"DOC()DOC");
+static const auto _c2py_doc_13 = _c2py_fun_13.doc(R"DOC()DOC");
+static const auto _c2py_doc_14 = _c2py_fun_14.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"my_module_init", (PyCFunction)c2py::pyfkw<_c2py_fun_11>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_11.c_str()},
-   {"nop", (PyCFunction)c2py::pyfkw<_c2py_fun_12>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_12.c_str()},
+   {"a_friend", (PyCFunction)c2py::pyfkw<_c2py_fun_11>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_11.c_str()},
+   {"b_friend", (PyCFunction)c2py::pyfkw<_c2py_fun_12>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_12.c_str()},
+   {"my_module_init", (PyCFunction)c2py::pyfkw<_c2py_fun_13>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_13.c_str()},
+   {"nop", (PyCFunction)c2py::pyfkw<_c2py_fun_14>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_14.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
