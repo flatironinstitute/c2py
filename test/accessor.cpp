@@ -34,6 +34,9 @@ class B {
     return a1;
   }
 
+  // Delegates to get_a_ref(): exercises the CXXMemberCallExpr branch of check_return_visitor.
+  A const &get_a_via_method() { return get_a_ref(); }
+
   // Returns a ref to either member depending on b: tests that the correct
   // member is aliased regardless of which branch is taken.
   A &get_a_ref_switch(bool b) {

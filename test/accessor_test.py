@@ -89,6 +89,16 @@ class TestAccessor(unittest.TestCase):
         a = b.get_a_ref()
         self.assertRaises(RuntimeError, lambda x: M.f(x), a)
 
+    def test_method_delegation(self):
+        """get_a_via_method delegates to get_a_ref: method-call return is accepted."""
+        b = M.B()
+        rc = sys.getrefcount(b)
+        a = b.get_a_via_method()
+        self.assertEqual(sys.getrefcount(b), rc + 1)
+        self.assertEqual(a.i, b.get_i(True))
+        del a
+        self.assertEqual(sys.getrefcount(b), rc)
+
     def test_member_of_member_ref(self):
         """get_nested_a returns a const ref to a member of a member (o_.a)."""
         d = M.D()
