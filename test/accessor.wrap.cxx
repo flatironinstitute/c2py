@@ -94,17 +94,63 @@ PyMethodDef c2py::tp_methods<_c2py_cls_1>[] = {
 };
 
 template <> const std::string c2py::tp_doc<_c2py_cls_1> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_1>;
+// --------- class _c2py_cls_2 -----------
+using _c2py_cls_2                                            = Outer;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_2>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_2> = "accessor.Outer";
+static auto _c2py_init_2                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_2>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_2>    = c2py::pyfkw_constructor<_c2py_init_2>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_2> = _c2py_init_2.doc(R"DOC()DOC");
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<_c2py_cls_2>[] = {
+
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+constexpr auto _c2py_doc_member_1 = R"DOC()DOC";
+
+// ----- Member and property table ----
+
+template <>
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_2>[] = {c2py::getsetdef_from_member<&_c2py_cls_2::a, _c2py_cls_2>("a", _c2py_doc_member_1),
+
+                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
+template <> const std::string c2py::tp_doc<_c2py_cls_2> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_2>;
+// --------- class _c2py_cls_3 -----------
+using _c2py_cls_3                                            = D;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_3>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_3> = "accessor.D";
+static auto _c2py_init_3                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_3>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_3>    = c2py::pyfkw_constructor<_c2py_init_3>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_3> = _c2py_init_3.doc(R"DOC()DOC");
+// get_nested_a
+static auto const _c2py_fun_6 =
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_3 const &self) -> decltype(auto) { return self.get_nested_a(); }, "self")};
+
+static const auto _c2py_doc_6 = _c2py_fun_6.doc(R"DOC()DOC");
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<_c2py_cls_3>[] = {
+   {"get_nested_a", (PyCFunction)c2py::pyfkw<_c2py_fun_6>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_6.c_str()},
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+template <> const std::string c2py::tp_doc<_c2py_cls_3> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_3>;
 
 // ==================== module functions ====================
 
 // f
-static auto const _c2py_fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([](A &a) { return f(a); }, "a")};
+static auto const _c2py_fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](A &a) { return f(a); }, "a")};
 
-static const auto _c2py_doc_6 = _c2py_fun_6.doc(R"DOC()DOC");
+static const auto _c2py_doc_7 = _c2py_fun_7.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"f", (PyCFunction)c2py::pyfkw<_c2py_fun_6>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_6.c_str()},
+   {"f", (PyCFunction)c2py::pyfkw<_c2py_fun_7>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_7.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -138,6 +184,8 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_accessor() {
   if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_1>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_2>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_3>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -148,6 +196,8 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_accessor() {
 #define _add_type(T, N) c2py::add_type_object_to_main<T>(N, m, conv_table)
   _add_type(_c2py_cls_0, "A");
   _add_type(_c2py_cls_1, "B");
+  _add_type(_c2py_cls_2, "Outer");
+  _add_type(_c2py_cls_3, "D");
 #undef _add_type
 
   return m;

@@ -42,6 +42,20 @@ class B {
     else
       return a2;
   }
+
+};
+
+// Exercises the check_return_visitor fix that allows `this->member.field`.
+struct Outer {
+  A a;
+  Outer() : a{99} {}
+};
+
+class D {
+  Outer o_;
+
+  public:
+  A const &get_nested_a() const { return o_.a; }
 };
 
 #include "accessor.wrap.cxx"

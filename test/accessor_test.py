@@ -89,5 +89,15 @@ class TestAccessor(unittest.TestCase):
         a = b.get_a_ref()
         self.assertRaises(RuntimeError, lambda x: M.f(x), a)
 
+    def test_member_of_member_ref(self):
+        """get_nested_a returns a const ref to a member of a member (o_.a)."""
+        d = M.D()
+        rc = sys.getrefcount(d)
+        a = d.get_nested_a()
+        self.assertEqual(sys.getrefcount(d), rc + 1)
+        self.assertEqual(a.i, 99)
+        del a
+        self.assertEqual(sys.getrefcount(d), rc)
+
 if __name__ == '__main__':
     unittest.main()
