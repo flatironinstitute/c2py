@@ -123,4 +123,10 @@ struct C2PY_RENAME(renamed_class) some_class {
   C2PY_RENAME(renamed_method) void some_method(int y) { x += y; } 
 };
 
+namespace ns {
+  struct B {
+    friend void inline_friend(const B &b) { std::cout << "inline friend\n"; }
+  };
+}
+
 #include "cls_basic.wrap.cxx"

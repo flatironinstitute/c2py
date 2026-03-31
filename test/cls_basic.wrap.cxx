@@ -179,6 +179,22 @@ constinit PyGetSetDef c2py::tp_getset<_c2py_cls_2>[] = {c2py::getsetdef_from_mem
                                                         {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
 template <> const std::string c2py::tp_doc<_c2py_cls_2> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_2>;
+// --------- class _c2py_cls_3 -----------
+using _c2py_cls_3                                            = ns::B;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_3>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_3> = "cls_basic.B";
+static auto _c2py_init_3                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_3>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_3>    = c2py::pyfkw_constructor<_c2py_init_3>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_3> = _c2py_init_3.doc(R"DOC()DOC");
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<_c2py_cls_3>[] = {
+
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+template <> const std::string c2py::tp_doc<_c2py_cls_3> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_3>;
 
 // ==================== module functions ====================
 
@@ -188,23 +204,28 @@ static auto const _c2py_fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &
 // b_friend
 static auto const _c2py_fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return b_friend(a); }, "a")};
 
+// inline_friend
+static auto const _c2py_fun_13 = c2py::dispatcher_f_kw_t{c2py::cfun([](const ns::B &b) { return ns::inline_friend(b); }, "b")};
+
 // my_module_init
-static auto const _c2py_fun_13 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
+static auto const _c2py_fun_14 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
 
 // nop
-static auto const _c2py_fun_14 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
+static auto const _c2py_fun_15 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
 
 static const auto _c2py_doc_11 = _c2py_fun_11.doc(R"DOC()DOC");
 static const auto _c2py_doc_12 = _c2py_fun_12.doc(R"DOC()DOC");
 static const auto _c2py_doc_13 = _c2py_fun_13.doc(R"DOC()DOC");
 static const auto _c2py_doc_14 = _c2py_fun_14.doc(R"DOC()DOC");
+static const auto _c2py_doc_15 = _c2py_fun_15.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
    {"a_friend", (PyCFunction)c2py::pyfkw<_c2py_fun_11>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_11.c_str()},
    {"b_friend", (PyCFunction)c2py::pyfkw<_c2py_fun_12>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_12.c_str()},
-   {"my_module_init", (PyCFunction)c2py::pyfkw<_c2py_fun_13>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_13.c_str()},
-   {"nop", (PyCFunction)c2py::pyfkw<_c2py_fun_14>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_14.c_str()},
+   {"inline_friend", (PyCFunction)c2py::pyfkw<_c2py_fun_13>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_13.c_str()},
+   {"my_module_init", (PyCFunction)c2py::pyfkw<_c2py_fun_14>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_14.c_str()},
+   {"nop", (PyCFunction)c2py::pyfkw<_c2py_fun_15>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_15.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -242,6 +263,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls_basic() {
   if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_1>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_2>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_3>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -253,6 +275,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls_basic() {
   _add_type(_c2py_cls_0, "A");
   _add_type(_c2py_cls_1, "DummyClass");
   _add_type(_c2py_cls_2, "renamed_class");
+  _add_type(_c2py_cls_3, "B");
 #undef _add_type
 
   // Initialization of the module
