@@ -10,6 +10,21 @@ namespace c2py {
   template <typename Eraser, bool Constructors>
   PyObject *dispatcher_t<Eraser, Constructors>::call_impl(PyObject *self, PyObject *args, PyObject *kwargs) const {
 
+    // Rename deprecated keyword arguments if any
+    pyref new_kwargs; // holds the copy if we modify kwargs
+    if (!deprecated_params.empty() && kwargs) {
+      for (auto const &[old_name, new_name] : deprecated_params) {
+        PyObject *val = PyDict_GetItemString(kwargs, old_name.c_str()); // borrowed ref
+        if (val) {
+          if (!new_kwargs) new_kwargs = pyref{PyDict_Copy(kwargs)};
+          PyDict_SetItemString(new_kwargs, new_name.c_str(), val);
+          PyDict_DelItemString(new_kwargs, old_name.c_str());
+          PySys_WriteStderr("DeprecationWarning: parameter '%s' is deprecated, use '%s' instead\n", old_name.c_str(), new_name.c_str());
+        }
+      }
+      if (new_kwargs) kwargs = new_kwargs;
+    }
+
     for (auto const &ov : ov_list)
       if (ov->is_callable(self, args, kwargs)) return ov->operator()(self, args, kwargs);
 

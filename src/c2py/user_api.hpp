@@ -15,6 +15,7 @@
 #define C2PY_RENAME(X) __attribute__((annotate("c2py_rename:" #X)))
 #define C2PY_PROPERTY_GET(X) __attribute__((annotate("c2py_property_get:" #X)))
 #define C2PY_PROPERTY_SET(X) __attribute__((annotate("c2py_property_set:" #X)))
+#define C2PY_DEPRECATED_PARAMETER_NAME(...) __attribute__((annotate("c2py_deprecated_params:" C2PY_AS_STRING(__VA_ARGS__))))
 #else
 #define C2PY_IGNORE
 #define C2PY_WRAP_AS_METHOD
@@ -23,6 +24,7 @@
 #define C2PY_RENAME(X)
 #define C2PY_PROPERTY_GET(X)
 #define C2PY_PROPERTY_SET(X)
+#define C2PY_DEPRECATED_PARAMETER_NAME(...)
 #endif
 
 #define C2PY_AS_STRING(...) C2PY_AS_STRING2(__VA_ARGS__)

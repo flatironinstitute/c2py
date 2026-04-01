@@ -65,6 +65,7 @@ set(c2py_all_full_tests
   refcount
   const_ref_default_arg
   arithmetic
+  deprecated_params
   CACHE INTERNAL "")
 
 foreach(t ${c2py_all_full_tests})
