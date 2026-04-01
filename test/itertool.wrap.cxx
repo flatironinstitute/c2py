@@ -29,16 +29,21 @@ template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "itertool.AClass"
 static auto _c2py_init_0                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
 template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
 template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
+// data
+static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 const &self) -> decltype(auto) { return self.data(); }, "self")};
+
 // values
-static auto const _c2py_fun_0 =
+static auto const _c2py_fun_1 =
    c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 const &self) -> decltype(auto) { return self.values(); }, "self")};
 
 static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
+static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
-   {"values", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
+   {"data", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
+   {"values", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
@@ -56,13 +61,13 @@ template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp
 // ==================== module functions ====================
 
 // trf
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int n) { return trf(n); }, "n")};
+static auto const _c2py_fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](int n) { return trf(n); }, "n")};
 
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_2 = _c2py_fun_2.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
-   {"trf", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
+   {"trf", (PyCFunction)c2py::pyfkw<_c2py_fun_2>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_2.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 

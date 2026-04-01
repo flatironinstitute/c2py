@@ -15,6 +15,9 @@ struct a_class {
   [[nodiscard]] auto values() const {
     return itertools::transform(v, [](auto &&x) { return x * x; });
   }
+
+  // Return a const reference to the vector: the py_range must keep 'self' alive via guardian
+  [[nodiscard]] std::vector<int> const &data() const { return v; }
 };
 
 auto trf(int n) {

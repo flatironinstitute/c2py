@@ -24,7 +24,7 @@ namespace c2py {
   // *********************************************
   struct py_range {
     std::function<PyObject *(PyObject *)> lazy_iter;
-
+    pyref guardian                        = {}; // in case we are wrapping a reference.
     py_range()                            = delete;
     py_range(py_range const &)            = delete;
     py_range(py_range &&)                 = default;
@@ -40,6 +40,12 @@ namespace c2py {
            // and T may not be copyable... (e.g. a coroutine)
            return make_iterator(y->begin(), y->end(), self);
          }} {}
+
+    template <typename T>
+      requires(concepts::RangeOfConvertibles<std::decay_t<T>>)
+    py_range(T &x, PyObject *guardian)
+       : lazy_iter{[y = &x](PyObject *self) mutable -> PyObject * { return make_iterator(y->begin(), y->end(), self); }},
+         guardian{pyref::borrowed(guardian)} {}
   };
 
   // ------------- We wrap py_range --------------
@@ -50,14 +56,21 @@ namespace c2py {
 
   // -----  a converter into a py_range -----
 
-  struct py_converter_to_py_range {
+  template <bool IsReference> struct py_converter_to_py_range;
+
+  template <> struct py_converter_to_py_range<true> {
+    template <typename U> static PyObject *c2py(U &x, PyObject *guardian) { return py_converter<py_range>::c2py(py_range{x, guardian}); }
+  };
+
+  template <> struct py_converter_to_py_range<false> {
     template <typename U> static PyObject *c2py(U &&x) { return py_converter<py_range>::c2py(py_range{std::forward<U>(x)}); }
-    static void py2c(PyObject *ob)                                 = delete;
-    static bool is_convertible(PyObject *ob, bool raise_exception) = delete;
   };
 
   template <typename T>
     requires(concepts::RangeOfConvertibles<T> and not is_wrapped<T> and not concepts::IsConvertibleCPP2Py_backwd<std::decay_t<T>>)
-  struct py_converter<T> : py_converter_to_py_range {}; //
+  struct py_converter<T> : py_converter_to_py_range<std::is_reference_v<T>> {
+    static void py2c(PyObject *ob)                                 = delete;
+    static bool is_convertible(PyObject *ob, bool raise_exception) = delete;
+  }; //
 
 } // namespace c2py
