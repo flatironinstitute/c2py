@@ -13,4 +13,15 @@ struct A : B {
   int a(int i, int j) { return i + j; }
 };
 
+class C2PY_IGNORE C {
+  int ic = 12;
+  public:
+  C(int i) : ic(i) {}
+  C2PY_PROPERTY_GET(cc) int cc() const { return ic; }
+};
+
+struct D : public C {
+  D(int i) : C(i) {}
+};
+
 #include "cls_der.wrap.cxx"

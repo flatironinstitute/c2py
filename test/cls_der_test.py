@@ -6,7 +6,7 @@ import cls_der as M
 A = M.A
 B = M.B
 
-class TestIterable(unittest.TestCase):
+class TestInheritance(unittest.TestCase):
 
    def test_construct(self):
         a = M.A(2)
@@ -16,6 +16,10 @@ class TestIterable(unittest.TestCase):
         self.assertEqual( a.b(1),  3)
         self.assertTrue(isinstance(a, B))
         self.assertFalse(isinstance(b, A))
+
+   def test_property(self):
+        d = M.D(5)
+        self.assertEqual(d.cc, 5)
 
 #
 if __name__ == '__main__':

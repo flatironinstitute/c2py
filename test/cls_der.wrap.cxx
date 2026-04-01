@@ -73,6 +73,32 @@ PyMethodDef c2py::tp_methods<_c2py_cls_1>[] = {
 };
 
 template <> const std::string c2py::tp_doc<_c2py_cls_1> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_1>;
+// --------- class _c2py_cls_2 -----------
+using _c2py_cls_2                                            = D;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_2>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_2> = "cls_der.D";
+static auto _c2py_init_2                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_2, int>("i")};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_2>    = c2py::pyfkw_constructor<_c2py_init_2>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_2> = _c2py_init_2.doc(R"DOC()DOC");
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<_c2py_cls_2>[] = {
+
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+static constexpr auto prop_doc_0 = R"DOC()DOC";
+
+// ----- Member and property table ----
+
+template <>
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_2>[] = {
+
+   {"cc", c2py::getter_from_method_B<D, c2py::castmc<>(&C::cc)>, nullptr, prop_doc_0, nullptr},
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
+
+template <> const std::string c2py::tp_doc<_c2py_cls_2> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_2>;
 
 // ==================== module functions ====================
 
@@ -113,6 +139,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls_der() {
   if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
   c2py::wrap_pytype<_c2py_cls_1>.tp_base = &c2py::wrap_pytype<B>;
   if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_1>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_2>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -123,6 +150,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls_der() {
 #define _add_type(T, N) c2py::add_type_object_to_main<T>(N, m, conv_table)
   _add_type(_c2py_cls_0, "B");
   _add_type(_c2py_cls_1, "A");
+  _add_type(_c2py_cls_2, "D");
 #undef _add_type
 
   return m;
