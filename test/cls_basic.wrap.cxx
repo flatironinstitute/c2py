@@ -51,8 +51,9 @@ static auto const _c2py_fun_3 =
 static auto const _c2py_fun_4 = c2py::dispatcher_f_kw_t{c2py::cmethod(c2py::cast<const A &, int>(&hhh), "a", "j")};
 
 // m1
-static auto const _c2py_fun_5 = c2py::dispatcher_f_kw_t{
-   c2py::cmethod([](_c2py_cls_0 &self, double x) -> decltype(auto) { return self.m1(x); }, "self", "x"), c2py::cfun(&_c2py_cls_0::m1<int>, "x")};
+static auto const _c2py_fun_5 =
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 &self, double x) -> decltype(auto) { return self.m1(x); }, "self", "x"),
+                           c2py::cmethod([](_c2py_cls_0 &self, int x) -> decltype(auto) { return self.template m1<int>(x); }, "self", "x")};
 
 // no_prop
 static auto const _c2py_fun_6 = c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 &self) -> decltype(auto) { return self.no_prop(); }, "self")};
@@ -61,7 +62,8 @@ static auto const _c2py_fun_6 = c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_c
 static auto const _c2py_fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](int i) { return _c2py_cls_0::static_method(i); }, "i")};
 
 // tpl
-static auto const _c2py_fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun(&_c2py_cls_0::tpl<double>, "x")};
+static auto const _c2py_fun_8 =
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 &self, double x) -> decltype(auto) { return self.template tpl<double>(x); }, "self", "x")};
 
 static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
 static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");

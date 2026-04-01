@@ -74,17 +74,19 @@ static auto const _c2py_fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x, int
 static auto const _c2py_fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return get_arg(); })};
 
 // h
-static auto const _c2py_fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun(&N::h<int>, "x")};
+static auto const _c2py_fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return N::h<int>(x); }, "x")};
 
 // hf
 static auto const _c2py_fun_7 =
-   c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f1(x); }, "x"), c2py::cfun(&N::h<long>, "x"), c2py::cfun(&N::h<double>, "x")};
+   c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return f1(x); }, "x"), c2py::cfun([](long x) { return N::h<long>(x); }, "x"),
+                           c2py::cfun([](double x) { return N::h<double>(x); }, "x")};
 
 // isfinite
 static auto const _c2py_fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([](const dcomplex &x) { return N::isfinite(x); }, "x")};
 
 // non_deducible
-static auto const _c2py_fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun(&non_deducible<int, double>, "x"), c2py::cfun(&non_deducible<double, int>, "x")};
+static auto const _c2py_fun_9 = c2py::dispatcher_f_kw_t{c2py::cfun([](double x) { return non_deducible<int, double>(x); }, "x"),
+                                                        c2py::cfun([](int x) { return non_deducible<double, int>(x); }, "x")};
 
 // ret_with_alias
 static auto const _c2py_fun_10 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return ret_with_alias(); })};
@@ -97,7 +99,7 @@ static auto const _c2py_fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { 
 static auto const _c2py_fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return zfwd_decl_fnt(x); }, "x")};
 
 // zz
-static auto const _c2py_fun_13 = c2py::dispatcher_f_kw_t{c2py::cfun(&zz<A>, "x")};
+static auto const _c2py_fun_13 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &x) { return zz<A>(x); }, "x")};
 
 static const auto _c2py_doc_0  = _c2py_fun_0.doc(R"DOC()DOC");
 static const auto _c2py_doc_1  = _c2py_fun_1.doc(R"DOC()DOC");
