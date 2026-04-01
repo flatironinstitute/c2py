@@ -87,10 +87,16 @@ namespace c2py {
     };
 
     // IsConvertibleC2Py
+    // For reference types, c2py takes (x, PyObject* guardian) to track ownership.
+    // For value types, c2py takes (x) only.
     template <typename U>
-    concept IsConvertibleC2Py = requires(U x) {
-      { c2py::py_converter<std::remove_const_t<U>>::c2py(x) } -> std::same_as<PyObject *>;
-    };
+    concept IsConvertibleC2Py =
+       (std::is_reference_v<U> and requires(U x, PyObject *g) {
+         { c2py::py_converter<std::remove_const_t<U>>::c2py(x, g) } -> std::same_as<PyObject *>;
+       })
+       or (not std::is_reference_v<U> and requires(U x) {
+         { c2py::py_converter<std::remove_const_t<U>>::c2py(x) } -> std::same_as<PyObject *>;
+       });
 
     // IsConvertible
     template <typename U>
