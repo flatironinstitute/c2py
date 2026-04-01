@@ -12,8 +12,8 @@ namespace c2py {
 
     // Rename deprecated keyword arguments if any
     pyref new_kwargs; // holds the copy if we modify kwargs
-    if (!deprecated_params.empty() && kwargs) {
-      for (auto const &[old_name, new_name] : deprecated_params) {
+    if (deprecated_params && kwargs) {
+      for (auto const &[old_name, new_name] : *deprecated_params) {
         PyObject *val = PyDict_GetItemString(kwargs, old_name.c_str()); // borrowed ref
         if (val) {
           if (!new_kwargs) new_kwargs = pyref{PyDict_Copy(kwargs)};

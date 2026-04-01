@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 #include "pycfun_kw.hpp"
@@ -12,13 +13,13 @@ namespace c2py {
   // Gather a set of overload and handle the calls and error reporting
   template <typename Eraser, bool Constructors = false> struct dispatcher_t {
     std::vector<std::unique_ptr<Eraser>> ov_list;
-    std::map<std::string, std::string> deprecated_params; // old_name -> new_name
+    std::unique_ptr<std::map<std::string, std::string>> deprecated_params; // old_name -> new_name, null when unused
 
     template <typename... U> dispatcher_t(U &&...u) { ((void)ov_list.push_back(std::forward<U>(u)), ...); }
 
     // Builder: attach a deprecated parameter rename map
     dispatcher_t &&with_deprecated_params(std::map<std::string, std::string> m) && {
-      deprecated_params = std::move(m);
+      deprecated_params = std::make_unique<std::map<std::string, std::string>>(std::move(m));
       return std::move(*this);
     }
 
