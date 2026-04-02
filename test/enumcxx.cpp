@@ -9,4 +9,8 @@ enum E2 { A, B, C };
 E1 f1(E1 x) { return x; }
 E2 f2(E2 x) { return x; }
 
+struct D {
+  enum class E3 { d, e, f };
+};
+
 #include "enumcxx.wrap.cxx"

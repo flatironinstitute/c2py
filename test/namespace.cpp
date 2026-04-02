@@ -4,6 +4,11 @@
 namespace A {
   void funcA() { std::cout << "Function in namespace A" << std::endl; }
 
+  struct C {
+    enum class E1 { a, b, c };
+    E1 f1(E1 x) { return x; }
+  };
+
   namespace B {
     void funcB() { std::cout << "Function in namespace A::B" << std::endl; }
   } // namespace B
