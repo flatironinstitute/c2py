@@ -110,7 +110,14 @@ void zfoo(std::string x = {}) { std::cout << x << "\n"; }
 int zfwd_decl_fnt(int);
 int zfwd_decl_fnt(int x) { return x + 1; }
 
-int doc_d_1(int){ return 8;}
+int doc_d_1(int) { return 8; }
 
+// Wrap a function with a default argument whose type is an unqualified namespace-scoped alias
+namespace ns {
+
+  using myint_t = long;
+  myint_t zz_defarg_alias2(myint_t v = myint_t{0}) { return v; }
+
+} // namespace ns
 
 #include "basicfun.wrap.cxx"
