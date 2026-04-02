@@ -76,6 +76,15 @@ namespace c2py {
     return ovs(self, nullptr, nullptr);
   }
 
+  // Same as setter_from_method, but for inherited methods where F has base class type.
+  // Cls is the derived class that we are wrapping.
+  template <typename Cls, auto F> static int setter_from_method_B(PyObject *self, PyObject *value, void *closure) {
+    if (value == nullptr) return (PyErr_SetString(PyExc_AttributeError, static_cast<const char *>(closure)), -1);
+    static c2py::dispatcher_f_kw_t d = {c2py::cfun_B<Cls>(F, "i")};
+    d(self, c2py::pyref(PyTuple_Pack(1, value)), nullptr);
+    return 0;
+  }
+
   // Setter from a method pointer.
   // closure must point to the attribute-name C-string used in the "cannot delete" error.
   template <auto F> static int setter_from_method(PyObject *self, PyObject *value, void *closure) {

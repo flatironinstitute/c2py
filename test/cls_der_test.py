@@ -20,6 +20,8 @@ class TestInheritance(unittest.TestCase):
    def test_property(self):
         d = M.D(5)
         self.assertEqual(d.cc, 5)
+        d.cc = 10
+        self.assertEqual(d.cc, 10)
 
 #
 if __name__ == '__main__':

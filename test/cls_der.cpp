@@ -18,6 +18,7 @@ class C2PY_IGNORE C {
   public:
   C(int i) : ic(i) {}
   C2PY_PROPERTY_GET(cc) int cc() const { return ic; }
+  C2PY_PROPERTY_SET(cc) void set_cc(int v) { ic = v; }
 };
 
 struct D : public C {

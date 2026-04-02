@@ -95,7 +95,8 @@ static constexpr auto prop_doc_0 = R"DOC()DOC";
 template <>
 constinit PyGetSetDef c2py::tp_getset<_c2py_cls_2>[] = {
 
-   {"cc", c2py::getter_from_method_B<D, c2py::castmc<>(&C::cc)>, nullptr, prop_doc_0, nullptr},
+   {"cc", c2py::getter_from_method_B<D, c2py::castmc<>(&C::cc)>, (setter)c2py::setter_from_method_B<D, &C::set_cc>, prop_doc_0,
+    (void *)"Cannot delete the attribute cc"},
    {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
 template <> const std::string c2py::tp_doc<_c2py_cls_2> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_2>;
