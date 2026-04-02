@@ -64,9 +64,8 @@ namespace c2py {
 
   // ----------- API for arithmetic operations ---------------------------
 
-  // FIXME : extend for other operations
   // Name of operations
-  enum class OpName { Add, Sub, Mul, Div };
+  enum class OpName { Add, Sub, Mul, Div, LShift, Neg, IAdd, ISub, IMul, IDiv };
 
   // The user specializes this struct for type T and operation Op.
   // Specializations inherit from std::tuple<std::pair<T1,T2>, ...>.
@@ -81,6 +80,9 @@ namespace c2py {
   // Detect whether T has any arithmetic operator specialized
   template <typename T>
   concept has_any_arithmetic = arithmetic_is_specialized<T, OpName::Add> or arithmetic_is_specialized<T, OpName::Sub>
-                               or arithmetic_is_specialized<T, OpName::Mul> or arithmetic_is_specialized<T, OpName::Div>;
+                               or arithmetic_is_specialized<T, OpName::Mul> or arithmetic_is_specialized<T, OpName::Div>
+                               or arithmetic_is_specialized<T, OpName::LShift> or arithmetic_is_specialized<T, OpName::Neg>
+                               or arithmetic_is_specialized<T, OpName::IAdd> or arithmetic_is_specialized<T, OpName::ISub>
+                               or arithmetic_is_specialized<T, OpName::IMul> or arithmetic_is_specialized<T, OpName::IDiv>;
 
 } // namespace c2py

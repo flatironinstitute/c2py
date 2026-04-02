@@ -50,6 +50,18 @@ template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Add> : std::tuple
 
 template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Sub> : std::tuple<std::pair<A, A>> {};
 
+template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::LShift> : std::tuple<std::pair<A, int>> {};
+
+template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Neg> : std::tuple<A> {};
+
+template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::IAdd> : std::tuple<std::pair<A, A>> {};
+
+template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::ISub> : std::tuple<std::pair<A, A>> {};
+
+template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::IMul> : std::tuple<std::pair<A, int>> {};
+
+template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::IDiv> : std::tuple<std::pair<A, int>> {};
+
 template <> constexpr PyNumberMethods *c2py::tp_as_number<_c2py_cls_0> = &c2py::tp_as_number_impl<_c2py_cls_0>;
 
 template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;

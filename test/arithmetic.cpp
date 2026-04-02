@@ -9,4 +9,16 @@ A operator+(A const &x, A const &y) { return A{x.k + y.k}; }
 A operator-(A const &x, A const &y) { return A{x.k - y.k}; }
 A operator+(A const &x, int y) { return A{x.k + y}; }
 
+// Unary minus
+A operator-(A const &x) { return A{-x.k}; }
+
+// Left shift
+A operator<<(A const &x, int n) { return A{x.k << n}; }
+
+// In-place operators
+A &operator+=(A &x, A const &y) { x.k += y.k; return x; }
+A &operator-=(A &x, A const &y) { x.k -= y.k; return x; }
+A &operator*=(A &x, int y) { x.k *= y; return x; }
+A &operator/=(A &x, int y) { x.k /= y; return x; }
+
 #include "arithmetic.wrap.cxx"

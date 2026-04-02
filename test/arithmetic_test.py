@@ -15,11 +15,39 @@ class TestArithmetic(unittest.TestCase):
         b = M.A(3)
         self.assertEqual((a - b).k, 7)
 
-    def test_unsupported(self):
-        a = M.A(1)
-        b = M.A(2)
-        self.assertRaises(TypeError, lambda: a * b)
-        self.assertRaises(TypeError, lambda: a / b)
+    def test_neg(self):
+        a = M.A(5)
+        b = -a
+        self.assertEqual(b.k, -5)
+        # original unchanged
+        self.assertEqual(a.k, 5)
+
+    def test_lshift(self):
+        a = M.A(3)
+        b = a << 2
+        self.assertEqual(b.k, 12)
+
+    def test_iadd(self):
+        a = M.A(3)
+        b = M.A(4)
+        a += b
+        self.assertEqual(a.k, 7)
+
+    def test_isub(self):
+        a = M.A(10)
+        b = M.A(3)
+        a -= b
+        self.assertEqual(a.k, 7)
+
+    def test_imul(self):
+        a = M.A(5)
+        a *= 3
+        self.assertEqual(a.k, 15)
+
+    def test_itruediv(self):
+        a = M.A(12)
+        a /= 4
+        self.assertEqual(a.k, 3)
 
 
 if __name__ == "__main__":
