@@ -16,5 +16,12 @@ class TestNamespaceFiltering(unittest.TestCase):
         """Test that funcDetail is NOT wrapped."""
         self.assertFalse(hasattr(M, "funcDetail"), "funcDetail should NOT be wrapped")
 
+    def test_enumE1(self):
+        """Test that enum E1 is wrapped and accessible."""
+        c = M.C()
+        self.assertTrue(c.f1("a") == "a")
+        self.assertTrue(c.f1("b") == "b")
+        self.assertTrue(c.f1("c") == "c")
+
 if __name__ == "__main__":
     unittest.main()

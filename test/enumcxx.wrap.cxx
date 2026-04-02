@@ -20,10 +20,28 @@ using c2py::operator""_a;
 
 // ==================== enums =====================
 
-template <> std::map<E1, str_t> c2py::enum_to_string<E1> = {{E1::a, "a"}, {E1::b, "b"}, {E1::c, "c"}};
-template <> std::map<E2, str_t> c2py::enum_to_string<E2> = {{E2::A, "A"}, {E2::B, "B"}, {E2::C, "C"}};
+template <> std::map<E1, str_t> c2py::enum_to_string<E1>       = {{E1::a, "a"}, {E1::b, "b"}, {E1::c, "c"}};
+template <> std::map<E2, str_t> c2py::enum_to_string<E2>       = {{E2::A, "A"}, {E2::B, "B"}, {E2::C, "C"}};
+template <> std::map<D::E3, str_t> c2py::enum_to_string<D::E3> = {{D::E3::d, "d"}, {D::E3::e, "e"}, {D::E3::f, "f"}};
 
 // ==================== module classes =====================
+
+// --------- class _c2py_cls_0 -----------
+using _c2py_cls_0                                            = D;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "enumcxx.D";
+static auto _c2py_init_0                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
+
+// ----- Method table ----
+template <>
+PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
+
+   {nullptr, nullptr, 0, nullptr} // Sentinel
+};
+
+template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
 
 // ==================== module functions ====================
 
@@ -71,6 +89,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_enumcxx() {
   PyObject *m;
 
   if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -79,7 +98,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_enumcxx() {
 
   conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
 #define _add_type(T, N) c2py::add_type_object_to_main<T>(N, m, conv_table)
-
+  _add_type(_c2py_cls_0, "D");
 #undef _add_type
 
   return m;
