@@ -65,7 +65,7 @@ namespace c2py {
     return argument_t{std::move(nvp).name, //
                       python_typename<std::decay_t<A>>,
                       [](PyObject *ob, bool re) -> bool { return py_converter<std::decay_t<A>>::is_convertible(ob, re); }, //
-                      static_cast<A>(std::move(nvp).value), //ensure the default_value is an A, whatever T is.
+                      A(std::move(nvp).value), //ensure the default_value is an A, whatever T is.
                       default_value_repr<A>};
   }
 
