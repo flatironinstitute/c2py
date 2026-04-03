@@ -1,0 +1,3 @@
+documentation = "Test for match_names and match_files configuration options"
+match_names = "^::included_.*"
+match_files = "config_filter\\.cpp"

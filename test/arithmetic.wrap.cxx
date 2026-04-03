@@ -50,6 +50,10 @@ template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Add> : std::tuple
 
 template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Sub> : std::tuple<std::pair<A, A>> {};
 
+template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Mul> : std::tuple<std::pair<A, int>> {};
+
+template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Div> : std::tuple<std::pair<A, int>> {};
+
 template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::LShift> : std::tuple<std::pair<A, int>> {};
 
 template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Neg> : std::tuple<A> {};

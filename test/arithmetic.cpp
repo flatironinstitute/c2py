@@ -8,6 +8,8 @@ struct A {
 A operator+(A const &x, A const &y) { return A{x.k + y.k}; }
 A operator-(A const &x, A const &y) { return A{x.k - y.k}; }
 A operator+(A const &x, int y) { return A{x.k + y}; }
+A operator*(A const &x, int y) { return A{x.k * y}; }
+A operator/(A const &x, int y) { return A{x.k / y}; }
 
 // Unary minus
 A operator-(A const &x) { return A{-x.k}; }

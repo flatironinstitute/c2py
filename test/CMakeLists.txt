@@ -48,6 +48,7 @@ set(c2py_all_full_tests
   cls_der
   pointer
   comparison
+  config_filter
   issue9
   callables
   itertool
