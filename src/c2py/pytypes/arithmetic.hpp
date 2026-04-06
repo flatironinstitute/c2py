@@ -105,7 +105,7 @@ namespace c2py {
      0,                                             //     unaryfunc nb_absolute;
      0,                                             //     inquiry nb_bool;
      0,                                             //     unaryfunc nb_invert;
-     tp_number_impl<T, OpName::LShift>,             //     binaryfunc nb_lshift;
+     tp_number_impl<T, OpName::LShift, true>,        //     binaryfunc nb_lshift;
      0,                                             //     binaryfunc nb_rshift;
      0,                                             //     binaryfunc nb_and;
      0,                                             //     binaryfunc nb_xor;
