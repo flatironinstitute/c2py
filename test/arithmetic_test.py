@@ -37,8 +37,10 @@ class TestArithmetic(unittest.TestCase):
 
     def test_lshift(self):
         a = M.A(3)
-        b = a << 2
-        self.assertEqual(b.k, 12)
+        a << 2
+        self.assertEqual(a.k, 5)
+        a << 3 << 2
+        self.assertEqual(a.k, 10)
 
     def test_iadd(self):
         a = M.A(3)

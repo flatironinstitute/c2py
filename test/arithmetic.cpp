@@ -15,7 +15,7 @@ A operator/(A const &x, int y) { return A{x.k / y}; }
 A operator-(A const &x) { return A{-x.k}; }
 
 // Left shift
-A operator<<(A const &x, int n) { return A{x.k << n}; }
+A &operator<<(A &x, int n) { x.k += n; return x; }
 
 // In-place operators
 A &operator+=(A &x, A const &y) { x.k += y.k; return x; }
