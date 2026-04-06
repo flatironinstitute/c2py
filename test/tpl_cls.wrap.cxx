@@ -55,12 +55,17 @@ static auto const _c2py_fun_4 =
 static auto const _c2py_fun_5 =
    c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 &self, int x) -> decltype(auto) { return self.template tpl<int>(x); }, "self", "x")};
 
+// with_default_arg
+static auto const _c2py_fun_6 =
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 &self, int x) -> decltype(auto) { return self.with_default_arg(x); }, "self", "x"_a = 42)};
+
 static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
 static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
 static const auto _c2py_doc_2 = _c2py_fun_2.doc(R"DOC()DOC");
 static const auto _c2py_doc_3 = _c2py_fun_3.doc(R"DOC()DOC");
 static const auto _c2py_doc_4 = _c2py_fun_4.doc(R"DOC()DOC");
 static const auto _c2py_doc_5 = _c2py_fun_5.doc(R"DOC()DOC");
+static const auto _c2py_doc_6 = _c2py_fun_6.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
@@ -70,6 +75,7 @@ PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
    {"f", (PyCFunction)c2py::pyfkw<_c2py_fun_3>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_3.c_str()},
    {"g", (PyCFunction)c2py::pyfkw<_c2py_fun_4>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_4.c_str()},
    {"tpl", (PyCFunction)c2py::pyfkw<_c2py_fun_5>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_5.c_str()},
+   {"with_default_arg", (PyCFunction)c2py::pyfkw<_c2py_fun_6>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_6.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 
