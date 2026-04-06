@@ -58,7 +58,7 @@ static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x, int
                                                         c2py::cfun([](int x, std::string y) { return dd(x, y); }, "x", "y"_a = "blabla")};
 
 // doc_d_1
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int _p_0) { return doc_d_1(_p_0); }, "")};
+static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int _p_0) { return doc_d_1(_p_0); }, "_p_0")};
 
 // f
 static auto const _c2py_fun_2 =

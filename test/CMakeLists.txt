@@ -68,6 +68,7 @@ set(c2py_all_full_tests
   arithmetic
   deprecated_params
   tpl_default_arg
+  tpl_pack
   CACHE INTERNAL "")
 
 foreach(t ${c2py_all_full_tests})
