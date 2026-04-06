@@ -205,7 +205,7 @@ static auto const _c2py_fun_11 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &
 static auto const _c2py_fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return b_friend(a); }, "a")};
 
 // inline_friend
-static auto const _c2py_fun_13 = c2py::dispatcher_f_kw_t{c2py::cfun([](const ns::B &b) { return ns::inline_friend(b); }, "b")};
+static auto const _c2py_fun_13 = c2py::dispatcher_f_kw_t{c2py::cfun([](const ns::B &b) { return inline_friend(b); }, "b")};
 
 // my_module_init
 static auto const _c2py_fun_14 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
