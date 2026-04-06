@@ -22,7 +22,8 @@ struct A {
   using index_t = long;
   index_t f_w_alias(index_t i) const { return 2 * i; }
 
-  friend int a_friend(A const &a) { return -a.k; } // should not appear
+  friend int a_friend(A const &a) { return -a.k; }
+  friend int b_friend(A const &);
 
   double tpl(auto x) { return 256 + x; }
 
@@ -65,6 +66,9 @@ struct A {
 };
 
 std::ostream &operator<<(std::ostream &out, A const &a) { return out << "A : k = " << a.k << "\n"; }
+
+// out of class friend
+int b_friend(A const &a) { return -2 * a.k; }
 
 // Some operations
 bool operator<(A const &x, A const &y) { return x.k < y.k; }
@@ -118,5 +122,11 @@ struct C2PY_RENAME(renamed_class) some_class {
   some_class() = default;
   C2PY_RENAME(renamed_method) void some_method(int y) { x += y; } 
 };
+
+namespace ns {
+  struct B {
+    friend void inline_friend(const B &b) { std::cout << "inline friend\n"; }
+  };
+}
 
 #include "cls_basic.wrap.cxx"
