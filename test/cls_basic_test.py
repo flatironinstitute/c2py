@@ -105,7 +105,12 @@ class TestIterable(unittest.TestCase):
         a.renamed_method(5)
         self.assertEqual(a.x, 5)
 
-  
+   def test_inline_friend(self):
+        b = M.B()
+        # inline_friend is wrapped as a module-level function
+        M.inline_friend(b)
+
+
 #
 if __name__ == '__main__':
     unittest.main()
