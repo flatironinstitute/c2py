@@ -59,6 +59,10 @@ class TestIterable(unittest.TestCase):
    def test_print(self):
         a = AA(4)
         self.assertEqual(str(a), "A : k = 4\n")
+
+   def test_member_with_default_arg(self):
+        a = AA(3)
+        self.assertEqual(a.with_default_arg(10), 13)
   
 #
 if __name__ == '__main__':

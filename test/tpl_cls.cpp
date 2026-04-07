@@ -23,6 +23,9 @@ template <typename T> struct A {
   // Template method with non-deducible return type and variadic pack
   template <typename R, typename... U> R call(U &&...x) { return R(sizeof...(x)); }
 
+  // Member function with default arg.
+  int with_default_arg(int x = 42) { return x + k; }
+
   bool operator==(A const &) const = default;
 
   int operator()(int i) const { return i + k; }
