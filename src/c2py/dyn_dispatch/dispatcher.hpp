@@ -15,7 +15,15 @@ namespace c2py {
     std::vector<std::unique_ptr<Eraser>> ov_list;
     std::unique_ptr<std::map<std::string, std::string>> deprecated_params; // old_name -> new_name, null when unused
 
-    template <typename... U> dispatcher_t(U &&...u) { ((void)ov_list.push_back(std::forward<U>(u)), ...); }
+    template <typename... U> dispatcher_t(U &&...u) {
+      ov_list.reserve(sizeof...(U));
+#if defined(__clang__) && __clang_major__ < 21
+      // Clang < 21 has a default expression nesting limit of 256 which fold expressions can exceed
+      [[maybe_unused]] int dummy[] = {0, (ov_list.push_back(std::forward<U>(u)), 0)...};
+#else
+      ((void)ov_list.push_back(std::forward<U>(u)), ...);
+#endif
+    }
 
     // Builder: attach a deprecated parameter rename map
     dispatcher_t &&with_deprecated_params(std::map<std::string, std::string> m) && {
