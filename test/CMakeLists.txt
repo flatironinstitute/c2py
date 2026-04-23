@@ -61,6 +61,7 @@ set(c2py_all_full_tests
   tpl_derived
   callback
   std_container
+  hashable
   two_module_1
   two_module_2
   refcount

@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include "user_api.hpp"
 #include "py_converter.hpp"
 
@@ -29,5 +30,12 @@ namespace c2py::concepts {
 
   template <typename T>
   concept HasNonDeletedDefaultConstructor = std::is_default_constructible_v<T> && std::is_constructible_v<T>;
+
+  //---------------- Hashable-------------------
+  // A type is Hashable when std::hash<T> is specialized (the primary template is
+  // disabled by the standard, so the expression only compiles for specializations).
+  // Wrapped classes satisfying this concept opt into Python __hash__ via clair-c2py.
+  template <typename T>
+  concept Hashable = requires(T const &x) { std::hash<T>{}(x); };
 
 } // namespace c2py::concepts

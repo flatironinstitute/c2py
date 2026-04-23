@@ -1,9 +1,11 @@
 #pragma once
+#include <functional>
 #include <sstream>
 #include <type_traits>
 
 #include "../util/str.hpp"
 #include "../py_converter.hpp"
+#include "../concepts4plugin.hpp"
 
 // local pieces, separated for code readibility
 #include "arithmetic.hpp"
@@ -50,7 +52,17 @@ namespace c2py {
   template <typename T> static constexpr ternaryfunc tp_call            = nullptr;
   template <typename T> static constinit PyMethodDef tp_methods[]       = {{nullptr, nullptr, 0, nullptr}}; //NOLINT
   template <typename T> static constexpr PyGetSetDef *tp_getset         = {nullptr};                        //NOLINT
+  template <typename T> static constexpr hashfunc tp_hash               = nullptr;
   // template <typename Cls> static PyObject *tp_richcompare(PyObject *a, PyObject *b, int op);
+
+  // tp_hash_impl : default implementation that dispatches to std::hash<T>.
+  // Clair-c2py emits a specialization `template <> constexpr hashfunc c2py::tp_hash<Cls> = c2py::tp_hash_impl<Cls>`
+  // for every wrapped class satisfying the c2py::concepts::Hashable concept.
+  template <concepts::Hashable Cls>
+  static constexpr hashfunc tp_hash_impl = [](PyObject *self) -> Py_hash_t {
+    auto h = static_cast<Py_hash_t>(std::hash<Cls>{}(py_converter<Cls>::py2c(self)));
+    return h == -1 ? -2 : h; // CPython reserves -1 for error signaling
+  };
 
   // --------------- The corresponding python object : wrap_pytype --------------------
 
@@ -70,7 +82,7 @@ namespace c2py {
         tp_as_number<T>,                          // tp_as_number
         0,                                        // tp_as_sequence
         &tp_as_mapping<T>,                        // tp_as_mapping
-        0,                                        // tp_hash
+        tp_hash<T>,                               // tp_hash
         tp_call<T>,                               // tp_call
         &tp_str<T>,                               // tp_str
         0,                                        // tp_getattro
