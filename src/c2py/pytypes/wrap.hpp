@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include <sstream>
 #include <type_traits>
 
@@ -50,6 +51,16 @@ namespace c2py {
   template <typename T> static constexpr ternaryfunc tp_call            = nullptr;
   template <typename T> static constinit PyMethodDef tp_methods[]       = {{nullptr, nullptr, 0, nullptr}}; //NOLINT
   template <typename T> static constexpr PyGetSetDef *tp_getset         = {nullptr};                        //NOLINT
+  template <typename T>
+  static constexpr hashfunc tp_hash = [] {
+    if constexpr (requires(T const &x) { std::hash<T>{}(x); })
+      return static_cast<hashfunc>([](PyObject *self) -> Py_hash_t {
+        auto h = static_cast<Py_hash_t>(std::hash<T>{}(py_converter<T>::py2c(self)));
+        return h == -1 ? -2 : h; // CPython reserves -1 for error signaling
+      });
+    else
+      return static_cast<hashfunc>(nullptr);
+  }();
   // template <typename Cls> static PyObject *tp_richcompare(PyObject *a, PyObject *b, int op);
 
   // --------------- The corresponding python object : wrap_pytype --------------------
@@ -70,7 +81,7 @@ namespace c2py {
         tp_as_number<T>,                          // tp_as_number
         0,                                        // tp_as_sequence
         &tp_as_mapping<T>,                        // tp_as_mapping
-        0,                                        // tp_hash
+        tp_hash<T>,                               // tp_hash
         tp_call<T>,                               // tp_call
         &tp_str<T>,                               // tp_str
         0,                                        // tp_getattro
