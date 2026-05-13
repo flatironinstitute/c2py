@@ -9,7 +9,7 @@ struct A {
   int get_i() const { return i; } // const: must be callable on both const and non-const refs
 };
 
-void f(A &a) {}
+void f([[maybe_unused]] A &a) {}
 
 // Global A: used in the compilation_failure_checks tests to verify that
 // clair rejects methods returning a reference to a non-member.
