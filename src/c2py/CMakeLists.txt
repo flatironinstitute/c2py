@@ -15,8 +15,9 @@ target_include_directories(c2py PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/s
 target_include_directories(c2py SYSTEM INTERFACE $<INSTALL_INTERFACE:${CMAKE_INSTALL_FULL_INCLUDEDIR}>)
 
 # Disable the inclusion of the deprecated Numpy API headers starting from 1.8.0.
+# -U undefines any prior value (old Cpp2Py cmake exports define it without a value) before redefining.
 if(Python_NumPy_VERSION VERSION_GREATER "1.8.0")
-  target_compile_definitions(c2py PUBLIC NPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION)
+  target_compile_options(c2py PUBLIC -UNPY_NO_DEPRECATED_API -DNPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION)
 endif()
 
 # Install library and headers
