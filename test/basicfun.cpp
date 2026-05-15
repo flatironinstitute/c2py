@@ -19,6 +19,9 @@ int f(int x, int y) { return x + 10 * y; }
 
 int f(int x);
 
+int newf(int x) { return 9;}
+
+
 int g(int x, int y = 8) { return x * 10 + y; }
 
 // BUG

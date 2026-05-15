@@ -4,4 +4,4 @@ doc/cpp2rst_generated
 code.vim
 .cache
 .vscode
-
+*.log

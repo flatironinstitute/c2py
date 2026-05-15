@@ -49,6 +49,7 @@ set(c2py_all_full_tests
   pointer
   comparison
   config_filter
+  matchfile
   issue9
   callables
   itertool

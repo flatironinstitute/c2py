@@ -86,3 +86,18 @@ namespace c2py {
                                or arithmetic_is_specialized<T, OpName::IMul> or arithmetic_is_specialized<T, OpName::IDiv>;
 
 } // namespace c2py
+
+// ----------- PyMethodDef row helper -------------------------------------------
+// Used by clair-generated `.wrap.cxx` files to write one method/function-table
+// row instead of the long form
+//   {name, (PyCFunction)c2py::pyfkw<_c2py_fun_<h>>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_<h>.c_str()}
+//
+// Usage:
+//   PMDF("py_name", hash)               -> regular row
+//   PMDF("py_name", hash, METH_STATIC)  -> extra flags OR'd in (e.g. static methods)
+//
+// Expects two identifiers to be in scope:
+//   _c2py_fun_<hash>   : the dispatcher  (used via c2py::pyfkw<...>)
+//   _c2py_doc_<hash>   : the doc string  (a std::string, .c_str() called on it)
+#define PMDF(name, hash, ...)                                                                                                                          \
+  { name, (PyCFunction)c2py::pyfkw<_c2py_fun_##hash>, METH_VARARGS | METH_KEYWORDS __VA_OPT__(|) __VA_ARGS__, _c2py_doc_##hash.c_str() }
