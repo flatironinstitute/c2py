@@ -22,9 +22,15 @@ namespace c2py {
 
   // get the PyTypeObject from the table in __main__.
   template <typename T> void add_type_object_to_main(const char *pyname, PyObject *_main_, pto_table_t &conv_table) {
+    // tp_doc<T> is a global const std::string with static storage duration; .data() is valid
+    // for the lifetime of the shared library (Python finalization precedes dlclose).
     c2py::wrap_pytype<T>.tp_doc = c2py::tp_doc<T>.data();
     Py_INCREF(&c2py::wrap_pytype<T>);
-    PyModule_AddObject(_main_, pyname, (PyObject *)&c2py::wrap_pytype<T>);
+    // PyModule_AddObject steals the reference on success; release the INCREF on failure.
+    if (PyModule_AddObject(_main_, pyname, (PyObject *)&c2py::wrap_pytype<T>) < 0) {
+      Py_DECREF(&c2py::wrap_pytype<T>);
+      return;
+    }
     conv_table[std::type_index(typeid(T)).name()] = &c2py::wrap_pytype<T>;
   }
 

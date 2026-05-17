@@ -6,7 +6,7 @@ namespace c2py {
 
   // Each enum must specialize this variable and return a map enum -> string
   // FIXME ? Should it be a simple vector of pair ??
-  template <typename Enum> static std::map<Enum, std::string> enum_to_string; // NOLINT
+  template <typename Enum> static const std::map<Enum, std::string> enum_to_string; // NOLINT
 
   // Converter of an enum
   template <typename Enum>

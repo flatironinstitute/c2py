@@ -37,10 +37,15 @@ namespace c2py {
 
       // Now register the pointer in __main__
       PyObject *mod = PyImport_GetModule(pyref::string("__main__"));
-      auto *p       = new std::shared_ptr<pto_table_t>{sptr}; //NOLINT
-      pyref c       = PyCapsule_New((void *)p, "__main__.__cpp2py_table", (PyCapsule_Destructor)_table_destructor);
-      pyref s       = PyUnicode_FromString("__cpp2py_table");
-      int err       = PyObject_SetAttr(mod, s, c);
+      if (mod == nullptr) throw std::runtime_error("Severe internal error : can not load __main__");
+
+      // Use unique_ptr so the allocation is freed if PyCapsule_New or SetAttr fail.
+      auto p_owner = std::make_unique<std::shared_ptr<pto_table_t>>(sptr);
+      pyref c      = PyCapsule_New((void *)p_owner.get(), "__main__.__cpp2py_table", (PyCapsule_Destructor)_table_destructor);
+      if (c.is_null()) throw std::runtime_error("Can not create the __cpp2py_table capsule");
+      p_owner.release(); // capsule now owns the raw pointer; destructor will delete it
+      pyref s   = PyUnicode_FromString("__cpp2py_table");
+      int err   = PyObject_SetAttr(mod, s, c);
       if (err) {
         PyErr_SetString(PyExc_RuntimeError, "Can not add the __cpp2py_table to main");
         throw std::runtime_error("Can not add the __cpp2py_table to main");
