@@ -43,8 +43,7 @@ namespace c2py {
     static_assert(not std::is_reference_v<T>); // The T = U& case is a separate specialization
 
     template <typename U> static PyObject *c2py(U &&x) {
-      // Fast path: same-module type (PyType_Ready sets tp_alloc). Cross-module falls back to table.
-      PyTypeObject *p = wrap_pytype<T>.tp_alloc ? &wrap_pytype<T> : get_type_ptr(typeid(T));
+      PyTypeObject *p = get_type_ptr(typeid(T));
       if (p == nullptr) return nullptr;
       auto *self = (wrap<T> *)p->tp_alloc(p, 0);
       if (self != NULL) { self->_c = new T{std::forward<U>(x)}; } // NOLINT
@@ -63,7 +62,7 @@ namespace c2py {
     static bool is_const(PyObject *ob) { return ((wrap<T> *)ob)->is_const; } // specific to this converter
 
     static bool is_convertible(PyObject *ob, bool raise_exception) {
-      PyTypeObject *p = wrap_pytype<T>.tp_alloc ? &wrap_pytype<T> : get_type_ptr(typeid(T));
+      PyTypeObject *p = get_type_ptr(typeid(T));
       if (p == nullptr) return false;
       if (PyObject_TypeCheck(ob, p)) {
         if (((wrap<T> *)ob)->_c != NULL) return true;
@@ -89,7 +88,7 @@ namespace c2py {
 
     //
     static PyObject *c2py(T &x, PyObject *guardian) {
-      PyTypeObject *p = wrap_pytype<T>.tp_alloc ? &wrap_pytype<T> : get_type_ptr(typeid(T));
+      PyTypeObject *p = get_type_ptr(typeid(T));
       if (p == nullptr) return nullptr;
       auto *self = (wrap<T> *)p->tp_alloc(p, 0);
       if (self != NULL) {
