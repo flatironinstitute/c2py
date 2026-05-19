@@ -20,9 +20,9 @@ using c2py::operator""_a;
 
 // ==================== enums =====================
 
-template <> std::map<E1, str_t> c2py::enum_to_string<E1>       = {{E1::a, "a"}, {E1::b, "b"}, {E1::c, "c"}};
-template <> std::map<E2, str_t> c2py::enum_to_string<E2>       = {{E2::A, "A"}, {E2::B, "B"}, {E2::C, "C"}};
-template <> std::map<D::E3, str_t> c2py::enum_to_string<D::E3> = {{D::E3::d, "d"}, {D::E3::e, "e"}, {D::E3::f, "f"}};
+template <> const std::map<E1, str_t> c2py::enum_to_string<E1>       = {{E1::a, "a"}, {E1::b, "b"}, {E1::c, "c"}};
+template <> const std::map<E2, str_t> c2py::enum_to_string<E2>       = {{E2::A, "A"}, {E2::B, "B"}, {E2::C, "C"}};
+template <> const std::map<D::E3, str_t> c2py::enum_to_string<D::E3> = {{D::E3::d, "d"}, {D::E3::e, "e"}, {D::E3::f, "f"}};
 
 // ==================== module classes =====================
 
@@ -30,7 +30,7 @@ template <> std::map<D::E3, str_t> c2py::enum_to_string<D::E3> = {{D::E3::d, "d"
 using _c2py_cls_0                                            = D;
 template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
 template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "enumcxx.D";
-static auto _c2py_init_0                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
+static const auto _c2py_init_0                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
 template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
 template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
 

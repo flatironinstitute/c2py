@@ -26,7 +26,7 @@ using c2py::operator""_a;
 using _c2py_cls_0                                            = N::cls_hashable;
 template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
 template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "hashable.ClsHashable";
-static auto _c2py_init_0 = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>(), c2py::c_constructor<_c2py_cls_0, int>("v")};
+static const auto _c2py_init_0 = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>(), c2py::c_constructor<_c2py_cls_0, int>("v")};
 template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
 template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
 
@@ -51,7 +51,7 @@ template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp
 using _c2py_cls_1                                            = N::cls_not_hashable;
 template <> constexpr bool c2py::is_wrapped<_c2py_cls_1>     = true;
 template <> inline constexpr auto c2py::tp_name<_c2py_cls_1> = "hashable.ClsNotHashable";
-static auto _c2py_init_1 = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_1>(), c2py::c_constructor<_c2py_cls_1, int>("v")};
+static const auto _c2py_init_1 = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_1>(), c2py::c_constructor<_c2py_cls_1, int>("v")};
 template <> constexpr initproc c2py::tp_init<_c2py_cls_1>    = c2py::pyfkw_constructor<_c2py_init_1>;
 template <> const std::string c2py::tp_ctor_doc<_c2py_cls_1> = _c2py_init_1.doc(R"DOC()DOC");
 

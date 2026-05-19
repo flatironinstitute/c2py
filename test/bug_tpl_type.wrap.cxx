@@ -26,7 +26,7 @@ using c2py::operator""_a;
 using _c2py_cls_0                                            = C;
 template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
 template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "bug_tpl_type.C";
-static auto _c2py_init_0                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
+static const auto _c2py_init_0                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
 template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
 template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
 
@@ -42,7 +42,7 @@ template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp
 using _c2py_cls_1                                            = A<3>;
 template <> constexpr bool c2py::is_wrapped<_c2py_cls_1>     = true;
 template <> inline constexpr auto c2py::tp_name<_c2py_cls_1> = "bug_tpl_type.A3";
-static auto _c2py_init_1                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_1>()};
+static const auto _c2py_init_1                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_1>()};
 template <> constexpr initproc c2py::tp_init<_c2py_cls_1>    = c2py::pyfkw_constructor<_c2py_init_1>;
 template <> const std::string c2py::tp_ctor_doc<_c2py_cls_1> = _c2py_init_1.doc(R"DOC()DOC");
 // f
@@ -63,7 +63,7 @@ template <> const std::string c2py::tp_doc<_c2py_cls_1> = R"DOC()DOC" + c2py::tp
 using _c2py_cls_2                                            = B<int>;
 template <> constexpr bool c2py::is_wrapped<_c2py_cls_2>     = true;
 template <> inline constexpr auto c2py::tp_name<_c2py_cls_2> = "bug_tpl_type.Bi";
-static auto _c2py_init_2                                     = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_2>()};
+static const auto _c2py_init_2                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_2>()};
 template <> constexpr initproc c2py::tp_init<_c2py_cls_2>    = c2py::pyfkw_constructor<_c2py_init_2>;
 template <> const std::string c2py::tp_ctor_doc<_c2py_cls_2> = _c2py_init_2.doc(R"DOC()DOC");
 // f
