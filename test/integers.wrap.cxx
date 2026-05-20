@@ -34,10 +34,10 @@ static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](short x) {
 static auto const _c2py_fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return identity_int32(x); }, "x")};
 
 // identity_int64
-static auto const _c2py_fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](long x) { return identity_int64(x); }, "x")};
+static auto const _c2py_fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](long long x) { return identity_int64(x); }, "x")};
 
 // identity_int64_with_defarg
-static auto const _c2py_fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](long x) { return identity_int64_with_defarg(x); }, "x"_a = 42)};
+static auto const _c2py_fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](long long x) { return identity_int64_with_defarg(x); }, "x"_a = 42)};
 
 // identity_uint16
 static auto const _c2py_fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned short x) { return identity_uint16(x); }, "x")};
@@ -46,10 +46,10 @@ static auto const _c2py_fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned s
 static auto const _c2py_fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned int x) { return identity_uint32(x); }, "x")};
 
 // identity_uint64
-static auto const _c2py_fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned long x) { return identity_uint64(x); }, "x")};
+static auto const _c2py_fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned long long x) { return identity_uint64(x); }, "x")};
 
 // identity_uint64_with_defarg
-static auto const _c2py_fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned long x) { return identity_uint64_with_defarg(x); }, "x"_a = 42)};
+static auto const _c2py_fun_8 = c2py::dispatcher_f_kw_t{c2py::cfun([](unsigned long long x) { return identity_uint64_with_defarg(x); }, "x"_a = 42)};
 
 static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
 static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");

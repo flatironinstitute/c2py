@@ -10,7 +10,7 @@ namespace c2py {
 
   // Converter of an enum
   template <typename Enum>
-    requires(std::is_enum_v<Enum>)
+    requires(std::is_enum_v<Enum> and is_wrapped<Enum>)
   struct py_converter<Enum> {
     static std::string tp_name() {
       std::ostringstream out;

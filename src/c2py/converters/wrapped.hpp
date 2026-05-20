@@ -37,7 +37,7 @@ namespace c2py {
   //---------------------  wrapped type -----------------------------
 
   template <typename T>
-    requires(is_wrapped<T>)
+    requires(is_wrapped<T> and not std::is_enum_v<T>)
   struct py_converter<T> {
 
     static_assert(not std::is_reference_v<T>); // The T = U& case is a separate specialization

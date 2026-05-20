@@ -20,6 +20,10 @@ using c2py::operator""_a;
 
 // ==================== enums =====================
 
+template <> constexpr bool c2py::is_wrapped<N::Color> = true;
+template <>
+const std::map<N::Color, str_t> c2py::enum_to_string<N::Color> = {{N::Color::Red, "Red"}, {N::Color::Green, "Green"}, {N::Color::Blue, "Blue"}};
+
 // ==================== module classes =====================
 
 // --------- class _c2py_cls_0 -----------

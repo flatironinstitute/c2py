@@ -20,6 +20,7 @@ using c2py::operator""_a;
 
 // ==================== enums =====================
 
+template <> constexpr bool c2py::is_wrapped<A::C::E1>                      = true;
 template <> const std::map<A::C::E1, str_t> c2py::enum_to_string<A::C::E1> = {{A::C::E1::a, "a"}, {A::C::E1::b, "b"}, {A::C::E1::c, "c"}};
 
 // ==================== module classes =====================

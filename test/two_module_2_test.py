@@ -6,10 +6,14 @@ import numpy as np
 class TestIterable(unittest.TestCase):
 
    def test(self):
-        
         a = M1.A()
         b = M2.B()
-        self.assertEqual(b.g(2,a), 7)
+        self.assertEqual(b.g(2, a), 7)
+
+   def test_enum(self):
+        b = M2.B()
+        self.assertEqual(b.color_passthrough("Red"), "Red")
+        self.assertEqual(b.color_passthrough("Blue"), "Blue")
 
 if __name__ == '__main__':
     unittest.main()
