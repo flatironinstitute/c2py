@@ -23,6 +23,12 @@ using c2py::operator""_a;
 template <> constexpr bool c2py::is_wrapped<N::Color> = true;
 template <>
 const std::map<N::Color, str_t> c2py::enum_to_string<N::Color> = {{N::Color::Red, "Red"}, {N::Color::Green, "Green"}, {N::Color::Blue, "Blue"}};
+template <> constexpr bool c2py::is_wrapped<N::Direction>      = true;
+template <>
+const std::map<N::Direction, str_t> c2py::enum_to_string<N::Direction> = {{N::Direction::North, "North"},
+                                                                          {N::Direction::South, "South"},
+                                                                          {N::Direction::East, "East"},
+                                                                          {N::Direction::West, "West"}};
 
 // ==================== module classes =====================
 

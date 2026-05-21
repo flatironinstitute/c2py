@@ -33,18 +33,24 @@ template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(
 static auto const _c2py_fun_0 =
    c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 &self, N::Color c) -> decltype(auto) { return self.color_passthrough(c); }, "self", "c")};
 
+// direction_passthrough
+static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{
+   c2py::cmethod([](_c2py_cls_0 &self, N::Direction d) -> decltype(auto) { return self.direction_passthrough(d); }, "self", "d")};
+
 // g
-static auto const _c2py_fun_1 =
+static auto const _c2py_fun_2 =
    c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 &self, int i, const N::A &a) -> decltype(auto) { return self.g(i, a); }, "self", "i", "a")};
 
 static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
 static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_2 = _c2py_fun_2.doc(R"DOC()DOC");
 
 // ----- Method table ----
 template <>
 PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
    {"color_passthrough", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"g", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
+   {"direction_passthrough", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
+   {"g", (PyCFunction)c2py::pyfkw<_c2py_fun_2>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_2.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 

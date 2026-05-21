@@ -10,10 +10,15 @@ class TestIterable(unittest.TestCase):
         b = M2.B()
         self.assertEqual(b.g(2, a), 7)
 
-   def test_enum(self):
+   def test_enum_class(self):
         b = M2.B()
         self.assertEqual(b.color_passthrough("Red"), "Red")
         self.assertEqual(b.color_passthrough("Blue"), "Blue")
+
+   def test_enum(self):
+        b = M2.B()
+        self.assertEqual(b.direction_passthrough("North"), "North")
+        self.assertEqual(b.direction_passthrough("West"), "West")
 
 if __name__ == '__main__':
     unittest.main()
