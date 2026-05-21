@@ -26,18 +26,20 @@ function(clair_c2py_generate_bindings module_name)
   file(MAKE_DIRECTORY "${bin_dir}")
 
   # In-tree clair build: use the build target directly and rebuild bindings when the tool is recompiled.
-  # Otherwise (downstream projects): find the installed clair-c2py in PATH.
+  # Otherwise (downstream projects): find the installed clair-c2py in PATH and report its version.
   if (TARGET clair-c2py)
-    set(_clair_c2py_cmd clair-c2py)
+    set(CLAIR_C2PY_EXECUTABLE clair-c2py)  # use target; CMake resolves to path at build time
     set(_clair_c2py_dep clair-c2py)
-  else()
+  elseif (NOT CLAIR_C2PY_EXECUTABLE)
     find_program(CLAIR_C2PY_EXECUTABLE clair-c2py REQUIRED)
-    set(_clair_c2py_cmd ${CLAIR_C2PY_EXECUTABLE})
+    execute_process(COMMAND ${CLAIR_C2PY_EXECUTABLE} --version OUTPUT_VARIABLE _v)
+    string(REGEX MATCH "^[^\n]+" _v "${_v}")
+    message(STATUS "Found ${_v}")
   endif()
 
   add_custom_command(
     OUTPUT ${wrap_cxx} ${wrap_hxx} ${depfile}                                                              # Generates the .wrap.cxx, .wrap.hxx and dependency files
-    COMMAND ${_clair_c2py_cmd} -p ${PROJECT_BINARY_DIR} --generate-depfile ${depfile} ${module_name}.cpp   # -p path/to/compile/commands
+    COMMAND ${CLAIR_C2PY_EXECUTABLE} -p ${PROJECT_BINARY_DIR} --generate-depfile ${depfile} ${module_name}.cpp   # -p path/to/compile/commands
     DEPENDS ${cpp_src} ${_clair_c2py_dep}                                                                  # Rebuild when source or tool changes
     WORKING_DIRECTORY ${src_dir}                                                                           # Execute in source directory
     DEPFILE ${depfile}                                                                                     # Specify dependency file
