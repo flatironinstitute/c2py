@@ -21,8 +21,8 @@ endif()
 # include the exported targets of this project
 include(@CMAKE_INSTALL_FULL_LIBDIR@/cmake/c2py/c2py-targets.cmake)
 
-# include the clair_c2py_generate_bindings function
-include(@CMAKE_INSTALL_FULL_LIBDIR@/cmake/c2py/clair_c2py_generate_bindings.cmake)
+# include the c2py_add_module macro (also includes clair_c2py_generate_bindings)
+include(@CMAKE_INSTALL_FULL_LIBDIR@/cmake/c2py/c2py_add_module.cmake)
 
 #SET(C2PY_C2PY_MODULE_EXTENSION "wrap.cxx")
 
