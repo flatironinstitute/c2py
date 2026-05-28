@@ -45,6 +45,11 @@ endif()
 # Testing
 option(Build_Tests "Build tests" ON)
 
+# Regenerate the C++ Python bindings via clair-c2py for projects that use c2py_add_module.
+# Default OFF: most builds consume the checked-in .wrap.cxx files. Set ON when iterating on
+# bindings with clair installed.
+option(Update_Python_Bindings "Regenerate the C++ Python bindings via clair-c2py" OFF)
+
 # ############
 # Global Compilation Settings
 
@@ -125,10 +130,10 @@ endif()
 # Additional configuration files
 add_subdirectory(share)
 
-# Make the clair_c2py_generate_bindings function available to consumers
-# that pull c2py in as a subproject (e.g. via CPMAddPackage). For the
-# installed-package path it is included by c2py-config.cmake instead.
-include(${PROJECT_SOURCE_DIR}/share/cmake/clair_c2py_generate_bindings.cmake)
+# Make the c2py_add_module macro (and clair_c2py_generate_bindings) available
+# to consumers that pull c2py in as a subproject (e.g. via CPMAddPackage). For
+# the installed-package path it is included by c2py-config.cmake instead.
+include(${PROJECT_SOURCE_DIR}/share/cmake/c2py_add_module.cmake)
 
 #--------------------------------------------------------
 #   Sanitizers
