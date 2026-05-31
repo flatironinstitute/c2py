@@ -20,7 +20,6 @@ function(clair_c2py_generate_bindings module_name)
 
   set(cpp_src  "${src_dir}/${module_name}.cpp")
   set(wrap_cxx "${src_dir}/${module_name}.wrap.cxx")   # Python bindings file
-  set(wrap_hxx "${src_dir}/${module_name}.wrap.hxx")   # Converter declarations (included by dependent modules)
   set(depfile  "${bin_dir}/${module_name}.cpp.d")      # dependency file
 
   file(MAKE_DIRECTORY "${bin_dir}")
@@ -38,7 +37,7 @@ function(clair_c2py_generate_bindings module_name)
   endif()
 
   add_custom_command(
-    OUTPUT ${wrap_cxx} ${wrap_hxx} ${depfile}                                                              # Generates the .wrap.cxx, .wrap.hxx and dependency files
+    OUTPUT ${wrap_cxx} ${depfile}                                                                          # Generates the .wrap.cxx and dependency files (and .wrap.hxx when the module exports wrapped types)
     COMMAND ${CLAIR_C2PY_EXECUTABLE} -p ${PROJECT_BINARY_DIR} --generate-depfile ${depfile} ${module_name}.cpp   # -p path/to/compile/commands
     DEPENDS ${cpp_src} ${_clair_c2py_dep}                                                                  # Rebuild when source or tool changes
     WORKING_DIRECTORY ${src_dir}                                                                           # Execute in source directory
