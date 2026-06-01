@@ -28,7 +28,11 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DESTINATION include FILES_MATCHING
 # ========= Additional Depdencies ==========
 
 # Python and Numpy
-target_link_libraries(c2py PUBLIC  Python::NumPy Python::Python)
+# Link Python::Module, NOT Python::Python: modules must not link libpython. On a
+# conda interpreter (libpython statically embedded) the embedding target pulls a
+# second, uninitialized _PyRuntime and the first PyUnicode alloc segfaults on
+# macOS. (Linux hides this by deduping via global symbol scope.)
+target_link_libraries(c2py PUBLIC  Python::NumPy Python::Module)
 
 
 # ========= Dynamic Analyzer Checks ==========
