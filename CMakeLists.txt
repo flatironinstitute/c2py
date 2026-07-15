@@ -120,6 +120,23 @@ set(c2py_all_python_include_flags " -I${Python_INCLUDE_DIRS} -I${Python_NumPy_IN
 configure_file(c2py_flags.py.in c2py_flags @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/c2py_flags DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 
+# Expose reusable Python variables for downstream projects (triqs, h5, nda) that pull
+# c2py in as a subproject, so they no longer each run find_package(Python) and recompute
+# the install layout. These are CACHE variables so they cross the subproject scope.
+# We keep the historical, un-prefixed names (Python_EXECUTABLE, PYTHON_LIB_DEST_ROOT,
+# PYTHON_MODULE_EXT) so existing consumers and installed *-config files remain compatible.
+set(Python_EXECUTABLE "${Python_EXECUTABLE}" CACHE FILEPATH "Python interpreter for the c2py/TRIQS stack")
+if(Python_SOABI)
+  set(PYTHON_MODULE_EXT .${Python_SOABI}.so CACHE STRING "Python module extension")
+else()
+  set(PYTHON_MODULE_EXT .so CACHE STRING "Python module extension")
+endif()
+if(BUILD_DEBIAN_PACKAGE)
+  set(PYTHON_LIB_DEST_ROOT lib/python${Python_VERSION_MAJOR}/dist-packages CACHE PATH "Python module install destination (relative to the install prefix)")
+else()
+  set(PYTHON_LIB_DEST_ROOT lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages CACHE PATH "Python module install destination (relative to the install prefix)")
+endif()
+
 # #############
 # Build Project
 
