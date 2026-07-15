@@ -1,14 +1,14 @@
 #%Module1.0
 #
-# To be installed as ${MODULEPATH}/c2py/@C2PY_VERSION@
+# To be installed as ${MODULEPATH}/c2py/@PROJECT_VERSION@
 
 set     name        c2py
-set     version     @C2PY_VERSION@
+set     version     @PROJECT_VERSION@
 set     root        @CMAKE_INSTALL_PREFIX@
-set     git_hash    @C2PY_GIT_HASH@
+set     git_hash    @PROJECT_GIT_HASH@
 
 set     url         "https://github.com/flatironinstitute/c2py"
-set     description "Cpp2Py is a Python/C++ interfacing library"
+set     description "c2py is a Python/C++ interfacing library"
 
 module-whatis   "$description"
 
@@ -23,9 +23,9 @@ proc ModulesHelp { } {
 # Only one version of c2py can be loaded at a time
 conflict $name
 
-setenv          C2PY_ROOT         $root
-setenv          C2PY_VERSION      $version
-setenv          C2PY_GIT_HASH     $git_hash
+setenv          c2py_ROOT      $root
+setenv          c2py_VERSION   $version
+setenv          c2py_GIT_HASH  $git_hash
 
 prepend-path    PATH                @CMAKE_INSTALL_FULL_BINDIR@
 prepend-path    CPLUS_INCLUDE_PATH  @CMAKE_INSTALL_FULL_INCLUDEDIR@

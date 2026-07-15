@@ -1,32 +1,31 @@
+# This file allows other CMake Projects to find us
+# We provide general project information
+# and reestablish the exported CMake Targets
+
 # Multiple inclusion guard
-if(NOT C2PY_FOUND)
+if(NOT c2py_FOUND)
+set(c2py_FOUND TRUE)
+set_property(GLOBAL PROPERTY c2py_FOUND TRUE)
 
-MESSAGE(STATUS "Found c2py-config.cmake with version ${C2PY_VERSION}, hash = ${C2PY_GIT_HASH}, root = ${c2py_ROOT}")
-set(C2PY_FOUND True)
-set_property(GLOBAL PROPERTY C2PY_FOUND TRUE)
-
-# Version
-set(C2PY_VERSION @C2PY_VERSION@ CACHE STRING "c2py Version")
-set(C2PY_GIT_HASH @C2PY_GIT_HASH@ CACHE STRING "c2py Git Hash")
+# version
+set(c2py_VERSION @PROJECT_VERSION@ CACHE STRING "c2py version")
+set(c2py_GIT_HASH @PROJECT_GIT_HASH@ CACHE STRING "c2py git hash")
 
 # Root of the installation
-set(c2py_ROOT @CMAKE_INSTALL_PREFIX@ CACHE PATH "Root of c2py")
+set(c2py_ROOT @CMAKE_INSTALL_PREFIX@ CACHE STRING "c2py root directory")
 
 # Mac specific
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
- set(CMAKE_INSTALL_NAME_DIR "@CMAKE_INSTALL_FULL_LIBDIR@")
- set(CMAKE_MACOSX_RPATH 1) # new for cmake 3.x
+  set(CMAKE_INSTALL_NAME_DIR "@CMAKE_INSTALL_FULL_LIBDIR@")
+  set(CMAKE_MACOSX_RPATH 1) # new for cmake 3.x
 endif()
 
-# include the exported targets of this project
+# Include the exported targets of this project
 include(@CMAKE_INSTALL_FULL_LIBDIR@/cmake/c2py/c2py-targets.cmake)
 
-# include the c2py_add_module macro (also includes clair_c2py_generate_bindings)
+# Include the c2py_add_module macro (also includes clair_c2py_generate_bindings)
 include(@CMAKE_INSTALL_FULL_LIBDIR@/cmake/c2py/c2py_add_module.cmake)
 
-#SET(C2PY_C2PY_MODULE_EXTENSION "wrap.cxx")
-
-# FIXME : already exists ..
-#add_library(c2py::c2py ALIAS c2py)
+message(STATUS "Found c2py-config.cmake with version @PROJECT_VERSION@, hash = @PROJECT_GIT_HASH@, root = @CMAKE_INSTALL_PREFIX@")
 
 endif()

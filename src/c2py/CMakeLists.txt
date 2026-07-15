@@ -10,7 +10,6 @@ target_compile_features(c2py PUBLIC cxx_std_20)
 set_target_properties(c2py PROPERTIES
   POSITION_INDEPENDENT_CODE ON
   VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-  CXX_SCAN_FOR_MODULES OFF
 )
 target_include_directories(c2py PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>)
 target_include_directories(c2py SYSTEM INTERFACE $<INSTALL_INTERFACE:${CMAKE_INSTALL_FULL_INCLUDEDIR}>)
@@ -33,7 +32,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DESTINATION include FILES_MATCHING
 # conda interpreter (libpython statically embedded) the embedding target pulls a
 # second, uninitialized _PyRuntime and the first PyUnicode alloc segfaults on
 # macOS. (Linux hides this by deduping via global symbol scope.)
-target_link_libraries(c2py PUBLIC  Python::NumPy Python::Module)
+target_link_libraries(c2py PUBLIC Python::NumPy Python::Module)
 
 
 # ========= Dynamic Analyzer Checks ==========

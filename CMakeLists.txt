@@ -1,8 +1,5 @@
-cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
-cmake_policy(VERSION 3.20)
-if(POLICY CMP0144)
-  cmake_policy(SET CMP0144 NEW)
-endif()
+cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
+cmake_policy(VERSION ${CMAKE_VERSION})
 
 # ############
 # Define Project
@@ -21,9 +18,9 @@ message(STATUS "c2py Git hash: ${PROJECT_GIT_HASH}")
 
 # Assert that install directory is provided and is absolute path.
 if(NOT IS_SUBPROJECT)
- if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT OR (NOT IS_ABSOLUTE ${CMAKE_INSTALL_PREFIX}))
-   message(FATAL_ERROR "CMAKE_INSTALL_PREFIX must be specified and must be an absolute path.\n There is no default.\n Current value : ${CMAKE_INSTALL_PREFIX}\n.  e.g. ... -DCMAKE_INSTALL_PREFIX=$HOME/clair_install")
- endif()
+  if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT OR (NOT IS_ABSOLUTE ${CMAKE_INSTALL_PREFIX}))
+    message(FATAL_ERROR "No install prefix given (or invalid)")
+  endif()
   message(STATUS "-------- CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX} --------")
 endif()
 set(c2py_BINARY_DIR ${PROJECT_BINARY_DIR} CACHE STRING "Binary directory of the c2py Project")
@@ -53,11 +50,19 @@ option(Update_Python_Bindings "Regenerate the C++ Python bindings via clair-c2py
 # ############
 # Global Compilation Settings
 
+# Build a Debian package
+option(BUILD_DEBIAN_PACKAGE "Build a deb package" OFF)
+
 # Export the list of compile-commands into compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Disable compiler extensions
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+# No C++20 modules used. Disable module scanning (default ON for C++20+ with Ninja):
+# it injects transient @<obj>.modmap flags into compile_commands.json that break clair-c2py
+# binding generation when it replays those commands. No-op on CMake < 3.28.
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
 # Provide additional debugging information for Debug builds
 add_compile_options($<$<CONFIG:Debug>:-ggdb3>)
@@ -72,6 +77,7 @@ target_compile_options(c2py_warnings
     -Wpedantic
     -Wno-sign-compare
     $<$<CXX_COMPILER_ID:GNU>:-Wno-comma-subscript>
+    $<$<CXX_COMPILER_ID:GNU>:-Wno-psabi> # Disable notes about ABI changes
     $<$<CXX_COMPILER_ID:GNU>:-Wshadow=local>
     $<$<CXX_COMPILER_ID:GNU>:-Wno-attributes>
     $<$<CXX_COMPILER_ID:GNU>:-Wno-deprecated-declarations>
@@ -79,8 +85,8 @@ target_compile_options(c2py_warnings
     $<$<CXX_COMPILER_ID:AppleClang,Clang,IntelLLVM>:-Wno-unknown-warning-option>
     $<$<CXX_COMPILER_ID:AppleClang,Clang,IntelLLVM>:-Wshadow>
     $<$<CXX_COMPILER_ID:AppleClang,Clang,IntelLLVM>:-Wno-gcc-compat>
-    $<$<CXX_COMPILER_ID:AppleClang,Clang,IntelLLVM>:-Wno-c++20-extensions>
-    $<$<CXX_COMPILER_ID:AppleClang,Clang,IntelLLVM>:-Wno-c++20-compat>
+    $<$<CXX_COMPILER_ID:AppleClang,Clang,IntelLLVM>:-Wno-c++26-extensions>
+    $<$<CXX_COMPILER_ID:AppleClang,Clang,IntelLLVM>:-Wno-c++26-compat>
     $<$<CXX_COMPILER_ID:IntelLLVM>:-Wno-tautological-constant-compare>
 )
 
@@ -108,7 +114,7 @@ include(GNUInstallDirs)
 
 # Python
 message(STATUS "-------- Python detection -------------")
-find_package(Python COMPONENTS Interpreter Development NumPy)
+find_package(Python REQUIRED COMPONENTS Interpreter Development NumPy)
 set(c2py_all_python_flags " -I${Python_INCLUDE_DIRS} -I${Python_NumPy_INCLUDE_DIRS} -L${Python_LIBRARY_DIRS} -lpython${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}")
 set(c2py_all_python_include_flags " -I${Python_INCLUDE_DIRS} -I${Python_NumPy_INCLUDE_DIRS} ")
 configure_file(c2py_flags.py.in c2py_flags @ONLY)
@@ -135,28 +141,9 @@ add_subdirectory(share)
 # the installed-package path it is included by c2py-config.cmake instead.
 include(${PROJECT_SOURCE_DIR}/share/cmake/c2py_add_module.cmake)
 
-#--------------------------------------------------------
-#   Sanitizers
-#--------------------------------------------------------
-
-option(ASAN OFF "Compile library and executables with LLVM Address Sanitizer")
-option(UBSAN OFF "Compile library and executables with LLVM Undefined Behavior Sanitizer")
-
-if(ASAN)
-  if(NOT TARGET asan)
-    find_package(sanitizer REQUIRED "asan")
-  endif()
-endif()
-if(UBSAN)
-  if(NOT TARGET ubsan)
-    find_package(sanitizer REQUIRED "ubsan")
-  endif()
-endif()
-
 # #############
 # Debian Package
 
-option(BUILD_DEBIAN_PACKAGE "Build a deb package" OFF)
 if(BUILD_DEBIAN_PACKAGE AND NOT IS_SUBPROJECT)
   if(NOT CMAKE_INSTALL_PREFIX STREQUAL "/usr")
     message(FATAL_ERROR "CMAKE_INSTALL_PREFIX must be /usr for packaging")
@@ -167,8 +154,7 @@ if(BUILD_DEBIAN_PACKAGE AND NOT IS_SUBPROJECT)
   set(CPACK_PACKAGE_CONTACT "https://github.com/flatironinstitute/c2py")
   execute_process(COMMAND dpkg --print-architecture OUTPUT_VARIABLE CPACK_DEBIAN_PACKAGE_ARCHITECTURE OUTPUT_STRIP_TRAILING_WHITESPACE)
   set(CPACK_DEBIAN_PACKAGE_DEPENDS "python")
-  SET(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-  SET(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS ON)
+  set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+  set(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS ON)
   include(CPack)
 endif()
-

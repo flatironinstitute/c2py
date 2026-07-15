@@ -14,7 +14,7 @@ if(NOT IS_SUBPROJECT
       ${CMAKE_CURRENT_BINARY_DIR}/c2pyvars.sh
     DESTINATION share/c2py
   )
- 
+
   message(STATUS "*********************************************************************************")
   message(STATUS "* Custom install Location. Use:                                                  ")
   message(STATUS "*                                                                                ")
