@@ -105,7 +105,7 @@ static auto const _c2py_fun_13 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { 
 static auto const _c2py_fun_14 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &x) { return zz<A>(x); }, "x")};
 
 // zz_defarg_alias2
-static auto const _c2py_fun_15 = c2py::dispatcher_f_kw_t{c2py::cfun([](long v) { return ns::zz_defarg_alias2(v); }, "v"_a = long{0})};
+static auto const _c2py_fun_15 = c2py::dispatcher_f_kw_t{c2py::cfun([](ns::myint_t v) { return ns::zz_defarg_alias2(v); }, "v"_a = ns::myint_t{0})};
 
 static const auto _c2py_doc_0  = _c2py_fun_0.doc(R"DOC()DOC");
 static const auto _c2py_doc_1  = _c2py_fun_1.doc(R"DOC()DOC");
