@@ -6,7 +6,7 @@ endif()
 
 # ############
 # Define Project
-project(c2py VERSION 0.1.0 LANGUAGES CXX)
+project(c2py VERSION 0.9.0 LANGUAGES CXX)
 get_directory_property(IS_SUBPROJECT PARENT_DIRECTORY)
 
 message(STATUS "-------- c2py version and git hash detection -------------")
