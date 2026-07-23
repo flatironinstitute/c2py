@@ -1,6 +1,6 @@
 def projectName = "c2py" /* set to app/repo name */
 
-/* which platform to build documentation on (app4triqs builds/deploys docs via GitHub Actions, not Jenkins) */
+/* which platform to build documentation on (c2py builds docs via GitHub Actions, not Jenkins) */
 def documentationPlatform = ""
 /* Platforms that regenerate the Python bindings via clair-c2py.
    All others use the default (OFF) from c2py. */
@@ -11,12 +11,7 @@ def keepInstall = false // disabled on jenkins-new: !env.BRANCH_NAME.startsWith(
 properties([
   disableConcurrentBuilds(),
   buildDiscarder(logRotator(numToKeepStr: '10', daysToKeepStr: '30')),
-  pipelineTriggers(keepInstall ? [
-    upstream(
-      threshold: 'SUCCESS',
-      upstreamProjects: '/CCQ/TRIQS/cpp2py/master,/CCQ/TRIQS/h5/unstable'
-    ), githubPush()
-  ] : [githubPush()])
+  pipelineTriggers([githubPush()])
 ])
 
 def mounts = [:]
@@ -93,7 +88,7 @@ def runBuild = { String platform, String prefix, List<String> envs ->
       """
       catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
         try {
-          sh "make test CTEST_OUTPUT_ON_FAILURE=1"
+          sh "ctest --output-on-failure -j\$PARALLEL"
         } catch (exc) {
           archiveArtifacts(artifacts: 'Testing/Temporary/LastTest.log')
           throw exc
