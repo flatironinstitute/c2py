@@ -36,6 +36,14 @@ namespace c2py {
 
   //---------------------  wrapped type -----------------------------
 
+  namespace details {
+    // A legacy cpp2py holder is { PyObject_HEAD; T *_c; }, no parent and is_const. Use tp_basicsize to detect them.
+    template <typename T> bool is_legacy_cpp2py_type() {
+      PyTypeObject *p = get_type_ptr(typeid(T));
+      return (p == nullptr) or (p->tp_basicsize < static_cast<Py_ssize_t>(sizeof(wrap<T>)));
+    }
+  } // namespace details
+
   template <typename T>
     requires(is_wrapped<T> and not std::is_enum_v<T>)
   struct py_converter<T> {
@@ -59,7 +67,11 @@ namespace c2py {
       return *_c;
     }
 
-    static bool is_const(PyObject *ob) { return ((wrap<T> *)ob)->is_const; } // specific to this converter
+    static bool is_const(PyObject *ob) {
+      // A cpp2py legacy holder has no is_const field; such objects always own a mutable T.
+      if (details::is_legacy_cpp2py_type<T>()) return false;
+      return ((wrap<T> *)ob)->is_const;
+    }
 
     static bool is_convertible(PyObject *ob, bool raise_exception) {
       PyTypeObject *p = get_type_ptr(typeid(T));
@@ -90,6 +102,13 @@ namespace c2py {
     static PyObject *c2py(T &x, PyObject *guardian) {
       PyTypeObject *p = get_type_ptr(typeid(T));
       if (p == nullptr) return nullptr;
+      // Error for cpp2py legacy wrapped types, we don't have parent information
+      if (details::is_legacy_cpp2py_type<T>()) {
+        auto err = std::string{"Can not wrap a reference to "} + p->tp_name
+           + " : its Python type was registered by a module built with the legacy cpp2py. Rebuild that module with c2py.";
+        PyErr_SetString(PyExc_TypeError, err.c_str());
+        return nullptr;
+      }
       auto *self = (wrap<T> *)p->tp_alloc(p, 0);
       if (self != NULL) {
         self->_c       = &x;
