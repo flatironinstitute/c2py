@@ -112,6 +112,52 @@ class TestIterable(unittest.TestCase):
 
 
 #
+class TestPythonSubclass(unittest.TestCase):
+    """Python-side subclass of a wrapped C++ type passes through correctly."""
+
+    def setUp(self):
+        class B(M.A):
+            pass
+        self.B = B
+
+    def test_isinstance(self):
+        b = self.B(5)
+        self.assertIsInstance(b, M.A)
+
+    def test_pass_to_const_ref_function(self):
+        # B instance passed to a function taking A const& and returning int
+        b = self.B(3)
+        self.assertEqual(M.a_friend(b), -3)
+
+    def test_return_a_from_subclass(self):
+        # operator+ takes A const& and returns A by value
+        b = self.B(3)
+        result = b + M.A(2)
+        self.assertEqual(result.k, 5)
+
+    def test_non_const_method_on_subclass(self):
+        # non-const method — exercises is_const check on a Python subclass instance
+        b = self.B(3)
+        b.no_prop()  # k *= 10
+        self.assertEqual(b.k, 30)
+
+    def test_pass_to_mutating_ref_function(self):
+        # B instance passed to a function taking A& (non-const) : mutation must
+        # be visible on the original Python subclass instance, not on a copy.
+        b = self.B(3)
+        M.mutate_a(b)
+        self.assertEqual(b.k, 300)
+
+    def test_extra_python_attributes(self):
+        class C(M.A):
+            def __init__(self, x, label):
+                super().__init__(x)
+                self.label = label
+        c = C(7, "hello")
+        self.assertEqual(c.label, "hello")
+        self.assertEqual(M.a_friend(c), -7)
+
+
 if __name__ == '__main__':
     unittest.main()
 
