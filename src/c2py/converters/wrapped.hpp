@@ -102,9 +102,9 @@ namespace c2py {
     //
     static PyObject *c2py(T &x, PyObject *guardian) {
       PyTypeObject *p = get_type_ptr(typeid(T));
-      if (p == nullptr) return nullptr;
+      if (p == nullptr) [[unlikely]] return nullptr;
       // Error for cpp2py legacy wrapped types, we don't have parent information
-      if (details::is_legacy_cpp2py_type<T>(p)) {
+      if (details::is_legacy_cpp2py_type<T>(p)) [[unlikely]] {
         auto err = std::string{"Can not wrap a reference to "} + p->tp_name
            + " : its Python type was registered by a module built with the legacy cpp2py. Rebuild that module with c2py.";
         PyErr_SetString(PyExc_TypeError, err.c_str());
