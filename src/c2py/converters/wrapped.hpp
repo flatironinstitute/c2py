@@ -38,9 +38,15 @@ namespace c2py {
   //---------------------  wrapped type -----------------------------
 
   namespace details {
-    // A legacy cpp2py holder is { PyObject_HEAD; T *_c; }, no parent and is_const. Use tp_basicsize to detect them.
+    // Returns true if p (or its first C-defined base) is a legacy cpp2py holder
+    // { PyObject_HEAD; T *_c; } which has no parent or is_const field.
+    // Python subclasses are heap types (Py_TPFLAGS_HEAPTYPE); we skip them to reach the
+    // first C-defined base, whose tp_basicsize reliably identifies the holder layout.
+    // This is cross-module safe: it compares sizes, not addresses of wrap_pytype<T>.
     template <typename T> bool is_legacy_cpp2py_type(PyTypeObject *p) {
       assert(p != nullptr);
+      if (p->tp_flags & Py_TPFLAGS_HEAPTYPE) [[unlikely]]
+        do { p = p->tp_base; } while (p->tp_flags & Py_TPFLAGS_HEAPTYPE);
       return p->tp_basicsize < static_cast<Py_ssize_t>(sizeof(wrap<T>));
     }
   } // namespace details
@@ -69,7 +75,9 @@ namespace c2py {
     }
 
     static bool is_const(PyObject *ob) {
-      // A cpp2py legacy holder has no is_const field; such objects always own a mutable T.
+      // is_legacy_cpp2py_type walks up the MRO to the first C-defined (non-heap) base and checks
+      // its tp_basicsize. This correctly handles Python subclasses of both c2py and legacy holders,
+      // and is cross-module safe (size comparison, not pointer comparison against wrap_pytype<T>).
       if (details::is_legacy_cpp2py_type<T>(Py_TYPE(ob))) return false;
       return ((wrap<T> *)ob)->is_const;
     }
