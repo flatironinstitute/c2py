@@ -207,25 +207,30 @@ static auto const _c2py_fun_12 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &
 // inline_friend
 static auto const _c2py_fun_13 = c2py::dispatcher_f_kw_t{c2py::cfun([](const ns::B &b) { return inline_friend(b); }, "b")};
 
+// mutate_a
+static auto const _c2py_fun_14 = c2py::dispatcher_f_kw_t{c2py::cfun([](A &a) { return mutate_a(a); }, "a")};
+
 // my_module_init
-static auto const _c2py_fun_14 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
+static auto const _c2py_fun_15 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return my_module_init(); })};
 
 // nop
-static auto const _c2py_fun_15 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
+static auto const _c2py_fun_16 = c2py::dispatcher_f_kw_t{c2py::cfun([](const A &a) { return nop(a); }, "a")};
 
 static const auto _c2py_doc_11 = _c2py_fun_11.doc(R"DOC()DOC");
 static const auto _c2py_doc_12 = _c2py_fun_12.doc(R"DOC()DOC");
 static const auto _c2py_doc_13 = _c2py_fun_13.doc(R"DOC()DOC");
 static const auto _c2py_doc_14 = _c2py_fun_14.doc(R"DOC()DOC");
 static const auto _c2py_doc_15 = _c2py_fun_15.doc(R"DOC()DOC");
+static const auto _c2py_doc_16 = _c2py_fun_16.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
 static PyMethodDef module_methods[] = {
    {"a_friend", (PyCFunction)c2py::pyfkw<_c2py_fun_11>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_11.c_str()},
    {"b_friend", (PyCFunction)c2py::pyfkw<_c2py_fun_12>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_12.c_str()},
    {"inline_friend", (PyCFunction)c2py::pyfkw<_c2py_fun_13>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_13.c_str()},
-   {"my_module_init", (PyCFunction)c2py::pyfkw<_c2py_fun_14>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_14.c_str()},
-   {"nop", (PyCFunction)c2py::pyfkw<_c2py_fun_15>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_15.c_str()},
+   {"mutate_a", (PyCFunction)c2py::pyfkw<_c2py_fun_14>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_14.c_str()},
+   {"my_module_init", (PyCFunction)c2py::pyfkw<_c2py_fun_15>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_15.c_str()},
+   {"nop", (PyCFunction)c2py::pyfkw<_c2py_fun_16>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_16.c_str()},
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
 

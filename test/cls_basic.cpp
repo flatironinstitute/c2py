@@ -115,6 +115,9 @@ template A clone(A const &x);
 
 void nop(A const &a) {}
 
+// mutate a, passed by non-const reference
+void mutate_a(A &a) { a.k *= 100; }
+
 C2PY_MODULE_INIT void my_module_init() { std::cout << "===== Starting module !!=====" << std::endl; };
 
 struct C2PY_RENAME(renamed_class) some_class {
