@@ -73,4 +73,21 @@ namespace c2py {
     static bool is_convertible(PyObject *ob, bool raise_exception) = delete;
   }; //
 
+  // ------------- Registration of the types c2py wraps itself --------------
+
+  // Called once per module by the generated init function. Nothing here is exposed in the module
+  // namespace : py_range is an implementation detail, it is only ever produced by a converter.
+  // noexcept, for the reason given in add_type_object_to_main.
+  inline bool register_internal_types() noexcept try {
+    if (PyType_Ready(&wrap_pytype<py_range>) < 0) return false;
+    register_pto_in_table(std::type_index(typeid(py_range)).name(), &wrap_pytype<py_range>);
+    return true;
+  } catch (std::exception const &e) {
+    PyErr_Format(PyExc_ImportError, "c2py: can not register the internal types : %s", e.what());
+    return false;
+  } catch (...) {
+    PyErr_SetString(PyExc_ImportError, "c2py: can not register the internal types : unknown C++ exception");
+    return false;
+  }
+
 } // namespace c2py

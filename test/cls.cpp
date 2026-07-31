@@ -188,9 +188,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_cls() {
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
 
-  auto &conv_table = *c2py::conv_table_sptr.get();
-
-  add_type_object_to_main<A>("A", m, conv_table);
+  if (not add_type_object_to_main<A>("A", m)) return NULL;
 
   return m;
 }
