@@ -54,6 +54,8 @@ namespace c2py {
     return sptr;
   }
 
+  void register_pto_in_table(const char *mangled_name, PyTypeObject *pto) { (*conv_table_sptr)[mangled_name] = pto; }
+
   // get the PyTypeObject from the table in __main__.
   // if the type was not wrapped, return nullptr and set up a Python exception
   PyTypeObject *get_type_ptr(std::type_index const &ind) {

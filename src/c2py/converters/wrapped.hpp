@@ -20,8 +20,18 @@ namespace c2py {
   // if the type was not wrapped, return nullptr and set up a Python exception
   PyTypeObject *get_type_ptr(std::type_index const &ind);
 
-  // get the PyTypeObject from the table in __main__.
-  template <typename T> void add_type_object_to_main(const char *pyname, PyObject *_main_, pto_table_t &conv_table) {
+  // Register pto in the c2py table, under the mangled name of the C++ type it wraps.
+  void register_pto_in_table(const char *mangled_name, PyTypeObject *pto);
+
+  // Expose the PyTypeObject of T in the module namespace under pyname, and register it.
+  // Returns false, with a Python exception set, if the module can not be initialized : the generated
+  // init then returns NULL, i.e. the import fails with that exception.
+  //
+  // noexcept : this is called from PyInit, which is extern "C" and which CPython calls from C, so an
+  // exception crossing that frame terminates the process instead of failing the import. The table
+  // plumbing does throw, hence the function-try-block. Its handlers must not throw either, which is
+  // why they report through PyErr_Format rather than build a std::string.
+  template <typename T> [[nodiscard]] bool add_type_object_to_main(const char *pyname, PyObject *_main_) noexcept try {
     // tp_doc<T> is a global const std::string with static storage duration; .data() is valid
     // for the lifetime of the shared library (Python finalization precedes dlclose).
     c2py::wrap_pytype<T>.tp_doc = c2py::tp_doc<T>.data();
@@ -29,9 +39,16 @@ namespace c2py {
     // PyModule_AddObject steals the reference on success; release the INCREF on failure.
     if (PyModule_AddObject(_main_, pyname, (PyObject *)&c2py::wrap_pytype<T>) < 0) {
       Py_DECREF(&c2py::wrap_pytype<T>);
-      return;
+      return false;
     }
-    conv_table[std::type_index(typeid(T)).name()] = &c2py::wrap_pytype<T>;
+    register_pto_in_table(std::type_index(typeid(T)).name(), &c2py::wrap_pytype<T>);
+    return true;
+  } catch (std::exception const &e) {
+    PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : %s", pyname, e.what());
+    return false;
+  } catch (...) {
+    PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : unknown C++ exception", pyname);
+    return false;
   }
 
   //---------------------  wrapped type -----------------------------
