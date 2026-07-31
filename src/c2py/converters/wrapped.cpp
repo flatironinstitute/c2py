@@ -94,17 +94,17 @@ namespace c2py {
     return get_table(c2py_table_names, cache, true);
   }
 
-  void register_pto_in_table(const char *mangled_name, PyTypeObject *pto) {
+  PyTypeObject *register_pto_in_table(const char *mangled_name, PyTypeObject *pto) {
     auto sptr = get_pto_table();
-    if (not sptr) return; // no interpreter : nothing sensible to do, as in the legacy mirror
-    (*sptr)[mangled_name] = pto;
+    if (not sptr) return pto; // no interpreter : report pto as registered, so no conflict is diagnosed
+    return sptr->try_emplace(mangled_name, pto).first->second;
   }
 
   void register_pto_in_legacy_table(const char *mangled_name, PyTypeObject *pto) {
     auto sptr = get_legacy_pto_table(true);
     if (not sptr) return; // Py_IsInitialized was false : nothing sensible to do here
-    // Keep an entry already made by a legacy module : the legacy modules exchange objects of that
-    // Python type between themselves, and they can not recognize ours.
+    // Keeping the first registration matters here too : the legacy modules exchange objects of their
+    // own Python type between themselves, and they can not recognize ours.
     sptr->try_emplace(mangled_name, pto);
   }
 
