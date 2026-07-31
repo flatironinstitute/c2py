@@ -1,6 +1,8 @@
 # Modules that all wrap the same C++ type L, in different ways, so that a test can choose the
 # import order it wants to check. They are hand-written : what they exercise is the registration
-# itself, which the generated init only calls into.
+# itself, which the generated init only calls into. Clair can not generate these : see the note in
+# L.hpp for why (in short, is_wrapped<L> = true tells it a wrapper already exists elsewhere, which is
+# precisely what lets these modules each register their own, conflicting one by hand).
 macro(c2py_add_registration_module m)
   Python_add_library(${m} MODULE ${m}.cpp)
   # As c2py_add_module does for the real modules. It matters here more than anywhere else: these
@@ -24,7 +26,14 @@ macro(c2py_add_registration_test name)
 endmacro()
 
 c2py_add_registration_module(use_L)
+c2py_add_registration_module(c2py_a)
+c2py_add_registration_module(c2py_b)
+
+c2py_add_registration_test(not_registered)
+c2py_add_registration_test(conflict)
 
 # ------ Interoperability with the legacy cpp2py. All of this goes when cpp2py does. ------
 c2py_add_registration_module(legacy_reg)
 c2py_add_registration_test(legacy_only)
+c2py_add_registration_test(legacy_then_c2py)
+c2py_add_registration_test(legacy_after_c2py)
