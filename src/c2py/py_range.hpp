@@ -75,9 +75,11 @@ namespace c2py {
 
   // ------------- Registration of the types c2py wraps itself --------------
 
-  // Called once per module by the generated init function. Nothing here is exposed in the module
-  // namespace, nor mirrored into the legacy cpp2py table : py_range is an implementation detail, it
-  // is only ever produced by a converter.
+  // Called once per module by the generated init function. These types are needed by every module
+  // but there must be a single Python type for each of them, so the first module imported registers
+  // them and the others reuse its registration through the table (cf register_pto_in_table).
+  // Nothing here is exposed in the module namespace, nor mirrored into the legacy cpp2py table :
+  // py_range is an implementation detail, it is only ever produced by a converter.
   // noexcept, for the reason given in add_type_object_to_main.
   inline bool register_internal_types() noexcept try {
     if (PyType_Ready(&wrap_pytype<py_range>) < 0) return false;

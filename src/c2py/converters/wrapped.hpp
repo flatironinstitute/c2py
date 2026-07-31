@@ -36,12 +36,24 @@ namespace c2py {
   // Look up ind in the c2py table, then in the legacy cpp2py table.
   pto_lookup_t lookup_pto_in_tables(std::type_index const &ind);
 
-  // Register pto in the c2py table, under the mangled name of the C++ type it wraps.
-  void register_pto_in_table(const char *mangled_name, PyTypeObject *pto);
+  // Register pto in the c2py table, under the mangled name of the C++ type it wraps, keeping whatever
+  // entry is already there. Returns the entry now in the table, i.e. pto unless another module got
+  // there first.
+  //
+  // Whether two modules wrapping the same T end up sharing one wrap_pytype<T> is up to the loader.
+  // wrap_pytype<T> has internal linkage, one copy per module, but the template instantiations that
+  // use it are weak symbols : dyld coalesces those across images, so on macOS the second module runs
+  // the first module's add_type_object_to_main<T>, hence its wrap_pytype<T>, while on Linux
+  // RTLD_LOCAL keeps each module on its own copy and the two Python types stay distinct.
+  //
+  // The table is where we make this consistent : keep the first registration rather than let the last
+  // import win, and refuse a second, *different* PyTypeObject for a type already registered (cf
+  // add_type_object_to_main).
+  PyTypeObject *register_pto_in_table(const char *mangled_name, PyTypeObject *pto);
 
-  // ... and in the legacy cpp2py table, creating it if no legacy module has, and keeping any entry
-  // already there. This is what makes a T wrapped here usable by a module built with the legacy
-  // cpp2py : its holder only ever reads _c, which is at the same offset in wrap<T>.
+  // ... and in the legacy cpp2py table, creating it if no legacy module has. This is what makes a T
+  // wrapped here usable by a module built with the legacy cpp2py : its holder only ever reads _c,
+  // which is at the same offset in wrap<T>.
   void register_pto_in_legacy_table(const char *mangled_name, PyTypeObject *pto);
 
   // Expose the PyTypeObject of T in the module namespace under pyname, and register it.
@@ -63,7 +75,17 @@ namespace c2py {
       return false;
     }
     auto const *mangled_name = std::type_index(typeid(T)).name();
-    register_pto_in_table(mangled_name, &c2py::wrap_pytype<T>);
+    // Re-importing a module re-runs its init with the same wrap_pytype<T>, which is fine. A
+    // *different* PyTypeObject means two c2py modules wrap this C++ type : objects of one would not
+    // convert in the other, so refuse rather than let it be discovered later.
+    auto *registered = register_pto_in_table(mangled_name, &c2py::wrap_pytype<T>);
+    if (registered != &c2py::wrap_pytype<T>) {
+      auto err = std::string{"c2py: the C++ type wrapped here as '"} + pyname + "' is already registered as '" + registered->tp_name
+         + "' by another module. The two Python types are distinct and objects of one will not convert in the other. "
+           "Wrap this C++ type in a single module and import it from there.";
+      PyErr_SetString(PyExc_RuntimeError, err.c_str());
+      return false;
+    }
     register_pto_in_legacy_table(mangled_name, &c2py::wrap_pytype<T>);
     return true;
   } catch (std::exception const &e) {
