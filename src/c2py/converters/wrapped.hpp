@@ -3,22 +3,34 @@
 #include "../pytypes/wrap.hpp"
 #include <type_traits>
 
-// A global table of PyTypeObject to be stored at the top of interpreter
-// so that each module can retrieve the PyTypeObject of types wrapped by other modules.
+// Two global tables of PyTypeObject, stored at the top of the interpreter so that each module can
+// retrieve the PyTypeObject of the types wrapped by the other modules :
+//
+//   __main__.__c2py_table    the types wrapped by the c2py modules. Written by c2py only.
+//   __main__.__cpp2py_table  the table of the legacy cpp2py, written by the legacy modules.
+//
+// A lookup goes through the c2py table first. A type found only in the cpp2py table is wrapped by a
+// module built with the legacy cpp2py, whose holder is { PyObject_HEAD; T *_c; } : it has no parent
+// and no is_const field, so the converters can not treat it as a wrap<T>.
 namespace c2py {
 
   // Table : c++ type name -> PyTypeObject *
   using pto_table_t = std::map<std::string, PyTypeObject *>;
 
-  // Get the PyTypeObject table, initialize it if necessary
+  // Get the c2py PyTypeObject table, initialize it if necessary
   std::shared_ptr<pto_table_t> get_pto_table();
 
-  // Each translation holds a shared pointer to the PyTypeObject table
+  // Each translation holds a shared pointer to the c2py PyTypeObject table
   static std::shared_ptr<pto_table_t> conv_table_sptr = get_pto_table(); //NOLINT
 
-  // get the PyTypeObject from the table in __main__.
-  // if the type was not wrapped, return nullptr and set up a Python exception
-  PyTypeObject *get_type_ptr(std::type_index const &ind);
+  // The result of the lookup of a C++ type in the tables.
+  struct pto_lookup_t {
+    PyTypeObject *pto = nullptr; // null if the type is wrapped nowhere. A Python exception is then set.
+    bool legacy       = false;   // pto comes from the legacy cpp2py table : holder without parent and is_const
+  };
+
+  // Look up ind in the c2py table, then in the legacy cpp2py table.
+  pto_lookup_t lookup_pto_in_tables(std::type_index const &ind);
 
   // Register pto in the c2py table, under the mangled name of the C++ type it wraps.
   void register_pto_in_table(const char *mangled_name, PyTypeObject *pto);
@@ -60,7 +72,7 @@ namespace c2py {
     static_assert(not std::is_reference_v<T>); // The T = U& case is a separate specialization
 
     template <typename U> static PyObject *c2py(U &&x) {
-      PyTypeObject *p = get_type_ptr(typeid(T));
+      PyTypeObject *p = lookup_pto_in_tables(typeid(T)).pto;
       if (p == nullptr) return nullptr;
       auto *self = (wrap<T> *)p->tp_alloc(p, 0);
       if (self != NULL) { self->_c = new T{std::forward<U>(x)}; } // NOLINT
@@ -79,7 +91,7 @@ namespace c2py {
     static bool is_const(PyObject *ob) { return ((wrap<T> *)ob)->is_const; } // specific to this converter
 
     static bool is_convertible(PyObject *ob, bool raise_exception) {
-      PyTypeObject *p = get_type_ptr(typeid(T));
+      PyTypeObject *p = lookup_pto_in_tables(typeid(T)).pto;
       if (p == nullptr) return false;
       if (PyObject_TypeCheck(ob, p)) {
         if (((wrap<T> *)ob)->_c != NULL) return true;
@@ -105,7 +117,7 @@ namespace c2py {
 
     //
     static PyObject *c2py(T &x, PyObject *guardian) {
-      PyTypeObject *p = get_type_ptr(typeid(T));
+      PyTypeObject *p = lookup_pto_in_tables(typeid(T)).pto;
       if (p == nullptr) return nullptr;
       auto *self = (wrap<T> *)p->tp_alloc(p, 0);
       if (self != NULL) {
