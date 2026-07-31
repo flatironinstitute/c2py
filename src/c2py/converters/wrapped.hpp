@@ -7,7 +7,8 @@
 // retrieve the PyTypeObject of the types wrapped by the other modules :
 //
 //   __main__.__c2py_table    the types wrapped by the c2py modules. Written by c2py only.
-//   __main__.__cpp2py_table  the table of the legacy cpp2py, written by the legacy modules.
+//   __main__.__cpp2py_table  the table of the legacy cpp2py. Written by the legacy modules, and by
+//                            c2py as well (cf register_pto_in_legacy_table).
 //
 // A lookup goes through the c2py table first. A type found only in the cpp2py table is wrapped by a
 // module built with the legacy cpp2py, whose holder is { PyObject_HEAD; T *_c; } : it has no parent
@@ -20,7 +21,10 @@ namespace c2py {
   // Get the c2py PyTypeObject table, initialize it if necessary
   std::shared_ptr<pto_table_t> get_pto_table();
 
-  // Each translation holds a shared pointer to the c2py PyTypeObject table
+  // Each translation unit holds a shared pointer to the c2py PyTypeObject table, as returned by
+  // get_pto_table when that unit was initialized. In a module this is the table : the unit is
+  // initialized at dlopen, with the interpreter live. It is empty only when static initialization
+  // precedes Py_Initialize, i.e. c2py linked into a program rather than loaded as a module.
   static std::shared_ptr<pto_table_t> conv_table_sptr = get_pto_table(); //NOLINT
 
   // The result of the lookup of a C++ type in the tables.
@@ -34,6 +38,11 @@ namespace c2py {
 
   // Register pto in the c2py table, under the mangled name of the C++ type it wraps.
   void register_pto_in_table(const char *mangled_name, PyTypeObject *pto);
+
+  // ... and in the legacy cpp2py table, creating it if no legacy module has, and keeping any entry
+  // already there. This is what makes a T wrapped here usable by a module built with the legacy
+  // cpp2py : its holder only ever reads _c, which is at the same offset in wrap<T>.
+  void register_pto_in_legacy_table(const char *mangled_name, PyTypeObject *pto);
 
   // Expose the PyTypeObject of T in the module namespace under pyname, and register it.
   // Returns false, with a Python exception set, if the module can not be initialized : the generated
@@ -53,7 +62,9 @@ namespace c2py {
       Py_DECREF(&c2py::wrap_pytype<T>);
       return false;
     }
-    register_pto_in_table(std::type_index(typeid(T)).name(), &c2py::wrap_pytype<T>);
+    auto const *mangled_name = std::type_index(typeid(T)).name();
+    register_pto_in_table(mangled_name, &c2py::wrap_pytype<T>);
+    register_pto_in_legacy_table(mangled_name, &c2py::wrap_pytype<T>);
     return true;
   } catch (std::exception const &e) {
     PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : %s", pyname, e.what());

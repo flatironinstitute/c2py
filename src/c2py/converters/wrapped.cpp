@@ -63,33 +63,56 @@ namespace c2py {
       return sptr;
     }
 
-    // The legacy cpp2py table, or an empty shared_ptr if no legacy module has created it. Once found
-    // it is cached : a table in __main__ is never replaced. A miss is *not* cached : a legacy module
-    // may well be imported after us.
-    std::shared_ptr<pto_table_t> get_legacy_pto_table() {
-      static std::shared_ptr<pto_table_t> cache = {}; //NOLINT
+    // The table named by names, created if absent and create is true. Once found it is cached : a
+    // table in __main__ is never replaced. A miss is *not* cached : Python may not be initialized
+    // yet, and a legacy module may well be imported after us.
+    std::shared_ptr<pto_table_t> get_table(table_names_t names, std::shared_ptr<pto_table_t> &cache, bool create) {
       if (cache) return cache;
       if (not Py_IsInitialized()) return {};
-      cache = table_from_main(legacy_table_names);
-      return cache;
+      auto sptr = table_from_main(names);
+      if (not sptr and create) sptr = create_table_in_main(names);
+      cache = sptr;
+      return sptr;
+    }
+
+    // The legacy cpp2py table, or an empty shared_ptr if no legacy module has created it and create
+    // is false.
+    std::shared_ptr<pto_table_t> get_legacy_pto_table(bool create = false) {
+      static std::shared_ptr<pto_table_t> cache = {}; //NOLINT
+      return get_table(legacy_table_names, cache, create);
     }
 
   } // namespace
 
-  // Get the c2py table, initialize it if necessary
+  // Get the c2py table, initialize it if necessary. Empty only if Python is not initialized yet,
+  // which happens when c2py is linked into a program whose static initialization precedes
+  // Py_Initialize : the callers below must then do nothing, and the first call after Py_Initialize
+  // builds the table. Do not read conv_table_sptr instead : it is the copy of whichever translation
+  // unit, frozen at whatever get_pto_table returned when that unit was initialized.
   std::shared_ptr<pto_table_t> get_pto_table() {
-    if (not Py_IsInitialized()) return {}; // do it later
-    auto sptr = table_from_main(c2py_table_names);
-    if (not sptr) sptr = create_table_in_main(c2py_table_names);
-    return sptr;
+    static std::shared_ptr<pto_table_t> cache = {}; //NOLINT
+    return get_table(c2py_table_names, cache, true);
   }
 
-  void register_pto_in_table(const char *mangled_name, PyTypeObject *pto) { (*conv_table_sptr)[mangled_name] = pto; }
+  void register_pto_in_table(const char *mangled_name, PyTypeObject *pto) {
+    auto sptr = get_pto_table();
+    if (not sptr) return; // no interpreter : nothing sensible to do, as in the legacy mirror
+    (*sptr)[mangled_name] = pto;
+  }
+
+  void register_pto_in_legacy_table(const char *mangled_name, PyTypeObject *pto) {
+    auto sptr = get_legacy_pto_table(true);
+    if (not sptr) return; // Py_IsInitialized was false : nothing sensible to do here
+    // Keep an entry already made by a legacy module : the legacy modules exchange objects of that
+    // Python type between themselves, and they can not recognize ours.
+    sptr->try_emplace(mangled_name, pto);
+  }
 
   pto_lookup_t lookup_pto_in_tables(std::type_index const &ind) {
-    if (conv_table_sptr) {
-      auto const &table = *conv_table_sptr;
-      if (auto it = table.find(ind.name()); it != table.end()) return {it->second, false};
+    // The c2py table first : a type wrapped by a c2py module is registered in both tables, so a hit
+    // here means the wrap<T> holder, whatever the legacy table holds for that type.
+    if (auto sptr = get_pto_table(); sptr) {
+      if (auto it = sptr->find(ind.name()); it != sptr->end()) return {it->second, false};
     }
     if (auto sptr = get_legacy_pto_table(); sptr) {
       if (auto it = sptr->find(ind.name()); it != sptr->end()) return {it->second, true};
