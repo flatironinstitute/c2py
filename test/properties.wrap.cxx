@@ -255,7 +255,6 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_properties() 
 
   PyObject *m;
 
-  if (PyType_Ready(&c2py::wrap_pytype<c2py::py_range>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_1>) < 0) return NULL;
   if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_2>) < 0) return NULL;
@@ -263,10 +262,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_properties() 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
 
-  auto &conv_table = *c2py::conv_table_sptr.get();
-
-  conv_table[std::type_index(typeid(c2py::py_range)).name()] = &c2py::wrap_pytype<c2py::py_range>;
-#define _add_type(T, N) c2py::add_type_object_to_main<T>(N, m, conv_table)
+  if (not c2py::register_internal_types()) return NULL;
+#define _add_type(T, N)                                                                                                                              \
+  if (not c2py::add_type_object_to_main<T>(N, m)) return NULL
   _add_type(_c2py_cls_0, "A");
   _add_type(_c2py_cls_1, "B");
   _add_type(_c2py_cls_2, "C");
