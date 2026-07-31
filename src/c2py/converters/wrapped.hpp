@@ -33,8 +33,29 @@ namespace c2py {
     bool legacy       = false;   // pto comes from the legacy cpp2py table : holder without parent and is_const
   };
 
-  // Look up ind in the c2py table, then in the legacy cpp2py table.
+  // Look up ind in the c2py table, then in the legacy cpp2py table. Not meant to be called
+  // directly : go through lookup_pto<T> below, which memoizes the result.
   pto_lookup_t lookup_pto_in_tables(std::type_index const &ind);
+
+  // Memoized lookup of T caching lookup_pto_in_tables.
+  // static, like wrap_pytype : one cache per module.
+  template <typename T> static pto_lookup_t pto_cache = {}; //NOLINT
+
+  // Only a hit in the c2py table is memoized. It never changes afterwards, since a registration
+  // there keeps the entry already present (cf register_pto_in_table). The two other outcomes can :
+  // a miss because a module registering T may be imported later, and a legacy hit because a c2py
+  // module wrapping T may be imported later, and must then win as the c2py table is searched first.
+  //
+  // static, to match pto_cache. The chain stops here : the py_converter<T> members that call this are
+  // class template members, which can not be given internal linkage.
+  template <typename T> static pto_lookup_t lookup_pto() {
+    auto r = pto_cache<T>;
+    if (r.pto == nullptr) [[unlikely]] {
+      r = lookup_pto_in_tables(typeid(T));
+      if (not r.legacy) pto_cache<T> = r;
+    }
+    return r;
+  }
 
   // Register pto in the c2py table, under the mangled name of the C++ type it wraps, keeping whatever
   // entry is already there. Returns the entry now in the table, i.e. pto unless another module got
@@ -107,7 +128,7 @@ namespace c2py {
     // A legacy cpp2py type needs no special case here : it holds a T it owns through _c, at the same
     // offset as in wrap<T>, and its dealloc deletes it. parent and is_const stay untouched.
     template <typename U> static PyObject *c2py(U &&x) {
-      PyTypeObject *p = lookup_pto_in_tables(typeid(T)).pto;
+      PyTypeObject *p = lookup_pto<T>().pto;
       if (p == nullptr) return nullptr;
       auto *self = (wrap<T> *)p->tp_alloc(p, 0);
       if (self != NULL) { self->_c = new T{std::forward<U>(x)}; } // NOLINT
@@ -126,12 +147,12 @@ namespace c2py {
     // specific to this converter. ob has passed is_convertible, i.e. it is an instance of the
     // PyTypeObject registered for T, so the lookup below describes its holder.
     static bool is_const(PyObject *ob) {
-      if (lookup_pto_in_tables(typeid(T)).legacy) return false; // a legacy holder has no is_const field, and owns a mutable T
+      if (lookup_pto<T>().legacy) return false; // a legacy holder has no is_const field, and owns a mutable T
       return ((wrap<T> *)ob)->is_const;
     }
 
     static bool is_convertible(PyObject *ob, bool raise_exception) {
-      PyTypeObject *p = lookup_pto_in_tables(typeid(T)).pto;
+      PyTypeObject *p = lookup_pto<T>().pto;
       if (p == nullptr) return false;
       if (PyObject_TypeCheck(ob, p)) {
         if (((wrap<T> *)ob)->_c != NULL) return true;
@@ -157,7 +178,7 @@ namespace c2py {
 
     //
     static PyObject *c2py(T &x, PyObject *guardian) {
-      auto [p, legacy] = lookup_pto_in_tables(typeid(T));
+      auto [p, legacy] = lookup_pto<T>();
       if (p == nullptr) return nullptr;
       // A legacy cpp2py holder has no parent : it would delete the T we only borrow here, and its
       // tp_alloc would not even reserve the space for the parent and is_const we must write.
