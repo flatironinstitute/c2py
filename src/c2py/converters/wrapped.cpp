@@ -3,12 +3,13 @@
 
 namespace c2py {
 
-  // The table is stored in __main__ in a PyCapsule holding a pointer to a
+  // Each table is stored in __main__ in a PyCapsule holding a pointer to a
   // std::shared_ptr<pto_table_t>, so that all the modules of the process share it.
   //
-  // It is the table of the legacy cpp2py : same capsule name, same key (the mangled name given by
-  // std::type_index), and a std::map<std::string, PyTypeObject *> of the same layout, so a module
-  // built with the legacy cpp2py and a c2py module recognize each other's types.
+  // The legacy cpp2py stores its own table in exactly the same way : same capsule name, same key
+  // (the mangled name given by std::type_index) and a std::map<std::string, PyTypeObject *> of the
+  // same layout, so we can read and write it directly. This is an ABI coupling with cpp2py, which is
+  // the price of the interoperability. cpp2py is deprecated and frozen, so it will not move.
 
   namespace {
 
@@ -18,6 +19,7 @@ namespace c2py {
       const char *capsule; // the name of the capsule, which PyCapsule_GetPointer checks
     };
 
+    constexpr table_names_t c2py_table_names{"__c2py_table", "__main__.__c2py_table"};
     constexpr table_names_t legacy_table_names{"__cpp2py_table", "__main__.__cpp2py_table"};
 
     // __main__. Throws, with a Python exception set, if it can not be found.
@@ -61,29 +63,39 @@ namespace c2py {
       return sptr;
     }
 
+    // The legacy cpp2py table, or an empty shared_ptr if no legacy module has created it. Once found
+    // it is cached : a table in __main__ is never replaced. A miss is *not* cached : a legacy module
+    // may well be imported after us.
+    std::shared_ptr<pto_table_t> get_legacy_pto_table() {
+      static std::shared_ptr<pto_table_t> cache = {}; //NOLINT
+      if (cache) return cache;
+      if (not Py_IsInitialized()) return {};
+      cache = table_from_main(legacy_table_names);
+      return cache;
+    }
+
   } // namespace
 
-  // Get the table, initialize it if necessary
+  // Get the c2py table, initialize it if necessary
   std::shared_ptr<pto_table_t> get_pto_table() {
     if (not Py_IsInitialized()) return {}; // do it later
-    auto sptr = table_from_main(legacy_table_names);
-    if (not sptr) sptr = create_table_in_main(legacy_table_names);
+    auto sptr = table_from_main(c2py_table_names);
+    if (not sptr) sptr = create_table_in_main(c2py_table_names);
     return sptr;
   }
 
   void register_pto_in_table(const char *mangled_name, PyTypeObject *pto) { (*conv_table_sptr)[mangled_name] = pto; }
 
-  // get the PyTypeObject from the table in __main__.
-  // if the type was not wrapped, return nullptr and set up a Python exception
-  PyTypeObject *get_type_ptr(std::type_index const &ind) {
-    pto_table_t &conv_table = *conv_table_sptr.get();
-
-    auto it = conv_table.find(ind.name());
-    if (it != conv_table.end()) return it->second;
-
-    std::string s = std::string{"The type "} + ind.name() + " can not be converted";
-    PyErr_SetString(PyExc_RuntimeError, s.c_str());
-    return nullptr;
+  pto_lookup_t lookup_pto_in_tables(std::type_index const &ind) {
+    if (conv_table_sptr) {
+      auto const &table = *conv_table_sptr;
+      if (auto it = table.find(ind.name()); it != table.end()) return {it->second, false};
+    }
+    if (auto sptr = get_legacy_pto_table(); sptr) {
+      if (auto it = sptr->find(ind.name()); it != sptr->end()) return {it->second, true};
+    }
+    PyErr_SetString(PyExc_RuntimeError, ("The type "s + ind.name() + " can not be converted").c_str());
+    return {};
   }
 
 } // namespace c2py
