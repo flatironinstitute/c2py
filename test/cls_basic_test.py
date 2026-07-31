@@ -112,6 +112,57 @@ class TestIterable(unittest.TestCase):
 
 
 #
+class TestPythonSubclass(unittest.TestCase):
+    """Python-side subclass of a wrapped C++ type passes through correctly.
+
+    Deriving at all requires Py_TPFLAGS_BASETYPE on wrap<A>, which setUp exercises.
+    """
+
+    def setUp(self):
+        class B(M.A):
+            pass
+        self.B = B
+
+    def test_pass_to_const_ref_function(self):
+        # B instance passed to a function taking A const& and returning int
+        b = self.B(3)
+        self.assertEqual(M.a_friend(b), -3)
+
+    def test_return_a_from_subclass(self):
+        # operator+ takes A const& and returns A by value : the result is built with the
+        # PyTypeObject registered for A, so it is an A, not a B
+        b = self.B(3)
+        result = b + M.A(2)
+        self.assertEqual(result.k, 5)
+        self.assertIs(type(result), M.A)
+
+    def test_non_const_method_on_subclass(self):
+        # non-const method — exercises is_const check on a Python subclass instance
+        b = self.B(3)
+        b.no_prop()  # k *= 10
+        self.assertEqual(b.k, 30)
+
+    def test_pass_to_mutating_ref_function(self):
+        # B instance passed to a function taking A& (non-const) : mutation must
+        # be visible on the original Python subclass instance, not on a copy.
+        b = self.B(3)
+        M.mutate_a(b)
+        self.assertEqual(b.k, 300)
+
+    def test_subclass_with_own_init(self):
+        # super().__init__ must reach tp_init, so that the C++ A is built from x. Python appends
+        # the __dict__ holding label after the wrap<A> holder, at tp_basicsize : too small a value
+        # there would put it on top of the C++ object.
+        class C(M.A):
+            def __init__(self, x, label):
+                super().__init__(x)
+                self.label = label
+        c = C(7, "hello")
+        self.assertEqual(c.label, "hello")
+        self.assertEqual(c.k, 7)
+        self.assertEqual(M.a_friend(c), -7)
+
+
 if __name__ == '__main__':
     unittest.main()
 
