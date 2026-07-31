@@ -82,6 +82,8 @@ namespace c2py {
 
     static_assert(not std::is_reference_v<T>); // The T = U& case is a separate specialization
 
+    // A legacy cpp2py type needs no special case here : it holds a T it owns through _c, at the same
+    // offset as in wrap<T>, and its dealloc deletes it. parent and is_const stay untouched.
     template <typename U> static PyObject *c2py(U &&x) {
       PyTypeObject *p = lookup_pto_in_tables(typeid(T)).pto;
       if (p == nullptr) return nullptr;
@@ -99,7 +101,12 @@ namespace c2py {
       return *_c;
     }
 
-    static bool is_const(PyObject *ob) { return ((wrap<T> *)ob)->is_const; } // specific to this converter
+    // specific to this converter. ob has passed is_convertible, i.e. it is an instance of the
+    // PyTypeObject registered for T, so the lookup below describes its holder.
+    static bool is_const(PyObject *ob) {
+      if (lookup_pto_in_tables(typeid(T)).legacy) return false; // a legacy holder has no is_const field, and owns a mutable T
+      return ((wrap<T> *)ob)->is_const;
+    }
 
     static bool is_convertible(PyObject *ob, bool raise_exception) {
       PyTypeObject *p = lookup_pto_in_tables(typeid(T)).pto;
@@ -128,8 +135,16 @@ namespace c2py {
 
     //
     static PyObject *c2py(T &x, PyObject *guardian) {
-      PyTypeObject *p = lookup_pto_in_tables(typeid(T)).pto;
+      auto [p, legacy] = lookup_pto_in_tables(typeid(T));
       if (p == nullptr) return nullptr;
+      // A legacy cpp2py holder has no parent : it would delete the T we only borrow here, and its
+      // tp_alloc would not even reserve the space for the parent and is_const we must write.
+      if (legacy) [[unlikely]] {
+        auto err = std::string{"Can not wrap a reference to "} + p->tp_name
+           + " : its Python type is registered by a module built with the legacy cpp2py. Rebuild that module with c2py.";
+        PyErr_SetString(PyExc_TypeError, err.c_str());
+        return nullptr;
+      }
       auto *self = (wrap<T> *)p->tp_alloc(p, 0);
       if (self != NULL) {
         self->_c       = &x;
