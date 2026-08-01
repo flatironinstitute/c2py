@@ -10,7 +10,14 @@
 #define C2PY_VERSION_MINOR_CURRENT 1
 #ifdef C2PY_VERSION_MAJOR
 #if (C2PY_VERSION_MAJOR != C2PY_VERSION_MAJOR_CURRENT) or (C2PY_VERSION_MINOR != C2PY_VERSION_MINOR_CURRENT)
-#error "The wrapping code has been generated for a different version of c2py compared to the one included."
+// #error does not expand macros, so the two versions are reported by the #pragma message just
+// before it, as a note or a warning. An unrecognized #pragma is ignored, so a compiler without it
+// only prints less : the #error is what stops the compilation either way.
+#define C2PY_STRINGIFY_(x) #x
+#define C2PY_STRINGIFY(x) C2PY_STRINGIFY_(x)
+#pragma message("this c2py is version " C2PY_STRINGIFY(C2PY_VERSION_MAJOR_CURRENT) "." C2PY_STRINGIFY(C2PY_VERSION_MINOR_CURRENT))
+#pragma message("the wrapping code was generated for version " C2PY_STRINGIFY(C2PY_VERSION_MAJOR) "." C2PY_STRINGIFY(C2PY_VERSION_MINOR))
+#error "The two versions must match exactly : regenerate the wrapping code with clair-c2py."
 #endif
 #endif
 
