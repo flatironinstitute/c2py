@@ -6,8 +6,8 @@
 // which includes c2py.
 // This checks that the versions are the same, i.e. that the generated code is indeed
 // compiled with exactly the c2py version for which it was generated.
-#define C2PY_VERSION_MAJOR_CURRENT 0
-#define C2PY_VERSION_MINOR_CURRENT 1
+#define C2PY_VERSION_MAJOR_CURRENT 1
+#define C2PY_VERSION_MINOR_CURRENT 0
 #ifdef C2PY_VERSION_MAJOR
 #if (C2PY_VERSION_MAJOR != C2PY_VERSION_MAJOR_CURRENT) or (C2PY_VERSION_MINOR != C2PY_VERSION_MINOR_CURRENT)
 // #error does not expand macros, so the two versions are reported by the #pragma message just
