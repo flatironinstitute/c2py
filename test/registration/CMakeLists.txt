@@ -30,6 +30,7 @@ c2py_add_registration_module(c2py_a)
 c2py_add_registration_module(c2py_b)
 
 c2py_add_registration_test(not_registered)
+c2py_add_registration_test(not_registered_overload)
 c2py_add_registration_test(conflict)
 
 # ------ Interoperability with the legacy cpp2py. All of this goes when cpp2py does. ------

@@ -153,7 +153,14 @@ namespace c2py {
 
     static bool is_convertible(PyObject *ob, bool raise_exception) {
       PyTypeObject *p = lookup_pto<T>().pto;
-      if (p == nullptr) return false;
+      if (p == nullptr) {
+        // T is wrapped nowhere, and the lookup has set a RuntimeError. Clear it unless we were asked
+        // to raise : this is a predicate, and the dispatcher calls it with raise_exception false to
+        // try each overload in turn. A leftover error makes the *next* overload decline as well,
+        // since a converter reads PyErr_Occurred to detect its own failure.
+        if (not raise_exception) PyErr_Clear();
+        return false;
+      }
       if (PyObject_TypeCheck(ob, p)) {
         if (((wrap<T> *)ob)->_c != NULL) return true;
         auto err = std::string{"Severe internal error : Python object of "} + p->tp_name + " has a _c NULL pointer !!";

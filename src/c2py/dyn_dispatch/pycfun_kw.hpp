@@ -45,7 +45,16 @@ namespace c2py {
 
     // Can the object x be converted into the type of the argument ?
     // raise_exception : as in converters. Will raise Python exceptions if true.
-    bool is_convertible(PyObject *x, bool raise_exception) const { return (*is_conv)(x, raise_exception); }
+    //
+    // With raise_exception false this is a pure predicate : a converter that declines must leave no
+    // Python error set. The dispatcher tries each overload that way, so an error left behind would be
+    // seen by the next one, and a converter that reads PyErr_Occurred to detect its own failure would
+    // decline too. The assertion checks every converter at the one place they are all called from.
+    bool is_convertible(PyObject *x, bool raise_exception) const {
+      bool r = (*is_conv)(x, raise_exception);
+      C2PY_ASSERT(raise_exception or not PyErr_Occurred());
+      return r;
+    }
   };
 
   // Two makers for argument_t
