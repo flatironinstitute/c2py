@@ -9,6 +9,11 @@ macro(c2py_add_test modulename)
   get_filename_component(test_name ${modulename} NAME_WE)
   get_filename_component(test_dir ${modulename} DIRECTORY)
   Python_add_library(${modulename} MODULE ${modulename}.cpp)
+  # As c2py_add_module does for the real modules : without it the templates the c2py headers
+  # instantiate here keep default visibility and are exported from the module.
+  set_target_properties(${modulename} PROPERTIES
+    CXX_VISIBILITY_PRESET hidden
+    VISIBILITY_INLINES_HIDDEN ON)
   target_link_libraries(${modulename} PRIVATE c2py c2py_warnings)
   add_test(NAME ${modulename}_py COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${test_dir}/${modulename}_test.py WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${test_dir})
   set_property(TEST ${modulename}_py APPEND PROPERTY ENVIRONMENT PYTHONPATH=${h5_BINARY_DIR}/python:${CMAKE_CURRENT_BINARY_DIR}:$ENV{PYTHONPATH} ${SANITIZER_RT_PRELOAD})

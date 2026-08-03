@@ -7,8 +7,12 @@ target_link_libraries(c2py PRIVATE $<BUILD_INTERFACE:c2py_warnings>)
 
 # Configure target and compilation
 target_compile_features(c2py PUBLIC cxx_std_20)
+
+# Hidden visibility for c2py so that NO symbol leak outside the module later.
 set_target_properties(c2py PROPERTIES
   POSITION_INDEPENDENT_CODE ON
+  CXX_VISIBILITY_PRESET hidden
+  VISIBILITY_INLINES_HIDDEN ON
   VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 )
 target_include_directories(c2py PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>)
