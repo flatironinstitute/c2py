@@ -15,17 +15,9 @@
 // and no is_const field, so the converters can not treat it as a wrap<T>.
 namespace c2py {
 
-  // Table : c++ type name -> PyTypeObject *
+  // Table : c++ type name -> PyTypeObject *.
+  // Public only because it is used in used in test/registration/legacy_reg.cpp since is the also layout of the legacy cpp2py table
   using pto_table_t = std::map<std::string, PyTypeObject *>;
-
-  // Get the c2py PyTypeObject table, initialize it if necessary
-  std::shared_ptr<pto_table_t> get_pto_table();
-
-  // Each translation unit holds a shared pointer to the c2py PyTypeObject table, as returned by
-  // get_pto_table when that unit was initialized. In a module this is the table : the unit is
-  // initialized at dlopen, with the interpreter live. It is empty only when static initialization
-  // precedes Py_Initialize, i.e. c2py linked into a program rather than loaded as a module.
-  static std::shared_ptr<pto_table_t> conv_table_sptr = get_pto_table(); //NOLINT
 
   // The result of the lookup of a C++ type in the tables.
   struct pto_lookup_t {
@@ -83,8 +75,8 @@ namespace c2py {
   //
   // noexcept : this is called from PyInit, which is extern "C" and which CPython calls from C, so an
   // exception crossing that frame terminates the process instead of failing the import. The table
-  // plumbing does throw, hence the function-try-block. Its handlers must not throw either, which is
-  // why they report through PyErr_Format rather than build a std::string.
+  // plumbing does throw (cf get_table_from_main), hence the function-try-block. Its handlers must not
+  // throw either, which is why they report through PyErr_Format rather than build a std::string.
   template <typename T> [[nodiscard]] bool add_type_object_to_main(const char *pyname, PyObject *_main_) noexcept try {
     // tp_doc<T> is a global const std::string with static storage duration; .data() is valid
     // for the lifetime of the shared library (Python finalization precedes dlclose).
@@ -110,10 +102,10 @@ namespace c2py {
     register_pto_in_legacy_table(mangled_name, &c2py::wrap_pytype<T>);
     return true;
   } catch (std::exception const &e) {
-    PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : %s", pyname, e.what());
+    PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : %s", pyname, e.what()); // NOLINT
     return false;
   } catch (...) {
-    PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : unknown C++ exception", pyname);
+    PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : unknown C++ exception", pyname); // NOLINT
     return false;
   }
 
