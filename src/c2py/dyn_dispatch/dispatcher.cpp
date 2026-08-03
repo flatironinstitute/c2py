@@ -1,7 +1,6 @@
 #include "dispatcher.hpp"
 #include "../util/str.hpp"
 #include <cstddef>
-#include <regex>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -48,9 +47,27 @@ namespace c2py {
   template <typename Eraser, bool Constructors>
   [[nodiscard]] std::string dispatcher_t<Eraser, Constructors>::doc(const char *doc_string, std::vector<std::vector<std::string>> const &param_types,
                                                                     std::vector<std::string> const &return_types) const {
+    // Re-indent a signature : a newline followed by whitespace becomes a newline and 8 spaces,
+    // or 5 spaces when an arrow follows. A newline with no whitespace after it is left alone.
     auto format_sig = [](std::string const &sig) {
-      auto tmp_res = std::regex_replace(sig, std::regex(R"(\n\s+)"), "\n        ");
-      return std::regex_replace(tmp_res, std::regex(R"(\n\s+->)"), "\n     ->");
+      auto is_space = [](char c) { return c == ' ' or c == '\t' or c == '\n' or c == '\r' or c == '\f' or c == '\v'; };
+      std::string res;
+      res.reserve(sig.size() + sig.size() / 4);
+      for (std::size_t i = 0; i < sig.size(); ++i) {
+        if (sig[i] != '\n') {
+          res += sig[i];
+          continue;
+        }
+        std::size_t j = i + 1; // end of the whitespace run following the newline
+        while (j < sig.size() and is_space(sig[j])) ++j;
+        if (j == i + 1) {
+          res += '\n';
+          continue;
+        }
+        res += (sig.compare(j, 2, "->") == 0 ? "\n     " : "\n        ");
+        i = j - 1;
+      }
+      return res;
     };
     std::stringstream fs;
     fs << "Dispatched C++ " << (Constructors ? "constructor(s)" : "function(s)") << ".\n\n::\n\n";
