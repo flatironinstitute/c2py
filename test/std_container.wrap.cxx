@@ -11,8 +11,8 @@
 #pragma GCC diagnostic ignored "-Wcpp"
 #endif
 
-#define C2PY_VERSION_MAJOR 0
-#define C2PY_VERSION_MINOR 1
+#define C2PY_VERSION_MAJOR 1
+#define C2PY_VERSION_MINOR 0
 
 #include <c2py/c2py.hpp>
 
