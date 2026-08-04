@@ -24,30 +24,38 @@ namespace c2py {
       return out.str();
     }
 
-    // In python, just a string
-    static PyObject *c2py(Enum x) { return PyUnicode_FromString(enum_to_string<Enum>.find(x)->second.c_str()); }
+    // In python, just a string.
+    // x is not necessarily an enumerator : any value of the underlying type is a value of the enum
+    // (e.g. Flags::A | Flags::B), and such a value has no name to convert to.
+    static PyObject *c2py(Enum x) {
+      auto it = enum_to_string<Enum>.find(x);
+      if (it == enum_to_string<Enum>.end()) {
+        PyErr_SetString(PyExc_ValueError, ("Enum " + cpp_qname<Enum>() + " : this value is not an enumerator").c_str());
+        return nullptr;
+      }
+      return PyUnicode_FromString(it->second.c_str());
+    }
 
-    // string -> value
+    // string -> value. is_convertible has already checked the find.
     static Enum py2c(PyObject *ob) {
       static auto str_to_enum = reverse_std_map(enum_to_string<Enum>);
       std::string s           = PyUnicode_AsUTF8(ob);
       auto it                 = str_to_enum.find(s);
+      if (it == str_to_enum.end()) throw std::runtime_error{"Enum " + cpp_qname<Enum>() + " : unknown string \"" + s + "\""};
       return it->second;
     }
 
     // convertibility : must be a string
-    // FIXME : the find must occur in py2c
-    // and throw a C++ exception ...
     static bool is_convertible(PyObject *ob, bool raise_exception) {
       static auto str_to_enum = reverse_std_map(enum_to_string<Enum>);
       if (!PyUnicode_Check(ob)) {
-        if (raise_exception) PyErr_SetString(PyExc_ValueError, "Convertion of C++ enum : the object is not a string");
+        if (raise_exception) PyErr_SetString(PyExc_ValueError, "Conversion of a C++ enum : the object is not a string");
         return false;
       }
       std::string s = PyUnicode_AsUTF8(ob);
       if (auto it = str_to_enum.find(s); it != str_to_enum.end()) return true;
       if (raise_exception) {
-        auto err = "Convertion of C++ enum : \nThe string \"" + s + "\" is not in "
+        auto err = "Conversion of C++ enum : \nThe string \"" + s + "\" is not in "
            + join(
                       enum_to_string<Enum>, [](auto &&x) { return x.second; }, ',');
         PyErr_SetString(PyExc_ValueError, err.c_str());
