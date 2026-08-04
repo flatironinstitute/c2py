@@ -53,11 +53,9 @@ namespace c2py {
   // entry is already there. Returns the entry now in the table, i.e. pto unless another module got
   // there first.
   //
-  // Whether two modules wrapping the same T end up sharing one wrap_pytype<T> is up to the loader.
-  // wrap_pytype<T> has internal linkage, one copy per module, but the template instantiations that
-  // use it are weak symbols : dyld coalesces those across images, so on macOS the second module runs
-  // the first module's add_type_object_to_main<T>, hence its wrap_pytype<T>, while on Linux
-  // RTLD_LOCAL keeps each module on its own copy and the two Python types stay distinct.
+  // Two modules wrapping the same T each register their own wrap_pytype<T> : it has internal linkage,
+  // and so does the add_type_object_to_main<T> that reads it, so no image shares either. The two
+  // Python types are distinct, on every platform.
   //
   // The table is where we make this consistent : keep the first registration rather than let the last
   // import win, and refuse a second, *different* PyTypeObject for a type already registered (cf
@@ -69,44 +67,21 @@ namespace c2py {
   // which is at the same offset in wrap<T>.
   void register_pto_in_legacy_table(const char *mangled_name, PyTypeObject *pto);
 
-  // Expose the PyTypeObject of T in the module namespace under pyname, and register it.
-  // Returns false, with a Python exception set, if the module can not be initialized : the generated
-  // init then returns NULL, i.e. the import fails with that exception.
+  // Expose pto in the module namespace under pyname, and register it. Returns false, with a Python
+  // exception set, if the module can not be initialized : the generated init then returns NULL, i.e.
+  // the import fails with that exception. Nothing here depends on the wrapped C++ type, which enters
+  // only through pto, its mangled name and its doc.
+  [[nodiscard]] bool add_type_object_to_main_impl(const char *pyname, PyObject *_main_, PyTypeObject *pto, const char *mangled_name,
+                                                  const char *doc) noexcept;
+
+  // Same, for the type T wrapped by this module.
   //
-  // noexcept : this is called from PyInit, which is extern "C" and which CPython calls from C, so an
-  // exception crossing that frame terminates the process instead of failing the import. The table
-  // plumbing does throw (cf get_table_from_main), hence the function-try-block. Its handlers must not
-  // throw either, which is why they report through PyErr_Format rather than build a std::string.
-  template <typename T> [[nodiscard]] bool add_type_object_to_main(const char *pyname, PyObject *_main_) noexcept try {
-    // tp_doc<T> is a global const std::string with static storage duration; .data() is valid
-    // for the lifetime of the shared library (Python finalization precedes dlclose).
-    c2py::wrap_pytype<T>.tp_doc = c2py::tp_doc<T>.data();
-    Py_INCREF(&c2py::wrap_pytype<T>);
-    // PyModule_AddObject steals the reference on success; release the INCREF on failure.
-    if (PyModule_AddObject(_main_, pyname, (PyObject *)&c2py::wrap_pytype<T>) < 0) {
-      Py_DECREF(&c2py::wrap_pytype<T>);
-      return false;
-    }
-    auto const *mangled_name = std::type_index(typeid(T)).name();
-    // Re-importing a module re-runs its init with the same wrap_pytype<T>, which is fine. A
-    // *different* PyTypeObject means two c2py modules wrap this C++ type : objects of one would not
-    // convert in the other, so refuse rather than let it be discovered later.
-    auto *registered = register_pto_in_table(mangled_name, &c2py::wrap_pytype<T>);
-    if (registered != &c2py::wrap_pytype<T>) {
-      auto err = std::string{"c2py: the C++ type wrapped here as '"} + pyname + "' is already registered as '" + registered->tp_name
-         + "' by another module. The two Python types are distinct and objects of one will not convert in the other. "
-           "Wrap this C++ type in a single module and import it from there.";
-      PyErr_SetString(PyExc_RuntimeError, err.c_str());
-      return false;
-    }
-    register_pto_in_legacy_table(mangled_name, &c2py::wrap_pytype<T>);
-    return true;
-  } catch (std::exception const &e) {
-    PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : %s", pyname, e.what()); // NOLINT
-    return false;
-  } catch (...) {
-    PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : unknown C++ exception", pyname); // NOLINT
-    return false;
+  // static is important here, like the wrap_pytype<T> it reads : both are per module, so the type registered here is
+  // this module's, inlined or not.
+  // tp_doc<T> is a global const std::string with static storage duration; .data() is valid for the
+  // lifetime of the shared library (Python finalization precedes dlclose).
+  template <typename T> [[nodiscard]] static bool add_type_object_to_main(const char *pyname, PyObject *_main_) noexcept {
+    return add_type_object_to_main_impl(pyname, _main_, &c2py::wrap_pytype<T>, typeid(T).name(), c2py::tp_doc<T>.data());
   }
 
   //---------------------  wrapped type -----------------------------

@@ -112,6 +112,40 @@ namespace c2py {
   }
 
   // ------------------------------------------------------------
+  // noexcept : this is called from PyInit, which is extern "C" and which CPython calls from C, so an
+  // exception crossing that frame terminates the process instead of failing the import. The table
+  // plumbing does throw (cf get_table_from_main), hence the function-try-block. Its handlers must not
+  // throw either, which is why they report through PyErr_Format rather than build a std::string.
+  bool add_type_object_to_main_impl(const char *pyname, PyObject *_main_, PyTypeObject *pto, const char *mangled_name, const char *doc) noexcept try {
+    pto->tp_doc = doc;
+    Py_INCREF(pto);
+    // PyModule_AddObject steals the reference on success; release the INCREF on failure.
+    if (PyModule_AddObject(_main_, pyname, (PyObject *)pto) < 0) {
+      Py_DECREF(pto);
+      return false;
+    }
+    // Re-importing a module re-runs its init with the same pto, which is fine. A *different*
+    // PyTypeObject means two c2py modules wrap this C++ type : objects of one would not convert in
+    // the other, so refuse rather than let it be discovered later.
+    auto *registered = register_pto_in_table(mangled_name, pto);
+    if (registered != pto) {
+      auto err = std::string{"c2py: the C++ type wrapped here as '"} + pyname + "' is already registered as '" + registered->tp_name
+         + "' by another module. The two Python types are distinct and objects of one will not convert in the other. "
+           "Wrap this C++ type in a single module and import it from there.";
+      PyErr_SetString(PyExc_RuntimeError, err.c_str());
+      return false;
+    }
+    register_pto_in_legacy_table(mangled_name, pto);
+    return true;
+  } catch (std::exception const &e) {
+    PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : %s", pyname, e.what()); // NOLINT
+    return false;
+  } catch (...) {
+    PyErr_Format(PyExc_ImportError, "c2py: can not register '%s' : unknown C++ exception", pyname); // NOLINT
+    return false;
+  }
+
+  // ------------------------------------------------------------
   pto_lookup_t lookup_pto_in_tables(std::type_index const &ind) {
     // The c2py table first : a type wrapped by a c2py module is registered in both tables, so a hit
     // here means the wrap<T> holder, whatever the legacy table holds for that type.
