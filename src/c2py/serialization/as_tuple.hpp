@@ -6,7 +6,6 @@
 
 using namespace std::string_literals;
 static constexpr char *module_name(); // forward
-using str_t = std::string;
 
 namespace c2py {
 
