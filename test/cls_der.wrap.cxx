@@ -15,6 +15,7 @@
 #define C2PY_VERSION_MINOR 0
 
 #include <c2py/c2py.hpp>
+#include <c2py/version_check.hpp>
 
 using c2py::operator""_a;
 
