@@ -22,50 +22,50 @@ using c2py::operator""_a;
 
 // ==================== module classes =====================
 
-// --------- class _c2py_cls_0 -----------
-using _c2py_cls_0                                            = N1::no_defaults;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "synth_init.NoDefaults";
+// --------- class _c2py_cls_40e5fc76 -----------
+using _c2py_cls_40e5fc76                                            = N1::no_defaults;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_40e5fc76>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_40e5fc76> = "synth_init.NoDefaults";
 
-static int synth_constructor_0(PyObject *self, PyObject *args, PyObject *kwargs) {
+static int synth_constructor_7e508fc8(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::no_defaults.\nNo positional arguments allowed. Use keywords arguments"));
     return -1;
   }
   c2py::pydict_extractor de{kwargs};
   try {
-    ((c2py::wrap<_c2py_cls_0> *)self)->_c = new _c2py_cls_0{};
+    ((c2py::wrap<_c2py_cls_40e5fc76> *)self)->_c = new _c2py_cls_40e5fc76{};
   } catch (std::exception const &e) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::no_defaults from a Python dict.\n   "s + e.what()).c_str());
     return -1;
   }
-  auto &self_c = *(((c2py::wrap<_c2py_cls_0> *)self)->_c);
+  auto &self_c = *(((c2py::wrap<_c2py_cls_40e5fc76> *)self)->_c);
   de("a", self_c.a, false);
   return de.check();
 }
 
-template <> constexpr initproc c2py::tp_init<_c2py_cls_0> = synth_constructor_0;
+template <> constexpr initproc c2py::tp_init<_c2py_cls_40e5fc76> = synth_constructor_7e508fc8;
 
 template <>
-const std::string c2py::tp_ctor_doc<_c2py_cls_0> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+const std::string c2py::tp_ctor_doc<_c2py_cls_40e5fc76> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
 
 Parameters
 ----------
 a : {par_0}
 
 )DOC",
-                                                                      "par", {c2py::python_typename<int>()});
+                                                                             "par", {c2py::python_typename<int>()});
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_40e5fc76>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_0 = R"DOC()DOC";
-static PyObject *prop_get_dict_0(PyObject *self, void *) {
-  auto &self_c = *(((c2py::wrap<_c2py_cls_0> *)self)->_c);
+constexpr auto _c2py_doc_member_240363c1 = R"DOC()DOC";
+static PyObject *prop_get_dict_7e508fc8(PyObject *self, void *) {
+  auto &self_c = *(((c2py::wrap<_c2py_cls_40e5fc76> *)self)->_c);
   c2py::pydict dic;
   dic["a"] = self_c.a;
   return dic.new_ref();
@@ -74,55 +74,56 @@ static PyObject *prop_get_dict_0(PyObject *self, void *) {
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_0>[] = {c2py::getsetdef_from_member<&_c2py_cls_0::a, _c2py_cls_0>("a", _c2py_doc_member_0),
-                                                        {"__dict__", (getter)prop_get_dict_0, nullptr, "", nullptr},
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_40e5fc76>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_40e5fc76::a, _c2py_cls_40e5fc76>("a", _c2py_doc_member_240363c1),
+   {"__dict__", (getter)prop_get_dict_7e508fc8, nullptr, "", nullptr},
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
-// --------- class _c2py_cls_1 -----------
-using _c2py_cls_1                                            = N1::with_defaults;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_1>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_1> = "synth_init.WithDefaults";
+template <> const std::string c2py::tp_doc<_c2py_cls_40e5fc76> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_40e5fc76>;
+// --------- class _c2py_cls_23873e83 -----------
+using _c2py_cls_23873e83                                            = N1::with_defaults;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_23873e83>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_23873e83> = "synth_init.WithDefaults";
 
-static int synth_constructor_1(PyObject *self, PyObject *args, PyObject *kwargs) {
+static int synth_constructor_0ff67923(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::with_defaults.\nNo positional arguments allowed. Use keywords arguments"));
     return -1;
   }
   c2py::pydict_extractor de{kwargs};
   try {
-    ((c2py::wrap<_c2py_cls_1> *)self)->_c = new _c2py_cls_1{};
+    ((c2py::wrap<_c2py_cls_23873e83> *)self)->_c = new _c2py_cls_23873e83{};
   } catch (std::exception const &e) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::with_defaults from a Python dict.\n   "s + e.what()).c_str());
     return -1;
   }
-  auto &self_c = *(((c2py::wrap<_c2py_cls_1> *)self)->_c);
+  auto &self_c = *(((c2py::wrap<_c2py_cls_23873e83> *)self)->_c);
   de("a", self_c.a, true);
   return de.check();
 }
 
-template <> constexpr initproc c2py::tp_init<_c2py_cls_1> = synth_constructor_1;
+template <> constexpr initproc c2py::tp_init<_c2py_cls_23873e83> = synth_constructor_0ff67923;
 
 template <>
-const std::string c2py::tp_ctor_doc<_c2py_cls_1> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+const std::string c2py::tp_ctor_doc<_c2py_cls_23873e83> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
 
 Parameters
 ----------
 a : {par_0}, default=5
 
 )DOC",
-                                                                      "par", {c2py::python_typename<int>()});
+                                                                             "par", {c2py::python_typename<int>()});
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_1>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_23873e83>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_1 = R"DOC()DOC";
-static PyObject *prop_get_dict_1(PyObject *self, void *) {
-  auto &self_c = *(((c2py::wrap<_c2py_cls_1> *)self)->_c);
+constexpr auto _c2py_doc_member_e42194f6 = R"DOC()DOC";
+static PyObject *prop_get_dict_0ff67923(PyObject *self, void *) {
+  auto &self_c = *(((c2py::wrap<_c2py_cls_23873e83> *)self)->_c);
   c2py::pydict dic;
   dic["a"] = self_c.a;
   return dic.new_ref();
@@ -131,54 +132,56 @@ static PyObject *prop_get_dict_1(PyObject *self, void *) {
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_1>[] = {c2py::getsetdef_from_member<&_c2py_cls_1::a, _c2py_cls_1>("a", _c2py_doc_member_1),
-                                                        {"__dict__", (getter)prop_get_dict_1, nullptr, "", nullptr},
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_23873e83>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_23873e83::a, _c2py_cls_23873e83>("a", _c2py_doc_member_e42194f6),
+   {"__dict__", (getter)prop_get_dict_0ff67923, nullptr, "", nullptr},
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_1> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_1>;
-// --------- class _c2py_cls_2 -----------
-using _c2py_cls_2                                            = N1::A_ndc;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_2>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_2> = "synth_init.ANdc";
-static const auto _c2py_init_0                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_2, int>("i")};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_2>    = c2py::pyfkw_constructor<_c2py_init_0>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_2> = _c2py_init_0.doc(R"DOC()DOC");
+template <> const std::string c2py::tp_doc<_c2py_cls_23873e83> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_23873e83>;
+// --------- class _c2py_cls_f0d40733 -----------
+using _c2py_cls_f0d40733                                            = N1::A_ndc;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_f0d40733>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_f0d40733> = "synth_init.ANdc";
+static const auto _c2py_init_edefc3b5                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_f0d40733, int>("i")};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_f0d40733>    = c2py::pyfkw_constructor<_c2py_init_edefc3b5>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_f0d40733> = _c2py_init_edefc3b5.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_2>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_f0d40733>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_2 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_65ded782 = R"DOC()DOC";
 
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_2>[] = {c2py::getsetdef_from_member<&_c2py_cls_2::u, _c2py_cls_2>("u", _c2py_doc_member_2),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_f0d40733>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_f0d40733::u, _c2py_cls_f0d40733>("u", _c2py_doc_member_65ded782),
 
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_2> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_2>;
-// --------- class _c2py_cls_3 -----------
-using _c2py_cls_3                                            = N1::params;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_3>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_3> = "synth_init.Params";
+template <> const std::string c2py::tp_doc<_c2py_cls_f0d40733> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_f0d40733>;
+// --------- class _c2py_cls_08b1d68a -----------
+using _c2py_cls_08b1d68a                                            = N1::params;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_08b1d68a>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_08b1d68a> = "synth_init.Params";
 
-static int synth_constructor_2(PyObject *self, PyObject *args, PyObject *kwargs) {
+static int synth_constructor_5d69d204(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::params.\nNo positional arguments allowed. Use keywords arguments"));
     return -1;
   }
   c2py::pydict_extractor de{kwargs};
   try {
-    ((c2py::wrap<_c2py_cls_3> *)self)->_c = new _c2py_cls_3{};
+    ((c2py::wrap<_c2py_cls_08b1d68a> *)self)->_c = new _c2py_cls_08b1d68a{};
   } catch (std::exception const &e) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::params from a Python dict.\n   "s + e.what()).c_str());
     return -1;
   }
-  auto &self_c = *(((c2py::wrap<_c2py_cls_3> *)self)->_c);
+  auto &self_c = *(((c2py::wrap<_c2py_cls_08b1d68a> *)self)->_c);
   de("i", self_c.i, false);
   de("x", self_c.x, true);
   de("v", self_c.v, false);
@@ -186,10 +189,11 @@ static int synth_constructor_2(PyObject *self, PyObject *args, PyObject *kwargs)
   return de.check();
 }
 
-template <> constexpr initproc c2py::tp_init<_c2py_cls_3> = synth_constructor_2;
+template <> constexpr initproc c2py::tp_init<_c2py_cls_08b1d68a> = synth_constructor_5d69d204;
 
 template <>
-const std::string c2py::tp_ctor_doc<_c2py_cls_3> = c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
+const std::string c2py::tp_ctor_doc<_c2py_cls_08b1d68a> =
+   c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
 
 Parameters
 ----------
@@ -202,23 +206,23 @@ x : {par_2}, default=10
 w : {par_3}, default={1, 2, 3}
 
 )DOC",
-                                                                      "par",
-                                                                      {c2py::python_typename<int>(), c2py::python_typename<std::vector<int>>(),
-                                                                       c2py::python_typename<double>(), c2py::python_typename<std::vector<int>>()});
+                      "par",
+                      {c2py::python_typename<int>(), c2py::python_typename<std::vector<int>>(), c2py::python_typename<double>(),
+                       c2py::python_typename<std::vector<int>>()});
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_3>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_08b1d68a>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_3 = R"DOC(An int)DOC";
-constexpr auto _c2py_doc_member_4 = R"DOC(A double)DOC";
-constexpr auto _c2py_doc_member_5 = R"DOC(A vector of int)DOC";
-constexpr auto _c2py_doc_member_6 = R"DOC()DOC";
-static PyObject *prop_get_dict_2(PyObject *self, void *) {
-  auto &self_c = *(((c2py::wrap<_c2py_cls_3> *)self)->_c);
+constexpr auto _c2py_doc_member_9c97f055 = R"DOC(An int)DOC";
+constexpr auto _c2py_doc_member_8b97d592 = R"DOC(A double)DOC";
+constexpr auto _c2py_doc_member_8d97d8b8 = R"DOC(A vector of int)DOC";
+constexpr auto _c2py_doc_member_8e97da4b = R"DOC()DOC";
+static PyObject *prop_get_dict_5d69d204(PyObject *self, void *) {
+  auto &self_c = *(((c2py::wrap<_c2py_cls_08b1d68a> *)self)->_c);
   c2py::pydict dic;
   dic["i"] = self_c.i;
   dic["x"] = self_c.x;
@@ -230,32 +234,33 @@ static PyObject *prop_get_dict_2(PyObject *self, void *) {
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_3>[] = {c2py::getsetdef_from_member<&_c2py_cls_3::i, _c2py_cls_3>("i", _c2py_doc_member_3),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_3::x, _c2py_cls_3>("x", _c2py_doc_member_4),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_3::v, _c2py_cls_3>("v", _c2py_doc_member_5),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_3::w, _c2py_cls_3>("w", _c2py_doc_member_6),
-                                                        {"__dict__", (getter)prop_get_dict_2, nullptr, "", nullptr},
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_08b1d68a>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_08b1d68a::i, _c2py_cls_08b1d68a>("i", _c2py_doc_member_9c97f055),
+   c2py::getsetdef_from_member<&_c2py_cls_08b1d68a::x, _c2py_cls_08b1d68a>("x", _c2py_doc_member_8b97d592),
+   c2py::getsetdef_from_member<&_c2py_cls_08b1d68a::v, _c2py_cls_08b1d68a>("v", _c2py_doc_member_8d97d8b8),
+   c2py::getsetdef_from_member<&_c2py_cls_08b1d68a::w, _c2py_cls_08b1d68a>("w", _c2py_doc_member_8e97da4b),
+   {"__dict__", (getter)prop_get_dict_5d69d204, nullptr, "", nullptr},
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_3> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_3>;
-// --------- class _c2py_cls_4 -----------
-using _c2py_cls_4                                            = N1::params_ndc;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_4>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_4> = "synth_init.ParamsNdc";
+template <> const std::string c2py::tp_doc<_c2py_cls_08b1d68a> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_08b1d68a>;
+// --------- class _c2py_cls_fef1ade2 -----------
+using _c2py_cls_fef1ade2                                            = N1::params_ndc;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_fef1ade2>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_fef1ade2> = "synth_init.ParamsNdc";
 
-static int synth_constructor_3(PyObject *self, PyObject *args, PyObject *kwargs) {
+static int synth_constructor_9416f20e(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::params_ndc.\nNo positional arguments allowed. Use keywords arguments"));
     return -1;
   }
   c2py::pydict_extractor de{kwargs};
   try {
-    ((c2py::wrap<_c2py_cls_4> *)self)->_c = new _c2py_cls_4{.ndc1 = de.get<N1::A_ndc>("ndc1")};
+    ((c2py::wrap<_c2py_cls_fef1ade2> *)self)->_c = new _c2py_cls_fef1ade2{.ndc1 = de.get<N1::A_ndc>("ndc1")};
   } catch (std::exception const &e) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::params_ndc from a Python dict.\n   "s + e.what()).c_str());
     return -1;
   }
-  auto &self_c = *(((c2py::wrap<_c2py_cls_4> *)self)->_c);
+  auto &self_c = *(((c2py::wrap<_c2py_cls_fef1ade2> *)self)->_c);
   de("i", self_c.i, false);
   de("x", self_c.x, true);
   de("ndc2", self_c.ndc2, true);
@@ -264,10 +269,10 @@ static int synth_constructor_3(PyObject *self, PyObject *args, PyObject *kwargs)
   return de.check();
 }
 
-template <> constexpr initproc c2py::tp_init<_c2py_cls_4> = synth_constructor_3;
+template <> constexpr initproc c2py::tp_init<_c2py_cls_fef1ade2> = synth_constructor_9416f20e;
 
 template <>
-const std::string c2py::tp_ctor_doc<_c2py_cls_4> =
+const std::string c2py::tp_ctor_doc<_c2py_cls_fef1ade2> =
    c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
 
 Parameters
@@ -290,21 +295,21 @@ w : {par_5}, default={1, 2, 3}
                        c2py::python_typename<double>(), c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>()});
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_4>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_fef1ade2>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_7  = R"DOC(An int)DOC";
-constexpr auto _c2py_doc_member_8  = R"DOC(A double
+constexpr auto _c2py_doc_member_92d44c0d = R"DOC(An int)DOC";
+constexpr auto _c2py_doc_member_81d4314a = R"DOC(A double
 with a long doc)DOC";
-constexpr auto _c2py_doc_member_9  = R"DOC(A non default constructible object)DOC";
-constexpr auto _c2py_doc_member_10 = R"DOC(A non default constructible object with a default init)DOC";
-constexpr auto _c2py_doc_member_11 = R"DOC(A vector of int)DOC";
-constexpr auto _c2py_doc_member_12 = R"DOC()DOC";
-static PyObject *prop_get_dict_3(PyObject *self, void *) {
-  auto &self_c = *(((c2py::wrap<_c2py_cls_4> *)self)->_c);
+constexpr auto _c2py_doc_member_f1eaea7c = R"DOC(A non default constructible object)DOC";
+constexpr auto _c2py_doc_member_f4eaef35 = R"DOC(A non default constructible object with a default init)DOC";
+constexpr auto _c2py_doc_member_73d41b40 = R"DOC(A vector of int)DOC";
+constexpr auto _c2py_doc_member_74d41cd3 = R"DOC()DOC";
+static PyObject *prop_get_dict_9416f20e(PyObject *self, void *) {
+  auto &self_c = *(((c2py::wrap<_c2py_cls_fef1ade2> *)self)->_c);
   c2py::pydict dic;
   dic["i"]    = self_c.i;
   dic["x"]    = self_c.x;
@@ -318,34 +323,35 @@ static PyObject *prop_get_dict_3(PyObject *self, void *) {
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_4>[] = {c2py::getsetdef_from_member<&_c2py_cls_4::i, _c2py_cls_4>("i", _c2py_doc_member_7),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_4::x, _c2py_cls_4>("x", _c2py_doc_member_8),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_4::ndc1, _c2py_cls_4>("ndc1", _c2py_doc_member_9),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_4::ndc2, _c2py_cls_4>("ndc2", _c2py_doc_member_10),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_4::v, _c2py_cls_4>("v", _c2py_doc_member_11),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_4::w, _c2py_cls_4>("w", _c2py_doc_member_12),
-                                                        {"__dict__", (getter)prop_get_dict_3, nullptr, "", nullptr},
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_fef1ade2>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_fef1ade2::i, _c2py_cls_fef1ade2>("i", _c2py_doc_member_92d44c0d),
+   c2py::getsetdef_from_member<&_c2py_cls_fef1ade2::x, _c2py_cls_fef1ade2>("x", _c2py_doc_member_81d4314a),
+   c2py::getsetdef_from_member<&_c2py_cls_fef1ade2::ndc1, _c2py_cls_fef1ade2>("ndc1", _c2py_doc_member_f1eaea7c),
+   c2py::getsetdef_from_member<&_c2py_cls_fef1ade2::ndc2, _c2py_cls_fef1ade2>("ndc2", _c2py_doc_member_f4eaef35),
+   c2py::getsetdef_from_member<&_c2py_cls_fef1ade2::v, _c2py_cls_fef1ade2>("v", _c2py_doc_member_73d41b40),
+   c2py::getsetdef_from_member<&_c2py_cls_fef1ade2::w, _c2py_cls_fef1ade2>("w", _c2py_doc_member_74d41cd3),
+   {"__dict__", (getter)prop_get_dict_9416f20e, nullptr, "", nullptr},
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_4> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_4>;
-// --------- class _c2py_cls_5 -----------
-using _c2py_cls_5                                            = N1::tpl_params_ndc<int>;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_5>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_5> = "synth_init.TplParamNdcInt";
+template <> const std::string c2py::tp_doc<_c2py_cls_fef1ade2> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_fef1ade2>;
+// --------- class _c2py_cls_78cab850 -----------
+using _c2py_cls_78cab850                                            = N1::tpl_params_ndc<int>;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_78cab850>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_78cab850> = "synth_init.TplParamNdcInt";
 
-static int synth_constructor_4(PyObject *self, PyObject *args, PyObject *kwargs) {
+static int synth_constructor_89de09c0(PyObject *self, PyObject *args, PyObject *kwargs) {
   if (args and PyTuple_Check(args) and (PyTuple_Size(args) > 0)) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::tpl_params_ndc<int>.\nNo positional arguments allowed. Use keywords arguments"));
     return -1;
   }
   c2py::pydict_extractor de{kwargs};
   try {
-    ((c2py::wrap<_c2py_cls_5> *)self)->_c = new _c2py_cls_5{.ndc1 = de.get<N1::A_ndc>("ndc1")};
+    ((c2py::wrap<_c2py_cls_78cab850> *)self)->_c = new _c2py_cls_78cab850{.ndc1 = de.get<N1::A_ndc>("ndc1")};
   } catch (std::exception const &e) {
     PyErr_SetString(PyExc_RuntimeError, ("Error in constructing N1::tpl_params_ndc<int> from a Python dict.\n   "s + e.what()).c_str());
     return -1;
   }
-  auto &self_c = *(((c2py::wrap<_c2py_cls_5> *)self)->_c);
+  auto &self_c = *(((c2py::wrap<_c2py_cls_78cab850> *)self)->_c);
   de("i", self_c.i, false);
   de("x", self_c.x, true);
   de("ndc2", self_c.ndc2, true);
@@ -354,10 +360,10 @@ static int synth_constructor_4(PyObject *self, PyObject *args, PyObject *kwargs)
   return de.check();
 }
 
-template <> constexpr initproc c2py::tp_init<_c2py_cls_5> = synth_constructor_4;
+template <> constexpr initproc c2py::tp_init<_c2py_cls_78cab850> = synth_constructor_89de09c0;
 
 template <>
-const std::string c2py::tp_ctor_doc<_c2py_cls_5> =
+const std::string c2py::tp_ctor_doc<_c2py_cls_78cab850> =
    c2py::replace_tags(R"DOC(Synthesized constructor with the following keyword arguments:
 
 Parameters
@@ -380,21 +386,21 @@ w : {par_5}
                        c2py::python_typename<N1::A_ndc>(), c2py::python_typename<std::vector<int>>(), c2py::python_typename<std::vector<int>>()});
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_5>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_78cab850>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_13 = R"DOC(An int)DOC";
-constexpr auto _c2py_doc_member_14 = R"DOC(A double
+constexpr auto _c2py_doc_member_faa0615f = R"DOC(An int)DOC";
+constexpr auto _c2py_doc_member_09a078fc = R"DOC(A double
 with a long doc)DOC";
-constexpr auto _c2py_doc_member_15 = R"DOC(A non default constructible object)DOC";
-constexpr auto _c2py_doc_member_16 = R"DOC(A non default constructible object with a default init)DOC";
-constexpr auto _c2py_doc_member_17 = R"DOC(A vector of int)DOC";
-constexpr auto _c2py_doc_member_18 = R"DOC()DOC";
-static PyObject *prop_get_dict_4(PyObject *self, void *) {
-  auto &self_c = *(((c2py::wrap<_c2py_cls_5> *)self)->_c);
+constexpr auto _c2py_doc_member_a73288aa = R"DOC(A non default constructible object)DOC";
+constexpr auto _c2py_doc_member_a6328717 = R"DOC(A non default constructible object with a default init)DOC";
+constexpr auto _c2py_doc_member_0fa0826e = R"DOC(A vector of int)DOC";
+constexpr auto _c2py_doc_member_10a08401 = R"DOC()DOC";
+static PyObject *prop_get_dict_89de09c0(PyObject *self, void *) {
+  auto &self_c = *(((c2py::wrap<_c2py_cls_78cab850> *)self)->_c);
   c2py::pydict dic;
   dic["i"]    = self_c.i;
   dic["x"]    = self_c.x;
@@ -408,24 +414,27 @@ static PyObject *prop_get_dict_4(PyObject *self, void *) {
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_5>[] = {c2py::getsetdef_from_member<&_c2py_cls_5::i, _c2py_cls_5>("i", _c2py_doc_member_13),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_5::x, _c2py_cls_5>("x", _c2py_doc_member_14),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_5::ndc1, _c2py_cls_5>("ndc1", _c2py_doc_member_15),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_5::ndc2, _c2py_cls_5>("ndc2", _c2py_doc_member_16),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_5::v, _c2py_cls_5>("v", _c2py_doc_member_17),
-                                                        c2py::getsetdef_from_member<&_c2py_cls_5::w, _c2py_cls_5>("w", _c2py_doc_member_18),
-                                                        {"__dict__", (getter)prop_get_dict_4, nullptr, "", nullptr},
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_78cab850>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_78cab850::i, _c2py_cls_78cab850>("i", _c2py_doc_member_faa0615f),
+   c2py::getsetdef_from_member<&_c2py_cls_78cab850::x, _c2py_cls_78cab850>("x", _c2py_doc_member_09a078fc),
+   c2py::getsetdef_from_member<&_c2py_cls_78cab850::ndc1, _c2py_cls_78cab850>("ndc1", _c2py_doc_member_a73288aa),
+   c2py::getsetdef_from_member<&_c2py_cls_78cab850::ndc2, _c2py_cls_78cab850>("ndc2", _c2py_doc_member_a6328717),
+   c2py::getsetdef_from_member<&_c2py_cls_78cab850::v, _c2py_cls_78cab850>("v", _c2py_doc_member_0fa0826e),
+   c2py::getsetdef_from_member<&_c2py_cls_78cab850::w, _c2py_cls_78cab850>("w", _c2py_doc_member_10a08401),
+   {"__dict__", (getter)prop_get_dict_89de09c0, nullptr, "", nullptr},
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_5> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_5>;
+template <> const std::string c2py::tp_doc<_c2py_cls_78cab850> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_78cab850>;
 
 // ==================== module functions ====================
 
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 
@@ -454,12 +463,12 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_synth_init() 
 
   PyObject *m;
 
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_1>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_2>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_3>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_4>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_5>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_40e5fc76>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_23873e83>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_f0d40733>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_08b1d68a>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_fef1ade2>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_78cab850>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -467,12 +476,12 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_synth_init() 
   if (not c2py::register_internal_types()) return NULL;
 #define _add_type(T, N)                                                                                                                              \
   if (not c2py::add_type_object_to_main<T>(N, m)) return NULL
-  _add_type(_c2py_cls_0, "NoDefaults");
-  _add_type(_c2py_cls_1, "WithDefaults");
-  _add_type(_c2py_cls_2, "ANdc");
-  _add_type(_c2py_cls_3, "Params");
-  _add_type(_c2py_cls_4, "ParamsNdc");
-  _add_type(_c2py_cls_5, "TplParamNdcInt");
+  _add_type(_c2py_cls_40e5fc76, "NoDefaults");
+  _add_type(_c2py_cls_23873e83, "WithDefaults");
+  _add_type(_c2py_cls_f0d40733, "ANdc");
+  _add_type(_c2py_cls_08b1d68a, "Params");
+  _add_type(_c2py_cls_fef1ade2, "ParamsNdc");
+  _add_type(_c2py_cls_78cab850, "TplParamNdcInt");
 #undef _add_type
 
   return m;

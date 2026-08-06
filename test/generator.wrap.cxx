@@ -25,15 +25,17 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // enumerate_vec
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::vector<int> v) { return enumerate_vec(v); }, "v")};
+static auto const _c2py_fun_06afad1c = c2py::dispatcher_f_kw_t{c2py::cfun([](std::vector<int> v) { return enumerate_vec(v); }, "v")};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
+static const auto _c2py_doc_06afad1c = _c2py_fun_06afad1c.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"enumerate_vec", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("enumerate_vec", 06afad1c),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 

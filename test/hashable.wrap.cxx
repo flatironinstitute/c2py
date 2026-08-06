@@ -22,64 +22,70 @@ using c2py::operator""_a;
 
 // ==================== module classes =====================
 
-// --------- class _c2py_cls_0 -----------
-using _c2py_cls_0                                            = N::cls_hashable;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "hashable.ClsHashable";
-static const auto _c2py_init_0 = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>(), c2py::c_constructor<_c2py_cls_0, int>("v")};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
+// --------- class _c2py_cls_b7c193b0 -----------
+using _c2py_cls_b7c193b0                                            = N::cls_hashable;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_b7c193b0>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_b7c193b0> = "hashable.ClsHashable";
+static const auto _c2py_init_ece3c8dd =
+   c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_b7c193b0>(), c2py::c_constructor<_c2py_cls_b7c193b0, int>("v")};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_b7c193b0>    = c2py::pyfkw_constructor<_c2py_init_ece3c8dd>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_b7c193b0> = _c2py_init_ece3c8dd.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_b7c193b0>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_0 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_d5972725 = R"DOC()DOC";
 
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_0>[] = {c2py::getsetdef_from_member<&_c2py_cls_0::value, _c2py_cls_0>("value", _c2py_doc_member_0),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_b7c193b0>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_b7c193b0::value, _c2py_cls_b7c193b0>("value", _c2py_doc_member_d5972725),
 
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
-// --------- class _c2py_cls_1 -----------
-using _c2py_cls_1                                            = N::cls_not_hashable;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_1>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_1> = "hashable.ClsNotHashable";
-static const auto _c2py_init_1 = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_1>(), c2py::c_constructor<_c2py_cls_1, int>("v")};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_1>    = c2py::pyfkw_constructor<_c2py_init_1>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_1> = _c2py_init_1.doc(R"DOC()DOC");
+template <> const std::string c2py::tp_doc<_c2py_cls_b7c193b0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_b7c193b0>;
+// --------- class _c2py_cls_3a379fba -----------
+using _c2py_cls_3a379fba                                            = N::cls_not_hashable;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_3a379fba>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_3a379fba> = "hashable.ClsNotHashable";
+static const auto _c2py_init_cca5231c =
+   c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_3a379fba>(), c2py::c_constructor<_c2py_cls_3a379fba, int>("v")};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_3a379fba>    = c2py::pyfkw_constructor<_c2py_init_cca5231c>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_3a379fba> = _c2py_init_cca5231c.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_1>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_3a379fba>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_1 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_ac147d6f = R"DOC()DOC";
 
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_1>[] = {c2py::getsetdef_from_member<&_c2py_cls_1::value, _c2py_cls_1>("value", _c2py_doc_member_1),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_3a379fba>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_3a379fba::value, _c2py_cls_3a379fba>("value", _c2py_doc_member_ac147d6f),
 
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_1> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_1>;
+template <> const std::string c2py::tp_doc<_c2py_cls_3a379fba> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_3a379fba>;
 
 // ==================== module functions ====================
 
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 
@@ -108,8 +114,8 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_hashable() {
 
   PyObject *m;
 
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_1>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_b7c193b0>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_3a379fba>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -117,8 +123,8 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_hashable() {
   if (not c2py::register_internal_types()) return NULL;
 #define _add_type(T, N)                                                                                                                              \
   if (not c2py::add_type_object_to_main<T>(N, m)) return NULL
-  _add_type(_c2py_cls_0, "ClsHashable");
-  _add_type(_c2py_cls_1, "ClsNotHashable");
+  _add_type(_c2py_cls_b7c193b0, "ClsHashable");
+  _add_type(_c2py_cls_3a379fba, "ClsNotHashable");
 #undef _add_type
 
   return m;

@@ -25,35 +25,37 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // f_map
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::map<std::string, int> m) { return f_map(m); }, "m")};
+static auto const _c2py_fun_6119ff9c = c2py::dispatcher_f_kw_t{c2py::cfun([](std::map<std::string, int> m) { return f_map(m); }, "m")};
 
 // f_optional
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](bool present) { return f_optional(present); }, "present")};
+static auto const _c2py_fun_2773917a = c2py::dispatcher_f_kw_t{c2py::cfun([](bool present) { return f_optional(present); }, "present")};
 
 // f_string
-static auto const _c2py_fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::string s) { return f_string(s); }, "s")};
+static auto const _c2py_fun_32a6c98b = c2py::dispatcher_f_kw_t{c2py::cfun([](std::string s) { return f_string(s); }, "s")};
 
 // f_tuple
-static auto const _c2py_fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return f_tuple(); })};
+static auto const _c2py_fun_f22cdf54 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return f_tuple(); })};
 
 // f_vector
-static auto const _c2py_fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::vector<int> v) { return f_vector(v); }, "v")};
+static auto const _c2py_fun_ec878e99 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::vector<int> v) { return f_vector(v); }, "v")};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
-static const auto _c2py_doc_2 = _c2py_fun_2.doc(R"DOC()DOC");
-static const auto _c2py_doc_3 = _c2py_fun_3.doc(R"DOC()DOC");
-static const auto _c2py_doc_4 = _c2py_fun_4.doc(R"DOC()DOC");
+static const auto _c2py_doc_6119ff9c = _c2py_fun_6119ff9c.doc(R"DOC()DOC");
+static const auto _c2py_doc_2773917a = _c2py_fun_2773917a.doc(R"DOC()DOC");
+static const auto _c2py_doc_32a6c98b = _c2py_fun_32a6c98b.doc(R"DOC()DOC");
+static const auto _c2py_doc_f22cdf54 = _c2py_fun_f22cdf54.doc(R"DOC()DOC");
+static const auto _c2py_doc_ec878e99 = _c2py_fun_ec878e99.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"f_map", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"f_optional", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {"f_string", (PyCFunction)c2py::pyfkw<_c2py_fun_2>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_2.c_str()},
-   {"f_tuple", (PyCFunction)c2py::pyfkw<_c2py_fun_3>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_3.c_str()},
-   {"f_vector", (PyCFunction)c2py::pyfkw<_c2py_fun_4>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_4.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("f_map", 6119ff9c),
+   PMDF("f_optional", 2773917a),
+   PMDF("f_string", 32a6c98b),
+   PMDF("f_tuple", f22cdf54),
+   PMDF("f_vector", ec878e99),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 

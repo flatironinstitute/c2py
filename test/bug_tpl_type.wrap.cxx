@@ -22,72 +22,76 @@ using c2py::operator""_a;
 
 // ==================== module classes =====================
 
-// --------- class _c2py_cls_0 -----------
-using _c2py_cls_0                                            = C;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "bug_tpl_type.C";
-static const auto _c2py_init_0                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
+// --------- class _c2py_cls_c60bf9f2 -----------
+using _c2py_cls_c60bf9f2                                            = C;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_c60bf9f2>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_c60bf9f2> = "bug_tpl_type.C";
+static const auto _c2py_init_12b36bc6                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_c60bf9f2>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_c60bf9f2>    = c2py::pyfkw_constructor<_c2py_init_12b36bc6>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_c60bf9f2> = _c2py_init_12b36bc6.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_c60bf9f2>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
-// --------- class _c2py_cls_1 -----------
-using _c2py_cls_1                                            = A<3>;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_1>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_1> = "bug_tpl_type.A3";
-static const auto _c2py_init_1                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_1>()};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_1>    = c2py::pyfkw_constructor<_c2py_init_1>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_1> = _c2py_init_1.doc(R"DOC()DOC");
+template <> const std::string c2py::tp_doc<_c2py_cls_c60bf9f2> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_c60bf9f2>;
+// --------- class _c2py_cls_a8fa5425 -----------
+using _c2py_cls_a8fa5425                                            = A<3>;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_a8fa5425>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_a8fa5425> = "bug_tpl_type.A3";
+static const auto _c2py_init_f4341508                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_a8fa5425>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_a8fa5425>    = c2py::pyfkw_constructor<_c2py_init_f4341508>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_a8fa5425> = _c2py_init_f4341508.doc(R"DOC()DOC");
 // f
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{
-   c2py::cmethod([](_c2py_cls_1 &self, std::vector<std::array<int, 3>> v) -> decltype(auto) { return self.f(v); }, "self", "v")};
+static auto const _c2py_fun_ba6a31c9 = c2py::dispatcher_f_kw_t{
+   c2py::cmethod([](_c2py_cls_a8fa5425 &self, std::vector<std::array<int, 3>> v) -> decltype(auto) { return self.f(v); }, "self", "v")};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
+static const auto _c2py_doc_ba6a31c9 = _c2py_fun_ba6a31c9.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_1>[] = {
-   {"f", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_a8fa5425>[] = {
+   PMDF("f", ba6a31c9),
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-template <> const std::string c2py::tp_doc<_c2py_cls_1> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_1>;
-// --------- class _c2py_cls_2 -----------
-using _c2py_cls_2                                            = B<int>;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_2>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_2> = "bug_tpl_type.Bi";
-static const auto _c2py_init_2                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_2>()};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_2>    = c2py::pyfkw_constructor<_c2py_init_2>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_2> = _c2py_init_2.doc(R"DOC()DOC");
+template <> const std::string c2py::tp_doc<_c2py_cls_a8fa5425> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_a8fa5425>;
+// --------- class _c2py_cls_d22e259e -----------
+using _c2py_cls_d22e259e                                            = B<int>;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_d22e259e>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_d22e259e> = "bug_tpl_type.Bi";
+static const auto _c2py_init_a7666d90                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_d22e259e>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_d22e259e>    = c2py::pyfkw_constructor<_c2py_init_a7666d90>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_d22e259e> = _c2py_init_a7666d90.doc(R"DOC()DOC");
 // f
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{
-   c2py::cmethod([](_c2py_cls_2 &self, std::vector<std::array<int, 3>> v) -> decltype(auto) { return self.f(v); }, "self", "v")};
+static auto const _c2py_fun_3ef8638c = c2py::dispatcher_f_kw_t{
+   c2py::cmethod([](_c2py_cls_d22e259e &self, std::vector<std::array<int, 3>> v) -> decltype(auto) { return self.f(v); }, "self", "v")};
 
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_3ef8638c = _c2py_fun_3ef8638c.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_2>[] = {
-   {"f", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_d22e259e>[] = {
+   PMDF("f", 3ef8638c),
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-template <> const std::string c2py::tp_doc<_c2py_cls_2> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_2>;
+template <> const std::string c2py::tp_doc<_c2py_cls_d22e259e> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_d22e259e>;
 
 // ==================== module functions ====================
 
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 
@@ -116,9 +120,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_bug_tpl_type(
 
   PyObject *m;
 
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_1>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_2>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_c60bf9f2>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_a8fa5425>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_d22e259e>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -126,9 +130,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_bug_tpl_type(
   if (not c2py::register_internal_types()) return NULL;
 #define _add_type(T, N)                                                                                                                              \
   if (not c2py::add_type_object_to_main<T>(N, m)) return NULL
-  _add_type(_c2py_cls_0, "C");
-  _add_type(_c2py_cls_1, "A3");
-  _add_type(_c2py_cls_2, "Bi");
+  _add_type(_c2py_cls_c60bf9f2, "C");
+  _add_type(_c2py_cls_a8fa5425, "A3");
+  _add_type(_c2py_cls_d22e259e, "Bi");
 #undef _add_type
 
   return m;

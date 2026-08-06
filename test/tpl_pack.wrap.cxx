@@ -25,24 +25,26 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // deduced_after_pack
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](int g) { return deduced_after_pack<0>(g); }, "g"),
-                                                        c2py::cfun([](double g) { return deduced_after_pack<0>(g); }, "g")};
+static auto const _c2py_fun_ec70254e = c2py::dispatcher_f_kw_t{c2py::cfun([](int g) { return deduced_after_pack<0>(g); }, "g"),
+                                                               c2py::cfun([](double g) { return deduced_after_pack<0>(g); }, "g")};
 
 // fn_param_pack
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{
+static auto const _c2py_fun_a3614ad1 = c2py::dispatcher_f_kw_t{
    c2py::cfun([](int g) { return fn_param_pack<int>(g); }, "g"),
    c2py::cfun([](int g, double args) { return fn_param_pack<int, double>(g, args); }, "g", "args"),
    c2py::cfun([](int g, double args0, char args1) { return fn_param_pack<int, double, char>(g, args0, args1); }, "g", "args0", "args1")};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_ec70254e = _c2py_fun_ec70254e.doc(R"DOC()DOC");
+static const auto _c2py_doc_a3614ad1 = _c2py_fun_a3614ad1.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"deduced_after_pack", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"fn_param_pack", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("deduced_after_pack", ec70254e),
+   PMDF("fn_param_pack", a3614ad1),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 

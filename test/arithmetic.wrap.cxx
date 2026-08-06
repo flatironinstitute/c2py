@@ -22,61 +22,64 @@ using c2py::operator""_a;
 
 // ==================== module classes =====================
 
-// --------- class _c2py_cls_0 -----------
-using _c2py_cls_0                                            = A;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "arithmetic.A";
-static const auto _c2py_init_0                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0, int>("k")};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
+// --------- class _c2py_cls_c40bf6cc -----------
+using _c2py_cls_c40bf6cc                                            = A;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_c40bf6cc>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_c40bf6cc> = "arithmetic.A";
+static const auto _c2py_init_185b847b                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_c40bf6cc, int>("k")};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_c40bf6cc>    = c2py::pyfkw_constructor<_c2py_init_185b847b>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_c40bf6cc> = _c2py_init_185b847b.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_c40bf6cc>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_0 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_e1b88f39 = R"DOC()DOC";
 
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_0>[] = {c2py::getsetdef_from_member<&_c2py_cls_0::k, _c2py_cls_0>("k", _c2py_doc_member_0),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_c40bf6cc>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_c40bf6cc::k, _c2py_cls_c40bf6cc>("k", _c2py_doc_member_e1b88f39),
 
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Add> : std::tuple<std::pair<A, A>, std::pair<A, int>> {};
+template <> struct c2py::arithmetic<_c2py_cls_c40bf6cc, c2py::OpName::Add> : std::tuple<std::pair<A, A>, std::pair<A, int>> {};
 
-template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Sub> : std::tuple<std::pair<A, A>> {};
+template <> struct c2py::arithmetic<_c2py_cls_c40bf6cc, c2py::OpName::Sub> : std::tuple<std::pair<A, A>> {};
 
-template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Mul> : std::tuple<std::pair<A, int>> {};
+template <> struct c2py::arithmetic<_c2py_cls_c40bf6cc, c2py::OpName::Mul> : std::tuple<std::pair<A, int>> {};
 
-template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Div> : std::tuple<std::pair<A, int>> {};
+template <> struct c2py::arithmetic<_c2py_cls_c40bf6cc, c2py::OpName::Div> : std::tuple<std::pair<A, int>> {};
 
-template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::LShift> : std::tuple<std::pair<A, int>> {};
+template <> struct c2py::arithmetic<_c2py_cls_c40bf6cc, c2py::OpName::LShift> : std::tuple<std::pair<A, int>> {};
 
-template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::Neg> : std::tuple<A> {};
+template <> struct c2py::arithmetic<_c2py_cls_c40bf6cc, c2py::OpName::Neg> : std::tuple<A> {};
 
-template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::IAdd> : std::tuple<std::pair<A, A>> {};
+template <> struct c2py::arithmetic<_c2py_cls_c40bf6cc, c2py::OpName::IAdd> : std::tuple<std::pair<A, A>> {};
 
-template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::ISub> : std::tuple<std::pair<A, A>> {};
+template <> struct c2py::arithmetic<_c2py_cls_c40bf6cc, c2py::OpName::ISub> : std::tuple<std::pair<A, A>> {};
 
-template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::IMul> : std::tuple<std::pair<A, int>> {};
+template <> struct c2py::arithmetic<_c2py_cls_c40bf6cc, c2py::OpName::IMul> : std::tuple<std::pair<A, int>> {};
 
-template <> struct c2py::arithmetic<_c2py_cls_0, c2py::OpName::IDiv> : std::tuple<std::pair<A, int>> {};
+template <> struct c2py::arithmetic<_c2py_cls_c40bf6cc, c2py::OpName::IDiv> : std::tuple<std::pair<A, int>> {};
 
-template <> constexpr PyNumberMethods *c2py::tp_as_number<_c2py_cls_0> = &c2py::tp_as_number_impl<_c2py_cls_0>;
+template <> constexpr PyNumberMethods *c2py::tp_as_number<_c2py_cls_c40bf6cc> = &c2py::tp_as_number_impl<_c2py_cls_c40bf6cc>;
 
-template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
+template <> const std::string c2py::tp_doc<_c2py_cls_c40bf6cc> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_c40bf6cc>;
 
 // ==================== module functions ====================
 
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 
@@ -105,7 +108,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_arithmetic() 
 
   PyObject *m;
 
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_c40bf6cc>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -113,7 +116,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_arithmetic() 
   if (not c2py::register_internal_types()) return NULL;
 #define _add_type(T, N)                                                                                                                              \
   if (not c2py::add_type_object_to_main<T>(N, m)) return NULL
-  _add_type(_c2py_cls_0, "A");
+  _add_type(_c2py_cls_c40bf6cc, "A");
 #undef _add_type
 
   return m;

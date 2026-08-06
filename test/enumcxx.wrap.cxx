@@ -29,40 +29,42 @@ template <> const std::map<D::E3, std::string> c2py::enum_to_string<D::E3> = {{D
 
 // ==================== module classes =====================
 
-// --------- class _c2py_cls_0 -----------
-using _c2py_cls_0                                            = D;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "enumcxx.D";
-static const auto _c2py_init_0                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
+// --------- class _c2py_cls_c10bf213 -----------
+using _c2py_cls_c10bf213                                            = D;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_c10bf213>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_c10bf213> = "enumcxx.D";
+static const auto _c2py_init_8e33de8a                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_c10bf213>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_c10bf213>    = c2py::pyfkw_constructor<_c2py_init_8e33de8a>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_c10bf213> = _c2py_init_8e33de8a.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_c10bf213>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
+template <> const std::string c2py::tp_doc<_c2py_cls_c10bf213> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_c10bf213>;
 
 // ==================== module functions ====================
 
 // f1
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](E1 x) { return f1(x); }, "x")};
+static auto const _c2py_fun_14226d78 = c2py::dispatcher_f_kw_t{c2py::cfun([](E1 x) { return f1(x); }, "x")};
 
 // f2
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](E2 x) { return f2(x); }, "x")};
+static auto const _c2py_fun_17227231 = c2py::dispatcher_f_kw_t{c2py::cfun([](E2 x) { return f2(x); }, "x")};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_14226d78 = _c2py_fun_14226d78.doc(R"DOC()DOC");
+static const auto _c2py_doc_17227231 = _c2py_fun_17227231.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"f1", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"f2", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("f1", 14226d78),
+   PMDF("f2", 17227231),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 
@@ -91,7 +93,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_enumcxx() {
 
   PyObject *m;
 
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_c10bf213>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -99,7 +101,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_enumcxx() {
   if (not c2py::register_internal_types()) return NULL;
 #define _add_type(T, N)                                                                                                                              \
   if (not c2py::add_type_object_to_main<T>(N, m)) return NULL
-  _add_type(_c2py_cls_0, "D");
+  _add_type(_c2py_cls_c10bf213, "D");
 #undef _add_type
 
   return m;

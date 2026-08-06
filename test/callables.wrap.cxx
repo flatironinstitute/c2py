@@ -25,50 +25,54 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // call1
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](const std::function<int(int, int)> &f) { return call1(f); }, "f")};
+static auto const _c2py_fun_dd33bb48 = c2py::dispatcher_f_kw_t{c2py::cfun([](const std::function<int(int, int)> &f) { return call1(f); }, "f")};
 
 // call2
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::function<int(int, int)> f) { return call2(f); }, "f")};
+static auto const _c2py_fun_e033c001 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::function<int(int, int)> f) { return call2(f); }, "f")};
 
 // call3
-static auto const _c2py_fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](const std::function<int(std::pair<int, int>)> &f) { return call3(f); }, "f")};
+static auto const _c2py_fun_df33be6e =
+   c2py::dispatcher_f_kw_t{c2py::cfun([](const std::function<int(std::pair<int, int>)> &f) { return call3(f); }, "f")};
 
 // call4
-static auto const _c2py_fun_3 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::function<int(std::pair<int, int>)> f) { return call4(f); }, "f")};
+static auto const _c2py_fun_e233c327 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::function<int(std::pair<int, int>)> f) { return call4(f); }, "f")};
 
 // call5
-static auto const _c2py_fun_4 = c2py::dispatcher_f_kw_t{c2py::cfun([](std::function<int(const std::pair<int, int> &)> f) { return call5(f); }, "f")};
+static auto const _c2py_fun_e133c194 =
+   c2py::dispatcher_f_kw_t{c2py::cfun([](std::function<int(const std::pair<int, int> &)> f) { return call5(f); }, "f")};
 
 // callback
-static auto const _c2py_fun_5 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return callback(); })};
+static auto const _c2py_fun_87f03406 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return callback(); })};
 
 // make_f
-static auto const _c2py_fun_6 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_f(); })};
+static auto const _c2py_fun_97dddf82 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_f(); })};
 
 // make_f2
-static auto const _c2py_fun_7 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_f2(); })};
+static auto const _c2py_fun_c2472210 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_f2(); })};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
-static const auto _c2py_doc_2 = _c2py_fun_2.doc(R"DOC()DOC");
-static const auto _c2py_doc_3 = _c2py_fun_3.doc(R"DOC()DOC");
-static const auto _c2py_doc_4 = _c2py_fun_4.doc(R"DOC()DOC");
-static const auto _c2py_doc_5 = _c2py_fun_5.doc(R"DOC()DOC");
-static const auto _c2py_doc_6 = _c2py_fun_6.doc(R"DOC()DOC");
-static const auto _c2py_doc_7 = _c2py_fun_7.doc(R"DOC()DOC");
+static const auto _c2py_doc_dd33bb48 = _c2py_fun_dd33bb48.doc(R"DOC()DOC");
+static const auto _c2py_doc_e033c001 = _c2py_fun_e033c001.doc(R"DOC()DOC");
+static const auto _c2py_doc_df33be6e = _c2py_fun_df33be6e.doc(R"DOC()DOC");
+static const auto _c2py_doc_e233c327 = _c2py_fun_e233c327.doc(R"DOC()DOC");
+static const auto _c2py_doc_e133c194 = _c2py_fun_e133c194.doc(R"DOC()DOC");
+static const auto _c2py_doc_87f03406 = _c2py_fun_87f03406.doc(R"DOC()DOC");
+static const auto _c2py_doc_97dddf82 = _c2py_fun_97dddf82.doc(R"DOC()DOC");
+static const auto _c2py_doc_c2472210 = _c2py_fun_c2472210.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"call1", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"call2", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {"call3", (PyCFunction)c2py::pyfkw<_c2py_fun_2>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_2.c_str()},
-   {"call4", (PyCFunction)c2py::pyfkw<_c2py_fun_3>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_3.c_str()},
-   {"call5", (PyCFunction)c2py::pyfkw<_c2py_fun_4>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_4.c_str()},
-   {"callback", (PyCFunction)c2py::pyfkw<_c2py_fun_5>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_5.c_str()},
-   {"make_f", (PyCFunction)c2py::pyfkw<_c2py_fun_6>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_6.c_str()},
-   {"make_f2", (PyCFunction)c2py::pyfkw<_c2py_fun_7>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_7.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("call1", dd33bb48),
+   PMDF("call2", e033c001),
+   PMDF("call3", df33be6e),
+   PMDF("call4", e233c327),
+   PMDF("call5", e133c194),
+   PMDF("callback", 87f03406),
+   PMDF("make_f", 97dddf82),
+   PMDF("make_f2", c2472210),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 

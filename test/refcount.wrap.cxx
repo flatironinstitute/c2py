@@ -25,20 +25,22 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // pyobject_ptr
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](double x) { return pyobject_ptr(x); }, "x")};
+static auto const _c2py_fun_19fd704c = c2py::dispatcher_f_kw_t{c2py::cfun([](double x) { return pyobject_ptr(x); }, "x")};
 
 // pyref_obj
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](double x) { return pyref_obj(x); }, "x")};
+static auto const _c2py_fun_b80bfee1 = c2py::dispatcher_f_kw_t{c2py::cfun([](double x) { return pyref_obj(x); }, "x")};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_19fd704c = _c2py_fun_19fd704c.doc(R"DOC()DOC");
+static const auto _c2py_doc_b80bfee1 = _c2py_fun_b80bfee1.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"pyobject_ptr", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"pyref_obj", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("pyobject_ptr", 19fd704c),
+   PMDF("pyref_obj", b80bfee1),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 

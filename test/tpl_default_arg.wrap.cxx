@@ -25,20 +25,22 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // by_value
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](int v) { return by_value<int>(v); }, "v"_a = int{})};
+static auto const _c2py_fun_c35cbf1e = c2py::dispatcher_f_kw_t{c2py::cfun([](int v) { return by_value<int>(v); }, "v"_a = int{})};
 
 // const_ref
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](const int &v) { return const_ref<int>(v); }, "v"_a = int{})};
+static auto const _c2py_fun_67436d96 = c2py::dispatcher_f_kw_t{c2py::cfun([](const int &v) { return const_ref<int>(v); }, "v"_a = int{})};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_c35cbf1e = _c2py_fun_c35cbf1e.doc(R"DOC()DOC");
+static const auto _c2py_doc_67436d96 = _c2py_fun_67436d96.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"by_value", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"const_ref", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("by_value", c35cbf1e),
+   PMDF("const_ref", 67436d96),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 

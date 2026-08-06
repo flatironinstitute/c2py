@@ -22,89 +22,94 @@ using c2py::operator""_a;
 
 // ==================== module classes =====================
 
-// --------- class _c2py_cls_0 -----------
-using _c2py_cls_0                                            = N::cls_equal;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "comparison.ClsEqual";
-static const auto _c2py_init_0                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0>()};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
+// --------- class _c2py_cls_7780ab00 -----------
+using _c2py_cls_7780ab00                                            = N::cls_equal;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_7780ab00>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_7780ab00> = "comparison.ClsEqual";
+static const auto _c2py_init_00d539c5                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_7780ab00>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_7780ab00>    = c2py::pyfkw_constructor<_c2py_init_00d539c5>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_7780ab00> = _c2py_init_00d539c5.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_7780ab00>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_0 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_71e81615 = R"DOC()DOC";
 
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_0>[] = {c2py::getsetdef_from_member<&_c2py_cls_0::value, _c2py_cls_0>("value", _c2py_doc_member_0),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_7780ab00>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_7780ab00::value, _c2py_cls_7780ab00>("value", _c2py_doc_member_71e81615),
 
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
-// --------- class _c2py_cls_1 -----------
-using _c2py_cls_1                                            = N::cls_equal2;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_1>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_1> = "comparison.ClsEqual2";
-static const auto _c2py_init_1                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_1>()};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_1>    = c2py::pyfkw_constructor<_c2py_init_1>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_1> = _c2py_init_1.doc(R"DOC()DOC");
+template <> const std::string c2py::tp_doc<_c2py_cls_7780ab00> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_7780ab00>;
+// --------- class _c2py_cls_518d7fb6 -----------
+using _c2py_cls_518d7fb6                                            = N::cls_equal2;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_518d7fb6>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_518d7fb6> = "comparison.ClsEqual2";
+static const auto _c2py_init_1a720fa3                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_518d7fb6>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_518d7fb6>    = c2py::pyfkw_constructor<_c2py_init_1a720fa3>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_518d7fb6> = _c2py_init_1a720fa3.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_1>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_518d7fb6>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_1 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_71f6ad43 = R"DOC()DOC";
 
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_1>[] = {c2py::getsetdef_from_member<&_c2py_cls_1::value, _c2py_cls_1>("value", _c2py_doc_member_1),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_518d7fb6>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_518d7fb6::value, _c2py_cls_518d7fb6>("value", _c2py_doc_member_71f6ad43),
 
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_1> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_1>;
-// --------- class _c2py_cls_2 -----------
-using _c2py_cls_2                                            = N::cls_comp;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_2>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_2> = "comparison.ClsComp";
-static const auto _c2py_init_2                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_2>()};
-template <> constexpr initproc c2py::tp_init<_c2py_cls_2>    = c2py::pyfkw_constructor<_c2py_init_2>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_2> = _c2py_init_2.doc(R"DOC()DOC");
+template <> const std::string c2py::tp_doc<_c2py_cls_518d7fb6> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_518d7fb6>;
+// --------- class _c2py_cls_579fa1bf -----------
+using _c2py_cls_579fa1bf                                            = N::cls_comp;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_579fa1bf>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_579fa1bf> = "comparison.ClsComp";
+static const auto _c2py_init_45e01a3d                               = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_579fa1bf>()};
+template <> constexpr initproc c2py::tp_init<_c2py_cls_579fa1bf>    = c2py::pyfkw_constructor<_c2py_init_45e01a3d>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_579fa1bf> = _c2py_init_45e01a3d.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_2>[] = {
-
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_579fa1bf>[] = {
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_2 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_422b1db4 = R"DOC()DOC";
 
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_2>[] = {c2py::getsetdef_from_member<&_c2py_cls_2::value, _c2py_cls_2>("value", _c2py_doc_member_2),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_579fa1bf>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_579fa1bf::value, _c2py_cls_579fa1bf>("value", _c2py_doc_member_422b1db4),
 
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_2> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_2>;
+template <> const std::string c2py::tp_doc<_c2py_cls_579fa1bf> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_579fa1bf>;
 
 // ==================== module functions ====================
 
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 
@@ -133,9 +138,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_comparison() 
 
   PyObject *m;
 
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_1>) < 0) return NULL;
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_2>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_7780ab00>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_518d7fb6>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_579fa1bf>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -143,9 +148,9 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_comparison() 
   if (not c2py::register_internal_types()) return NULL;
 #define _add_type(T, N)                                                                                                                              \
   if (not c2py::add_type_object_to_main<T>(N, m)) return NULL
-  _add_type(_c2py_cls_0, "ClsEqual");
-  _add_type(_c2py_cls_1, "ClsEqual2");
-  _add_type(_c2py_cls_2, "ClsComp");
+  _add_type(_c2py_cls_7780ab00, "ClsEqual");
+  _add_type(_c2py_cls_518d7fb6, "ClsEqual2");
+  _add_type(_c2py_cls_579fa1bf, "ClsComp");
 #undef _add_type
 
   return m;

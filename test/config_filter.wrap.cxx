@@ -25,20 +25,22 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // included_bar
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return included_bar(); })};
+static auto const _c2py_fun_62242683 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return included_bar(); })};
 
 // included_foo
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return included_foo(); })};
+static auto const _c2py_fun_11e3aa12 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return included_foo(); })};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_62242683 = _c2py_fun_62242683.doc(R"DOC()DOC");
+static const auto _c2py_doc_11e3aa12 = _c2py_fun_11e3aa12.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"included_bar", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"included_foo", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("included_bar", 62242683),
+   PMDF("included_foo", 11e3aa12),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 

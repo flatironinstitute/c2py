@@ -25,25 +25,27 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // callback1
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return callback1(); })};
+static auto const _c2py_fun_36223295 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return callback1(); })};
 
 // callback2
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return callback2(); })};
+static auto const _c2py_fun_33222ddc = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return callback2(); })};
 
 // callback3
-static auto const _c2py_fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return callback3(); })};
+static auto const _c2py_fun_34222f6f = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return callback3(); })};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
-static const auto _c2py_doc_2 = _c2py_fun_2.doc(R"DOC()DOC");
+static const auto _c2py_doc_36223295 = _c2py_fun_36223295.doc(R"DOC()DOC");
+static const auto _c2py_doc_33222ddc = _c2py_fun_33222ddc.doc(R"DOC()DOC");
+static const auto _c2py_doc_34222f6f = _c2py_fun_34222f6f.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"callback1", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"callback2", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {"callback3", (PyCFunction)c2py::pyfkw<_c2py_fun_2>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_2.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("callback1", 36223295),
+   PMDF("callback2", 33222ddc),
+   PMDF("callback3", 34222f6f),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 

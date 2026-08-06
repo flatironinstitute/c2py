@@ -25,25 +25,27 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // inc_opaque
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([](opaque &x) { return inc_opaque(x); }, "x")};
+static auto const _c2py_fun_633491bb = c2py::dispatcher_f_kw_t{c2py::cfun([](opaque &x) { return inc_opaque(x); }, "x")};
 
 // make_opaque
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_opaque(); })};
+static auto const _c2py_fun_f7931ad3 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return make_opaque(); })};
 
 // take_opaque
-static auto const _c2py_fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](const opaque &x) { return take_opaque(x); }, "x")};
+static auto const _c2py_fun_9f181a08 = c2py::dispatcher_f_kw_t{c2py::cfun([](const opaque &x) { return take_opaque(x); }, "x")};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
-static const auto _c2py_doc_2 = _c2py_fun_2.doc(R"DOC()DOC");
+static const auto _c2py_doc_633491bb = _c2py_fun_633491bb.doc(R"DOC()DOC");
+static const auto _c2py_doc_f7931ad3 = _c2py_fun_f7931ad3.doc(R"DOC()DOC");
+static const auto _c2py_doc_9f181a08 = _c2py_fun_9f181a08.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"inc_opaque", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"make_opaque", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {"take_opaque", (PyCFunction)c2py::pyfkw<_c2py_fun_2>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_2.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("inc_opaque", 633491bb),
+   PMDF("make_opaque", f7931ad3),
+   PMDF("take_opaque", 9f181a08),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 

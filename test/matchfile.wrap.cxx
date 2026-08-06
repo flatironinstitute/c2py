@@ -25,20 +25,22 @@ using c2py::operator""_a;
 // ==================== module functions ====================
 
 // aux_f
-static auto const _c2py_fun_0 = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return aux_f(); })};
+static auto const _c2py_fun_0e5bcefc = c2py::dispatcher_f_kw_t{c2py::cfun([]() { return aux_f(); })};
 
 // aux_g
-static auto const _c2py_fun_1 = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return aux_g(x); }, "x")};
+static auto const _c2py_fun_0f5bd08f = c2py::dispatcher_f_kw_t{c2py::cfun([](int x) { return aux_g(x); }, "x")};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
+static const auto _c2py_doc_0e5bcefc = _c2py_fun_0e5bcefc.doc(R"DOC()DOC");
+static const auto _c2py_doc_0f5bd08f = _c2py_fun_0f5bd08f.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"aux_f", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
-   {"aux_g", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("aux_f", 0e5bcefc),
+   PMDF("aux_g", 0f5bd08f),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 

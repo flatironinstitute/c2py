@@ -22,56 +22,62 @@ using c2py::operator""_a;
 
 // ==================== module classes =====================
 
-// --------- class _c2py_cls_0 -----------
-using _c2py_cls_0                                            = MyClass;
-template <> constexpr bool c2py::is_wrapped<_c2py_cls_0>     = true;
-template <> inline constexpr auto c2py::tp_name<_c2py_cls_0> = "deprecated_params.MyClass";
-static const auto _c2py_init_0 = c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_0, int>("v")}.with_deprecated_params({{"old_v", "v"}});
-template <> constexpr initproc c2py::tp_init<_c2py_cls_0>    = c2py::pyfkw_constructor<_c2py_init_0>;
-template <> const std::string c2py::tp_ctor_doc<_c2py_cls_0> = _c2py_init_0.doc(R"DOC()DOC");
+// --------- class _c2py_cls_3f2fea45 -----------
+using _c2py_cls_3f2fea45                                            = MyClass;
+template <> constexpr bool c2py::is_wrapped<_c2py_cls_3f2fea45>     = true;
+template <> inline constexpr auto c2py::tp_name<_c2py_cls_3f2fea45> = "deprecated_params.MyClass";
+static const auto _c2py_init_10cef024 =
+   c2py::dispatcher_c_kw_t{c2py::c_constructor<_c2py_cls_3f2fea45, int>("v")}.with_deprecated_params({{"old_v", "v"}});
+template <> constexpr initproc c2py::tp_init<_c2py_cls_3f2fea45>    = c2py::pyfkw_constructor<_c2py_init_10cef024>;
+template <> const std::string c2py::tp_ctor_doc<_c2py_cls_3f2fea45> = _c2py_init_10cef024.doc(R"DOC()DOC");
 // get_val
-static auto const _c2py_fun_0 =
-   c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_0 const &self) -> decltype(auto) { return self.get_val(); }, "self")};
+static auto const _c2py_fun_9822b277 =
+   c2py::dispatcher_f_kw_t{c2py::cmethod([](_c2py_cls_3f2fea45 const &self) -> decltype(auto) { return self.get_val(); }, "self")};
 
-static const auto _c2py_doc_0 = _c2py_fun_0.doc(R"DOC()DOC");
+static const auto _c2py_doc_9822b277 = _c2py_fun_9822b277.doc(R"DOC()DOC");
 
 // ----- Method table ----
-template <>
-PyMethodDef c2py::tp_methods<_c2py_cls_0>[] = {
-   {"get_val", (PyCFunction)c2py::pyfkw<_c2py_fun_0>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_0.c_str()},
+// clang-format off
+template <> PyMethodDef c2py::tp_methods<_c2py_cls_3f2fea45>[] = {
+   PMDF("get_val", 9822b277),
    {nullptr, nullptr, 0, nullptr} // Sentinel
 };
+// clang-format on
 
-constexpr auto _c2py_doc_member_0 = R"DOC()DOC";
+constexpr auto _c2py_doc_member_2e25f86c = R"DOC()DOC";
 
 // ----- Member and property table ----
 
 template <>
-constinit PyGetSetDef c2py::tp_getset<_c2py_cls_0>[] = {c2py::getsetdef_from_member<&_c2py_cls_0::val, _c2py_cls_0>("val", _c2py_doc_member_0),
+constinit PyGetSetDef c2py::tp_getset<_c2py_cls_3f2fea45>[] = {
+   c2py::getsetdef_from_member<&_c2py_cls_3f2fea45::val, _c2py_cls_3f2fea45>("val", _c2py_doc_member_2e25f86c),
 
-                                                        {nullptr, nullptr, nullptr, nullptr, nullptr}};
+   {nullptr, nullptr, nullptr, nullptr, nullptr}};
 
-template <> const std::string c2py::tp_doc<_c2py_cls_0> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_0>;
+template <> const std::string c2py::tp_doc<_c2py_cls_3f2fea45> = R"DOC()DOC" + c2py::tp_ctor_doc<_c2py_cls_3f2fea45>;
 
 // ==================== module functions ====================
 
 // f_renamed
-static auto const _c2py_fun_1 =
+static auto const _c2py_fun_6b23fb88 =
    c2py::dispatcher_f_kw_t{c2py::cfun([](int x, int y) { return f_renamed(x, y); }, "x", "y"_a = 10)}.with_deprecated_params({{"old_x", "x"}});
 
 // g_renamed
-static auto const _c2py_fun_2 = c2py::dispatcher_f_kw_t{c2py::cfun([](int a, int b) { return g_renamed(a, b); }, "a", "b")}.with_deprecated_params(
-   {{"old_a", "a"}, {"old_b", "b"}});
+static auto const _c2py_fun_d44f27cf =
+   c2py::dispatcher_f_kw_t{c2py::cfun([](int a, int b) { return g_renamed(a, b); }, "a", "b")}.with_deprecated_params(
+      {{"old_a", "a"}, {"old_b", "b"}});
 
-static const auto _c2py_doc_1 = _c2py_fun_1.doc(R"DOC()DOC");
-static const auto _c2py_doc_2 = _c2py_fun_2.doc(R"DOC()DOC");
+static const auto _c2py_doc_6b23fb88 = _c2py_fun_6b23fb88.doc(R"DOC()DOC");
+static const auto _c2py_doc_d44f27cf = _c2py_fun_d44f27cf.doc(R"DOC()DOC");
 //--------------------- module function table  -----------------------------
 
+// clang-format off
 static PyMethodDef module_methods[] = {
-   {"f_renamed", (PyCFunction)c2py::pyfkw<_c2py_fun_1>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_1.c_str()},
-   {"g_renamed", (PyCFunction)c2py::pyfkw<_c2py_fun_2>, METH_VARARGS | METH_KEYWORDS, _c2py_doc_2.c_str()},
-   {nullptr, nullptr, 0, nullptr} // Sentinel
+   PMDF("f_renamed", 6b23fb88),
+   PMDF("g_renamed", d44f27cf),
+   {nullptr, nullptr, 0, nullptr}  // Sentinel
 };
+// clang-format on
 
 //--------------------- module struct & init error definition ------------
 
@@ -100,7 +106,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_deprecated_pa
 
   PyObject *m;
 
-  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_0>) < 0) return NULL;
+  if (PyType_Ready(&c2py::wrap_pytype<_c2py_cls_3f2fea45>) < 0) return NULL;
 
   m = PyModule_Create(&module_def);
   if (m == NULL) return NULL;
@@ -108,7 +114,7 @@ extern "C" __attribute__((visibility("default"))) PyObject *PyInit_deprecated_pa
   if (not c2py::register_internal_types()) return NULL;
 #define _add_type(T, N)                                                                                                                              \
   if (not c2py::add_type_object_to_main<T>(N, m)) return NULL
-  _add_type(_c2py_cls_0, "MyClass");
+  _add_type(_c2py_cls_3f2fea45, "MyClass");
 #undef _add_type
 
   return m;
