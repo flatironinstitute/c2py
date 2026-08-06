@@ -52,3 +52,6 @@
 #include "converters/stl/function.hpp"
 #include "converters/stl/span.hpp"
 //#include "converters/misc.hpp"
+
+// Last : it only patches up what the wrapping code generated for c2py 0.1 needs, and uses the above.
+#include "backwd.hpp"
