@@ -121,14 +121,14 @@ namespace c2py {
 
   // Convert a PyObject to C++
   // NB: can return a T or  T [const] & (for wrapped types)
-  template <typename T> static decltype(auto) py2cxx(PyObject *x) { return py_converter<std::decay_t<T>>::py2c(x); }
+  template <typename T> decltype(auto) py2cxx(PyObject *x) { return py_converter<std::decay_t<T>>::py2c(x); }
 
   // Convert a C++ object into a Python object (always a NEW REFERENCE)
-  template <typename T> static PyObject *cxx2py(T &&x) { return py_converter<std::decay_t<T>>::c2py(std::forward<T>(x)); }
+  template <typename T> PyObject *cxx2py(T &&x) { return py_converter<std::decay_t<T>>::c2py(std::forward<T>(x)); }
 
   // True iif the object ob is convertible into T (short cut)
   // raise_exception. Cf py_converter::is_convertible
-  template <typename T> static bool convertible(PyObject *ob, bool raise_exception) { return py_converter<T>::is_convertible(ob, raise_exception); }
+  template <typename T> bool convertible(PyObject *ob, bool raise_exception) { return py_converter<T>::is_convertible(ob, raise_exception); }
 
   // ------------------- Python type name --------------------
   // For proper doc.

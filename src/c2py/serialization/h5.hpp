@@ -12,7 +12,7 @@
 namespace c2py {
 
   /// hdf5 is not defined for this object, we still but a function + exception for a clear and early error message.
-  template <typename Cls> static PyObject *tpxx_write_h5(PyObject *self, PyObject *args) {
+  template <typename Cls> PyObject *tpxx_write_h5(PyObject *self, PyObject *args) {
     static auto l                = [](Cls const &self_c, h5::group g, const char *key) { h5_write(g, key, self_c); };
     static dispatcher_f_kw_t ovs = {cmethod(+l, "cls", "g", "key")}; // lambda FIXME for method : take self : change the call ?
     return ovs(self, args, nullptr);

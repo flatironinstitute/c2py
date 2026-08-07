@@ -66,27 +66,27 @@ namespace c2py {
   // Transform a method pointer M into a `getter` type
   // of Python, cf https://docs.python.org/3/c-api/structures.html
   //
-  template <auto M> static PyObject *getter_from_method(PyObject *self, void *) {
+  template <auto M> PyObject *getter_from_method(PyObject *self, void *) {
     static c2py::dispatcher_f_kw_t ovs = {c2py::cfun(M)};
     return ovs(self, nullptr, nullptr);
   }
 
   // Same as getter_from_method, but for inherited methods where M has base class type.
   // Cls is the derived class that we are wrapping.
-  template <typename Cls, auto M> static PyObject *getter_from_method_B(PyObject *self, void *) {
+  template <typename Cls, auto M> PyObject *getter_from_method_B(PyObject *self, void *) {
     static c2py::dispatcher_f_kw_t ovs = {c2py::cfun_B<Cls>(M)};
     return ovs(self, nullptr, nullptr);
   }
 
   // Getter from a free function whose first argument is self
-  template <auto F> static PyObject *getter_from_fun(PyObject *self, void *) {
+  template <auto F> PyObject *getter_from_fun(PyObject *self, void *) {
     static c2py::dispatcher_f_kw_t ovs = {c2py::cmethod(F, "self")};
     return ovs(self, nullptr, nullptr);
   }
 
   // Same as setter_from_method, but for inherited methods where F has base class type.
   // Cls is the derived class that we are wrapping.
-  template <typename Cls, auto F> static int setter_from_method_B(PyObject *self, PyObject *value, void *closure) {
+  template <typename Cls, auto F> int setter_from_method_B(PyObject *self, PyObject *value, void *closure) {
     if (value == nullptr) return (PyErr_SetString(PyExc_AttributeError, static_cast<const char *>(closure)), -1);
     static c2py::dispatcher_f_kw_t d = {c2py::cfun_B<Cls>(F, "i")};
     d(self, c2py::pyref(PyTuple_Pack(1, value)), nullptr);
@@ -95,7 +95,7 @@ namespace c2py {
 
   // Setter from a method pointer.
   // closure must point to the attribute-name C-string used in the "cannot delete" error.
-  template <auto F> static int setter_from_method(PyObject *self, PyObject *value, void *closure) {
+  template <auto F> int setter_from_method(PyObject *self, PyObject *value, void *closure) {
     if (value == nullptr) return (PyErr_SetString(PyExc_AttributeError, static_cast<const char *>(closure)), -1);
     static c2py::dispatcher_f_kw_t d = {c2py::cfun(F, "i")};
     d(self, c2py::pyref(PyTuple_Pack(1, value)), nullptr);
@@ -104,7 +104,7 @@ namespace c2py {
 
   // Setter from a free function whose first argument is self.
   // closure must point to the attribute-name C-string used in the "cannot delete" error.
-  template <auto F> static int setter_from_fun(PyObject *self, PyObject *value, void *closure) {
+  template <auto F> int setter_from_fun(PyObject *self, PyObject *value, void *closure) {
     if (value == nullptr) return (PyErr_SetString(PyExc_AttributeError, static_cast<const char *>(closure)), -1);
     static c2py::dispatcher_f_kw_t d = {c2py::cmethod(F, "self", "i")};
     d(self, c2py::pyref(PyTuple_Pack(1, value)), nullptr);

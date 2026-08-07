@@ -19,7 +19,7 @@ namespace c2py {
 
   // ---------------------------------------
 
-  template <typename Iterator, typename Sentinel> static void py_iterator_dealloc(py_iterator<Iterator, Sentinel> *self) {
+  template <typename Iterator, typename Sentinel> void py_iterator_dealloc(py_iterator<Iterator, Sentinel> *self) {
     Py_XDECREF(self->container);
     Py_TYPE(self)->tp_free((PyObject *)self);
   }
