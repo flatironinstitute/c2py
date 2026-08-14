@@ -61,9 +61,7 @@ namespace c2py {
 
   // The 0.1 signature. The table argument is ignored, cf conv_table_sptr. The result is discarded by
   // the old code, with the consequence described above.
-  // static, like the overload it forwards to, and maybe_unused since only 0.1 generated code calls it.
-  template <typename T>
-  [[maybe_unused]] static bool add_type_object_to_main(const char *pyname, PyObject *_main_, pto_table_t & /*ignored*/) noexcept {
+  template <typename T> static bool add_type_object_to_main(const char *pyname, PyObject *_main_, pto_table_t & /*ignored*/) noexcept {
     return add_type_object_to_main<T>(pyname, _main_);
   }
 

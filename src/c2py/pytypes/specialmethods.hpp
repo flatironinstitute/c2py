@@ -10,7 +10,7 @@ namespace c2py {
 
     // Need Cls and Cls2 for the case when M is a pointer of a PARENT class,
     //
-    template <typename Cls, typename T, typename Cls2> PyObject *get_member_impl(PyObject *self, void *, T Cls2::*M) {
+    template <typename Cls, typename T, typename Cls2> static PyObject *get_member_impl(PyObject *self, void *, T Cls2::*M) {
       static_assert(std::is_base_of_v<Cls2, Cls>);
       auto &self_c = py_converter<Cls>::py2c(self);
       try {
@@ -22,7 +22,7 @@ namespace c2py {
       }
     }
 
-    template <typename Cls, typename T, typename Cls2> int set_member_impl(PyObject *self, PyObject *value, void *, T Cls2::*M) {
+    template <typename Cls, typename T, typename Cls2> static int set_member_impl(PyObject *self, PyObject *value, void *, T Cls2::*M) {
       static_assert(std::is_base_of_v<Cls2, Cls>);
       if (value == nullptr) {
         PyErr_SetString(PyExc_TypeError, "Cannot delete the attribute");
@@ -47,9 +47,9 @@ namespace c2py {
   // Makes a `getter` Python function from the member pointer M
   // NB impl: I do not use an inline lambda but rather get_member_impl since it takes M as an argument,
   // so it avoids to instantiate it for each M for a given class Cls and type T.
-  template <auto M, typename Cls> PyObject *get_member(PyObject *self, void *p) { return details::get_member_impl<Cls>(self, p, M); }
+  template <auto M, typename Cls> static PyObject *get_member(PyObject *self, void *p) { return details::get_member_impl<Cls>(self, p, M); }
 
-  template <auto M, typename Cls> int set_member(PyObject *self, PyObject *value, void *p) {
+  template <auto M, typename Cls> static int set_member(PyObject *self, PyObject *value, void *p) {
     return details::set_member_impl<Cls>(self, value, p, M);
   }
 
@@ -64,20 +64,20 @@ namespace c2py {
 // Not implemented in clang 20
 // #ifdef __cpp_multidimensional_subscript
 #if (defined(__GNUC__) and (__cpp_multidimensional_subscript >= 202110L)) or (__cplusplus >= 202302L)
-  template <typename T, typename... A> decltype(auto) getitem(T const &a, A... i) { return a[i...]; }
-  template <typename T, typename... A> void setitem(T &a, A... i, std::decay_t<decltype(a[i...])> const &val) { a[i...] = val; }
+  template <typename T, typename... A> static decltype(auto) getitem(T const &a, A... i) { return a[i...]; }
+  template <typename T, typename... A> static void setitem(T &a, A... i, std::decay_t<decltype(a[i...])> const &val) { a[i...] = val; }
 #else
-  template <typename T, typename A> decltype(auto) getitem(T const &a, A i) { return a[i]; }
-  template <typename T, typename A1> void setitem(T &a, A1 i, std::decay_t<decltype(a[i])> const &val) { a[i] = val; }
+  template <typename T, typename A> static decltype(auto) getitem(T const &a, A i) { return a[i]; }
+  template <typename T, typename A1> static void setitem(T &a, A1 i, std::decay_t<decltype(a[i])> const &val) { a[i] = val; }
 #endif
 
-  template <typename T> Py_ssize_t tpxx_size(PyObject *self) { return py2cxx<T>(self).size(); }
+  template <typename T> static Py_ssize_t tpxx_size(PyObject *self) { return py2cxx<T>(self).size(); }
 
   // -------------------- tp_richcompare ----------------------------
 
   // FIXME: ok, but it would not handle more complex comparison with other types...
   // To refine ?
-  template <typename Cls> PyObject *tp_richcompare(PyObject *a, PyObject *b, int op) {
+  template <typename Cls> static PyObject *tp_richcompare(PyObject *a, PyObject *b, int op) {
 
 // NOLINTNEXTLINE
 #define CLAIR_C2PY_COMPARE_IMPL(OP)                                                                                                                  \

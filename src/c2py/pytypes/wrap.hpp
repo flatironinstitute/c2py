@@ -24,14 +24,14 @@ namespace c2py {
 
   // ============ Prepare all the slots for wrap_pytype below ====================
   // tp_new
-  template <typename T> PyObject *tp_new(PyTypeObject *type, PyObject * /*args*/, PyObject * /*kwds*/) {
+  template <typename T> static PyObject *tp_new(PyTypeObject *type, PyObject * /*args*/, PyObject * /*kwds*/) {
     auto *self = (wrap<T> *)type->tp_alloc(type, 0);
     if (self != NULL) self->_c = NULL;
     return (PyObject *)self;
   }
 
   // tp_dealloc
-  template <typename T> void tp_dealloc(PyObject *self) {
+  template <typename T> static void tp_dealloc(PyObject *self) {
     auto *self_c = ((wrap<T> *)self);
     auto *c_ptr  = self_c->_c;
     if (self_c->parent == nullptr) {
@@ -45,9 +45,8 @@ namespace c2py {
   template <typename T> static constexpr initproc tp_init    = nullptr;
   template <typename T> inline const std::string tp_doc      = {};
   template <typename T> inline const std::string tp_ctor_doc = {};
-  // maybe_unused : static is deliberate (cf tp_repr impl below), so a TU that does not instantiate them must not warn.
-  template <typename T> [[maybe_unused]] static PyObject *tp_repr(PyObject *self); // impl below
-  template <typename T> [[maybe_unused]] static PyObject *tp_str(PyObject *self) { return tp_repr<T>(self); }
+  template <typename T> static PyObject *tp_repr(PyObject *self); // impl below
+  template <typename T> static PyObject *tp_str(PyObject *self) { return tp_repr<T>(self); }
   template <typename T> static constinit PyMappingMethods tp_as_mapping = {nullptr, nullptr, nullptr}; //NOLINT
   template <typename T> static constexpr ternaryfunc tp_call            = nullptr;
   template <typename T> static constinit PyMethodDef tp_methods[]       = {{nullptr, nullptr, 0, nullptr}}; //NOLINT

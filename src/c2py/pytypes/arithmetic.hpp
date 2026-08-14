@@ -30,7 +30,7 @@ namespace c2py {
     static auto invoke(auto &&x) { return -x; }
   };
 
-  template <OpName Op, typename T1, typename T2, bool InPlace = false> bool tp_arithmetic_impl1(PyObject *&r, PyObject *a1, PyObject *a2) {
+  template <OpName Op, typename T1, typename T2, bool InPlace = false> static bool tp_arithmetic_impl1(PyObject *&r, PyObject *a1, PyObject *a2) {
     using conv1 = py_converter<T1>;
     using conv2 = py_converter<T2>;
     bool ok     = conv1::is_convertible(a1, false) and conv2::is_convertible(a2, false);
@@ -51,7 +51,7 @@ namespace c2py {
     return ok;
   }
 
-  template <typename T, OpName Op, bool InPlace = false> PyObject *tp_arithmetic_impl2(PyObject *a1, PyObject *a2) {
+  template <typename T, OpName Op, bool InPlace = false> static PyObject *tp_arithmetic_impl2(PyObject *a1, PyObject *a2) {
     return [&a1, &a2]<typename... P>(std::tuple<P...> *) {
       PyObject *r = nullptr;
       if ((tp_arithmetic_impl1<Op, typename P::first_type, typename P::second_type, InPlace>(r, a1, a2) or ...))
@@ -73,7 +73,7 @@ namespace c2py {
 
   // ---- Unary dispatch (unaryfunc: single PyObject* arg) ----
 
-  template <OpName Op, typename T> PyObject *tp_unary_impl(PyObject *a) {
+  template <OpName Op, typename T> static PyObject *tp_unary_impl(PyObject *a) {
     try {
       return cxx2py(arith_op<Op>::invoke(py_converter<T>::py2c(a)));
     } catch (std::exception const &e) {

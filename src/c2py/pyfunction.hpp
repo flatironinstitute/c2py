@@ -10,7 +10,7 @@ namespace c2py {
 
     // Convert x to python. If x is not convertible and is a lambda or alike
     // we make an attempt a std::function out of it.
-    template <typename T> PyObject *cxx2py_or_fun(T &&x) {
+    template <typename T> static PyObject *cxx2py_or_fun(T &&x) {
       if constexpr (concepts::IsConvertibleC2Py<std::decay_t<T>>)
         return py_converter<std::decay_t<T>>::c2py(std::forward<T>(x));
       else

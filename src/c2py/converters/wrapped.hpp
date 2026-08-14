@@ -40,7 +40,7 @@ namespace c2py {
   //
   // static, to match pto_cache. The chain stops here : the py_converter<T> members that call this are
   // class template members, which can not be given internal linkage.
-  template <typename T> [[maybe_unused]] static pto_lookup_t lookup_pto() {
+  template <typename T> static pto_lookup_t lookup_pto() {
     auto r = pto_cache<T>;
     if (r.pto == nullptr) [[unlikely]] {
       r = lookup_pto_in_tables(typeid(T));
@@ -80,7 +80,7 @@ namespace c2py {
   // this module's, inlined or not.
   // tp_doc<T> is a global const std::string with static storage duration; .data() is valid for the
   // lifetime of the shared library (Python finalization precedes dlclose).
-  template <typename T> [[nodiscard, maybe_unused]] static bool add_type_object_to_main(const char *pyname, PyObject *_main_) noexcept {
+  template <typename T> [[nodiscard]] static bool add_type_object_to_main(const char *pyname, PyObject *_main_) noexcept {
     return add_type_object_to_main_impl(pyname, _main_, &c2py::wrap_pytype<T>, typeid(T).name(), c2py::tp_doc<T>.data());
   }
 
