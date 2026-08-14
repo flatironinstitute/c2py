@@ -1,4 +1,11 @@
 #pragma once
+
+// cf c2py.hpp. Its own push/pop does not cover us : the plugin includes this header on its own.
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-template"
+#endif
+
 #include <h5/serialization.hpp>
 #include <h5/format.hpp>
 #include <h5/_h5py.wrap.hxx>
@@ -73,3 +80,7 @@ namespace c2py {
   };
 
 } // namespace c2py
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
