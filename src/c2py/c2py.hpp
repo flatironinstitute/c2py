@@ -18,6 +18,14 @@
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #endif
 
+// The headers below declare static function and variable templates. static is deliberate : several of
+// them read the per-module statics pto_cache<T> and wrap_pytype<T>, which must not be merged across
+// modules. The per-TU copies that -Wunused-template flags cost nothing here, since a module is one TU.
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-template"
+#endif
+
 // -- The various parts of the lib ---
 // -- To reread the code, read in order --
 
@@ -55,3 +63,7 @@
 
 // Last : it only patches up what the wrapping code generated for c2py 0.1 needs, and uses the above.
 #include "backwd.hpp"
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
