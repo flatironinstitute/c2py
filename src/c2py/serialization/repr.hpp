@@ -5,6 +5,9 @@
 #include "../pytypes/wrap.hpp"
 
 using namespace std::string_literals;
+
+// gcc reports this under -Wunused-function in every TU that does not serialize via repr :
+// 'declared static but never defined'. Accepted for now, the definition comes from the generated code.
 static constexpr char *module_name(); // forward
 
 namespace c2py {

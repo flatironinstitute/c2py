@@ -5,7 +5,6 @@
 #include "../pytypes/wrap.hpp"
 
 using namespace std::string_literals;
-static constexpr char *module_name(); // forward
 
 namespace c2py {
 

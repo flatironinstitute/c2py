@@ -29,11 +29,14 @@
 #include "./pyref.hpp"
 #include "util/type_name.hpp"
 #include "util/str.hpp"
+#include "util/warnings.hpp"
 
 // for backward compatibility layer below
 namespace cpp2py {
   template <typename T> struct py_converter;
 }
+
+C2PY_UNUSED_TEMPLATE_WARNING_OFF
 
 namespace c2py {
 
@@ -185,3 +188,5 @@ namespace c2py {
     return py_converter<T>::py2c(*this);
   }
 } // namespace c2py
+
+C2PY_UNUSED_TEMPLATE_WARNING_ON

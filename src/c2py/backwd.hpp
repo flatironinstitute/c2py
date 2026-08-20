@@ -1,6 +1,7 @@
 #pragma once
 #include "./converters/wrapped.hpp"
 #include "./py_range.hpp"
+#include "./util/warnings.hpp"
 
 // Backward compatibility with the wrapping code generated for c2py 0.1, so that a project can be
 // rebuilt against this c2py without regenerating its .wrap.cxx with the matching clair-c2py.
@@ -29,6 +30,8 @@
 // The 0.1 enum tables are generated as std::map<E, str_t>. str_t was a global alias to std::string
 // leaked by serialization/as_tuple.hpp, which the plugin used and which has since been dropped.
 using str_t = std::string;
+
+C2PY_UNUSED_TEMPLATE_WARNING_OFF
 
 namespace c2py {
 
@@ -69,3 +72,5 @@ namespace c2py {
   inline bool register_internal_types(pto_table_t & /*ignored*/) noexcept { return register_internal_types(); }
 
 } // namespace c2py
+
+C2PY_UNUSED_TEMPLATE_WARNING_ON

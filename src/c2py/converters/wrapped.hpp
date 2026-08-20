@@ -1,6 +1,7 @@
 #pragma once
 #include "../py_converter.hpp"
 #include "../pytypes/wrap.hpp"
+#include "../util/warnings.hpp"
 #include <type_traits>
 
 // Two global tables of PyTypeObject, stored at the top of the interpreter so that each module can
@@ -13,6 +14,9 @@
 // A lookup goes through the c2py table first. A type found only in the cpp2py table is wrapped by a
 // module built with the legacy cpp2py, whose holder is { PyObject_HEAD; T *_c; } : it has no parent
 // and no is_const field, so the converters can not treat it as a wrap<T>.
+
+C2PY_UNUSED_TEMPLATE_WARNING_OFF
+
 namespace c2py {
 
   // Table : c++ type name -> PyTypeObject *.
@@ -175,3 +179,5 @@ namespace c2py {
   };
 
 } // namespace c2py
+
+C2PY_UNUSED_TEMPLATE_WARNING_ON

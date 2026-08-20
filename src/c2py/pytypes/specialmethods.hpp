@@ -2,6 +2,10 @@
 #include "../util/macros.hpp"
 #include "../py_converter.hpp"
 #include "../converters/basic_types.hpp"
+#include "../util/warnings.hpp"
+
+C2PY_UNUSED_TEMPLATE_WARNING_OFF
+
 namespace c2py {
 
   // -------------------- Members ----------------------------
@@ -104,3 +108,5 @@ namespace c2py {
 #undef CLAIR_C2PY_COMPARE_IMPL
 
 } // namespace c2py
+
+C2PY_UNUSED_TEMPLATE_WARNING_ON

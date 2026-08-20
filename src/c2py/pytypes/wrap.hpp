@@ -10,6 +10,9 @@
 #include "arithmetic.hpp"
 #include "iterator.hpp"
 #include "specialmethods.hpp"
+#include "../util/warnings.hpp"
+
+C2PY_UNUSED_TEMPLATE_WARNING_OFF
 
 namespace c2py {
 
@@ -143,3 +146,5 @@ namespace c2py {
   }
 
 } // namespace c2py
+
+C2PY_UNUSED_TEMPLATE_WARNING_ON

@@ -6,6 +6,10 @@
 #include <vector>
 #include "pycfun_kw.hpp"
 #include "binaryfunc.hpp"
+#include "../util/warnings.hpp"
+
+C2PY_UNUSED_TEMPLATE_WARNING_OFF
+
 namespace c2py {
 
   // =============== dynamic dispatcher ========================
@@ -115,3 +119,5 @@ namespace c2py {
   std::string replace_tags(std::string str, std::string const &tag, std::vector<std::string> const &vec);
 
 } // namespace c2py
+
+C2PY_UNUSED_TEMPLATE_WARNING_ON
