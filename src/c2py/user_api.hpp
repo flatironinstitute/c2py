@@ -62,6 +62,12 @@ namespace c2py {
   /// Cf example, it allows to add a clone function method to a class.
   //template <typename T> C2PY_WRAP_AS_METHOD static T clone(T const &x) { return T{x}; };
 
+  // ----------- Opt-in for repr based serialization -----------------------
+
+  // The class's operator<< must emit valid Python that evaluates back to an equal object,
+  // in the module the class is wrapped in.
+  template <typename T> constexpr bool serialize_via_repr = false;
+
   // ----------- API for arithmetic operations ---------------------------
 
   // Name of operations

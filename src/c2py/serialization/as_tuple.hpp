@@ -75,7 +75,7 @@ namespace c2py {
       ((wrap<T> *)self)->_c = new T{deserialize_tuple<T>(state)}; //NOLINT
       Py_RETURN_NONE;
     } catch (std::exception const &e) {
-      PyErr_SetString(PyExc_RuntimeError, ("in deserialization of object "s + tp_name<T>).c_str());
+      PyErr_SetString(PyExc_RuntimeError, ("in deserialization of object " + tp_name_str<T>()).c_str());
       return nullptr;
     }
   };

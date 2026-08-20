@@ -25,6 +25,11 @@ namespace c2py::concepts {
     { x.serialize(ar) };
   };
 
+  //---------------- HasSerializeViaRepr-------------------
+
+  template <typename T>
+  concept HasSerializeViaRepr = serialize_via_repr<T>;
+
   //---------------- HasNonDeletedDefaultConstructor-------------------
 
   template <typename T>

@@ -43,6 +43,9 @@ namespace c2py {
   template <typename T> const std::string cpp_qname() { return trim(replacenl(std::string{util::type_name<T>()})); }
   template <typename T> static constexpr char *tp_name = nullptr; //NOLINT
 
+  // tp_name<T> as a string, falling back on the C++ name for a type wrapped without one.
+  template <typename T> std::string tp_name_str() { return tp_name<T> ? tp_name<T> : cpp_qname<T>(); }
+
   //---------------------  py_converters -----------------------------
 
   template <typename T> struct py_converter;
@@ -141,6 +144,12 @@ namespace c2py {
     return name;
   }
 
+  // "pkg.mod.Cls" -> "pkg.mod". Empty if name has no dot.
+  inline std::string package_name(std::string const &name) {
+    auto pos = name.find_last_of('.');
+    return (pos == std::string::npos) ? std::string{} : name.substr(0, pos);
+  }
+
   //-------------------  python_typename --------------------
 
   template <typename U> std::string python_typename() {
@@ -150,12 +159,10 @@ namespace c2py {
       return py_converter<T>::tp_name();
     else if constexpr (requires { py_converter<T>::tp_name; }) // a simple string
       return py_converter<T>::tp_name;
-    else {
-      if (tp_name<T>)
-        return remove_package_name(tp_name<T>);
-      else
-        return cpp_qname<T>();
-    }
+    else if constexpr (tp_name<T> != nullptr)
+      return remove_package_name(tp_name<T>);
+    else
+      return cpp_qname<T>();
   }
   // ---------------------  Backward compatibility layer with cpp2py ------------
   // If the converters already exists in cpp2py, use them

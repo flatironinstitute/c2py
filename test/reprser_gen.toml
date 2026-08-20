@@ -1,0 +1,2 @@
+documentation = "Test of repr based serialization, selected by c2py::serialize_via_repr"
+match_files = "reprser_gen.cpp"

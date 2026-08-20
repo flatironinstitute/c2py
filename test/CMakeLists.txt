@@ -39,7 +39,8 @@ endmacro()
 
 # ----------------------------
 c2py_add_test(cls LOW_LEVEL)
-set (c2py_all_low_level_tests cls CACHE INTERNAL "") # Keep this, used in clair 
+c2py_add_test(reprser LOW_LEVEL)
+set (c2py_all_low_level_tests cls reprser CACHE INTERNAL "") # Keep this, used in clair 
 
 set(c2py_all_full_tests
   any
@@ -71,6 +72,7 @@ set(c2py_all_full_tests
   two_module_1
   two_module_2
   refcount
+  reprser_gen
   const_ref_default_arg
   arithmetic
   deprecated_params
